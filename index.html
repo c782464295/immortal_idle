@@ -8,45 +8,73 @@
         <!-- 网页图标 -->
         <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
         <!-- JavaScript files -->
+        
+        
+
         <script src="./js/common/jquery-3.6.0.min.js"></script>
+        
         <!-- JavaScript 拖拽 -->
         <script src="./js/common/Sortable.min.js"></script>
-        <!-- JavaScript 弹出提示框 -->
-        <script src="./js/common/sweetalert2@11.js"></script>
         <!-- JavaScript 物品状态 -->
         <script src="./js/common/popper.min.js"></script>
+        <!-- JavaScript 弹出提示框 -->
+        <script src="./js/common/sweetalert2@11.js"></script>
+        
         <!-- JavaScript 右下角通知 -->
         <script src="./js/common/toastr.min.js"></script>
 
+        
+        <script src="./js/common/bootstrap.min.js"></script>
+
+
 
         <!-- CSS files -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="./css/popover.css">
+        <link href="./css/bootstrap.min.css" rel="stylesheet" />
+        <link href="./css/toastr.min.css" rel="stylesheet" />
+
+        <link rel="stylesheet" href="./css/toastr.min.css">
+
         <link rel="stylesheet" href="./css/test.css">
 		<link rel="stylesheet" href="./css/main.css">
         <link rel="stylesheet" href="./css/inventory.css">
+        
     </head>
 
-    <!-- 深色 -->
-    <body class='theme-dark'>
-	<div id='inventory'>
-		<div class='item case_breakout' data-toggle="popover" data-tooltip='天才地宝'><span>20</span></div>
-		<div class='item case_vanguard'><span>0</span></div>
-		<div class='item case_chroma'><span>0</span></div>
-		<div class='item armor'><span>999</span></div>
-        <div class='item'><span>999</span></div>
-        <div class='item case_breakout'><span>20</span></div>
-        <div class='item case_breakout'><span>20</span></div>
-        <div class='item case_breakout'><span>20</span></div>
-        <div class='item case_breakout'><span>20</span></div>
-        <div class='item case_breakout'><span>20</span></div>
-	</div>
-        <script src="./js/notification.js"></script>
-        <script src="./js/inventory_new.js"></script>
+    <body>
+
+
+            <div id='inventory'>
+                <div class='item case_breakout' data-toggle="popover" data-tooltip='天才地宝' data-trigger="hover"><span>20</span></div>
+                <div class='item case_vanguard'><span>0</span></div>
+                <div class='item case_chroma'><span>0</span></div>
+                <div class='item armor'><span>999</span></div>
+                <div class='item'><span>999</span></div>
+                <div class='item case_breakout'><span>20</span></div>
+                <div class='item case_breakout'><span>20</span></div>
+                <div class='item case_breakout'><span>20</span></div>
+                <div class='item case_breakout'><span>20</span></div>
+                <div class='item case_breakout'><span>20</span></div>
+            </div>
+            <div id="stat-money"><span>20</span></div>
+        
+        
+            
+
+        
+        
+        
 
 
     </body>
 
     
+    <script src="./js/utility.js"></script>
+    <script src="./js/notification.js"></script>
+    <script src="./js/inventory.js"></script>
+    <script src="./js/statistics.js"></script>
+    <script src="./js/StatisticsTracker.js"></script>
 
+    <script src="./js/game.js"></script>
 
 </html>

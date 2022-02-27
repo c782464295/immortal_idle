@@ -1,8 +1,8 @@
 class inventory{
-    constructor(){
+    constructor(id = 'inventory'){
         this.invent = new Map();
-        this.sortable = null;
-
+        this.id = id;
+        this.sortable = Sortable.create(document.getElementById(this.id),{animation: 150, draggable: '.item'});
     }
     test(){
         this.invent.set(0,10);
@@ -11,36 +11,29 @@ class inventory{
         this.invent.set(3,1);
         this.invent.set(4,1);
     }
+    
+    additem(){
+        var tmp_node = document.createElement('div');
+        tmp_node.className = "item";
 
+        var tmp_node_p = document.getElementById(this.id).appendChild(tmp_node);
+        tmp_node_p.appendChild(document.createElement('span')).innerHTML='2';
+    }
 
-    update(id = 'tress'){
-        document.getElementById(id).innerHTML = '';
-        if(this.sortable!==null){
-            this.sortable.destroy();
-        }
-        this.invent.forEach(function(value,key,map){
-            if(allitems[key] == undefined){
-                console.log(new Error('id not found'));
-            }
-            console.log(allitems[key]);
-            document.getElementById(id).innerHTML +=  "<div class='bank-item' data-toggle='popover' data-id="+ key +" data-tooltip='"+allitems[key].name+"'><img class='bank-img p-1' src='./"+allitems[key].media+"'></img></div>";
-        });
+    update(){
         $("[data-toggle = 'popover']").each(function (){
             var $this = $(this);
             $this.popover({
-              html: true,
+              //html: true,
               placement: "top",
               //container: $this,
               trigger: "hover",
-              title: $this[0].getAttribute('data-tooltip')||'',
-              content: "Hey, you"
+              //title: $this[0].getAttribute('data-tooltip')||'',
+              content: $this[0].getAttribute('data-tooltip')||'',
             });
+            
         })
-
-        this.sortable = Sortable.create(document.getElementById(id),{});
-        this.sortable.sort(this.sortable.toArray().sort());
-
-        
+    
     }
 
     
@@ -59,4 +52,6 @@ class inventory{
 
     }
 }
+
+
 

@@ -1,12 +1,16 @@
-class game{
+class Game{
     constructor(){
         this.loopInterval = -1;
         this.loopStarted = false;
         this.maxOfflineTicks = 20 * 60 * 60 * 12;
 
-        this.woodcutting = new Woodcutting();
+        
 
         this.stats = new Statistics();
+
+        this.inventory = new inventory();
+
+        console.log("%c Loading %s Successfully!", 'background:#000;color:lime;font-style:italic', "Immortal Idle");
     }
 
     startMainLoop(){
@@ -32,3 +36,7 @@ class game{
         
     }
 }
+
+game = new Game();
+game.inventory.update();
+$("#stat-money").html("Wallet: <span>${0}</span>".format(2221212));
