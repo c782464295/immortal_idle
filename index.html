@@ -16,21 +16,23 @@
         <!-- JavaScript 拖拽 -->
         <script src="./js/common/Sortable.min.js"></script>
         <!-- JavaScript 物品状态 -->
-        <script src="./js/common/popper.min.js"></script>
+        <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
         <!-- JavaScript 弹出提示框 -->
         <script src="./js/common/sweetalert2@11.js"></script>
         
         <!-- JavaScript 右下角通知 -->
         <script src="./js/common/toastr.min.js"></script>
 
-        
-        <script src="./js/common/bootstrap.min.js"></script>
+        <!-- JavaScript 压缩 -->
+        <script src="./js/common/pako.min.js"></script>
+
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
 
         <!-- CSS files -->
         <link rel="stylesheet" href="./css/popover.css">
-        <link href="./css/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
         <link href="./css/toastr.min.css" rel="stylesheet" />
 
         <link rel="stylesheet" href="./css/toastr.min.css">
@@ -42,29 +44,46 @@
     </head>
 
     <body>
-
+            <h1>sss</h1>
+            <h1>sss</h1>
+            <h1>sss</h1>
             <div id='inventory'>
-                <div class='item case_breakout' data-toggle="popover" data-tooltip='天才地宝' data-trigger="hover"><span>20</span></div>
-                <div class='item case_vanguard'><span>0</span></div>
-                <div class='item case_chroma'><span>0</span></div>
-                <div class='item armor'><span>999</span></div>
-                <div class='item'><span>999</span></div>
-                <div class='item case_breakout'><span>20</span></div>
-                <div class='item case_breakout'><span>20</span></div>
-                <div class='item case_breakout'><span>20</span></div>
-                <div class='item case_breakout'><span>20</span></div>
-                <div class='item case_breakout'><span>20</span></div>
+                <div class='item case_breakout' data-id=1 data-toggle="popover" data-tooltip='天才地宝'><span>20</span></div>
+                <div class='item case_vanguard' data-id=2><span>0</span></div>
+                <div class='item case_chroma'data-id=3><span>0</span></div>
+                <div class='item armor' data-id=4><span>999</span></div>
+                <div class='item' data-id=5><span>999</span></div>
+                <div class='item case_breakout' data-id=6><span>20</span></div>
+                <div class='item case_breakout' data-id=7><span>20</span></div>
+                <div class='item case_breakout' data-id=8><span>20</span></div>
+                <div class='item case_breakout' data-id=93><span>20</span></div>
+                <div class='item' data-id=92><img class='item-img' src='./assets/protect_item.svg'><span>20</span></img></div>
+                <div class='item' data-toggle="popover" data-tooltip='??' data-id=90><img class='item-img' src='./assets/nOqKSbE.png'><span>20</span></img></div>
             </div>
+            <h1>sss</h1>
             <div id="stat-money"><span>20</span></div>
+            <h1>sss</h1>
+            <div class="row" id=mining-ores-container>
+                <mining-ore id="mine"></mining-ore>
+            </div>
+            <h1>sss</h1>
+            <h1>
+                <time-formatted id="elem" hour="numeric" minute="numeric" second="numeric"></time-formatted>
+            </h1>
+            <h1>sss</h1>
+            <progress is="progress-bar" id="prog"></progress>
         
         
-            
 
-        
-        
-        
-
-
+            <template id="tmpl">
+                <script>
+                  alert("Hello");
+                </script>
+                <div class="message">Hello, world!</div>
+            </template>
+            <template id="my-paragraph">
+                <p>My paragraph</p>
+            </template>
     </body>
 
     
@@ -73,7 +92,13 @@
     <script src="./js/inventory.js"></script>
     <script src="./js/statistics.js"></script>
     <script src="./js/StatisticsTracker.js"></script>
+    <script src="./js/timer.js"></script>
+    <script src="./js/AchievementManager.js"></script>
 
+    <script src="./js/progressbar.js"></script>
+    <script src="./js/TimeShow.js"></script>
+    <script src="./js/ore.js"></script>
+    <script src="./js/save.js"></script>
     <script src="./js/game.js"></script>
 
 </html>

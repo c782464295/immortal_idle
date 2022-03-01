@@ -1,18 +1,23 @@
 /* Popover */
 .popover{
-    border: 2px dotted red;
+    border: 0px dotted #2c343f !important;
+    padding: 0px !important;    
 }
 /* Popover Header */
 .popover-title{
     background-color: #73AD21; 
-    color: #FFFFFF; 
+    color: #cc2828; 
     font-size: 28px;
     text-align:center;
 }
 /* Popover Body */
 .popover-content{
-    background-color: coral;
-    color: #FFFFFF;
-    padding: 25px;
+    background-color: #2c343f;
+    color: #f4f804;
+    padding: 1px;
+}
+
+.popover.top>.arrow:after {
+    border-top-color: #2c343f !important;
 }
 

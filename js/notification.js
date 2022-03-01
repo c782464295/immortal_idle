@@ -19,14 +19,14 @@ class notification{
         }
     }
     toast_warning(data){
-        toastr.warning('My name is Inigo Montoya. You killed my father, prepare to die!')
+        toastr.warning(data);
     }
 
     pop_warning(data){
         Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Your work has been saved',
+            title: data,
             showConfirmButton: true,
             //background: '#545',
             timer: 5000

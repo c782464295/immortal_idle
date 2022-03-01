@@ -33,7 +33,7 @@ class StatisticsTracker{
     }
     deserialize(data){
         this.statistics.clear();
-        console.log(JSON.parse(data));
+        //console.log(JSON.parse(data));
         JSON.parse(data)["statistics"].forEach((item,index,array)=>{
             this.statistics.set(item[0],item[1]);
         })
