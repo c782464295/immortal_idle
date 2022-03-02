@@ -5,6 +5,7 @@ class ProgressBar extends HTMLProgressElement{
         // 元素创建
         this.value = 0;
         this.max = 100;
+        document.body.appendChild(this)
     }
 
     render(){
@@ -57,3 +58,4 @@ customElements.define("progress-bar", ProgressBar, {extends: 'progress'}); // (2
 
 //document.getElementById("prog").setAttribute('value',60);
 prog.setAttribute('value',60);
+car = new ProgressBar();
