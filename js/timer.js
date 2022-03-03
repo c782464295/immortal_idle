@@ -8,9 +8,11 @@ class TimerInfo{
 		this.paused = false;
 	}
 }
-
+/**
+ * 计时器默认100ms更新一次tick
+ */
 class TimerManager{
-	constructor(runtime = 1){
+	constructor(runtime = 100){
 		this.timers = new Map();
 		this.runtime = runtime;
         window.setInterval(this.Tick.bind(this), this.runtime);  
@@ -21,7 +23,7 @@ class TimerManager{
 	Tick(){
 		this.timers.forEach((value, key, map)=>{
 			if (!value.paused) {
-				value.current += 1;
+				value.current += 1 * this.runtime;
 
 				if (value.current>=value.threshold) {
 					value.func(...value.params);

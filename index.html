@@ -27,7 +27,8 @@
         <script src="./js/common/pako.min.js"></script>
 
         <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+        <!-- JavaScript 模糊搜索-->
+        <script src="./js/common/fuse.min.js"></script>
 
 
         <!-- CSS files -->
@@ -75,16 +76,18 @@
             <progress is="progress-bar" id="prog"></progress>
         
             <car-component></car-component>
-
+            <table-of-data></table-of-data>
+            
             <template id="tmpl">
-                <script>
-                  alert("Hello");
-                </script>
                 <div class="message">Hello, world!</div>
             </template>
             <template id="my-paragraph">
                 <p>My paragraph</p>
             </template>
+
+            <inventory-element></inventory-element>
+
+            
     </body>
 
     
@@ -96,6 +99,7 @@
     <script src="./js/timer.js"></script>
     <script src="./js/AchievementManager.js"></script>
 
+    <script src="./js/table-of-data.js"></script>
     <script src="./js/progressbar.js"></script>
     <script src="./js/TimeShow.js"></script>
     <script src="./js/ore.js"></script>
