@@ -130,13 +130,21 @@ class SwitchButton extends HTMLElement{
         </button>
         `;
         this._checked = Boolean(this.shadowRoot.querySelector('button').getAttribute('aria-checked'));
+        
+
+        
+        this.shadowRoot.querySelector('.switch-btn__text').innerHTML = this.getAttribute('text');
+    
         this.shadowRoot.querySelector('button').addEventListener('click', this.check.bind(this));
+
+        
     }
 
     check(event){
         const isPressed = event.currentTarget.getAttribute('aria-checked') === 'true';
         event.currentTarget.setAttribute('aria-checked', String(!isPressed));
         this._checked = Boolean(!isPressed);
+       
     }
 
 
@@ -149,3 +157,4 @@ class SwitchButton extends HTMLElement{
 customElements.define('switch-button', SwitchButton);
 
 /* document.querySelector('switch-button').isChecked
+*/

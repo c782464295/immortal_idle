@@ -30,9 +30,13 @@
 
             <div id="content">
                 <div class="sidenav"></div>
-                <div class="info">
+                <div class="info" id="ooo">
                     <table-of-data></table-of-data>
-                    <switch-button labelId="12"></switch-button>
+                    <switch-button id="12" text="Ena2e Settings"></switch-button>
+                    <switch-button id="123" text="E Settings"></switch-button>
+
+                    
+
                 </div>
             </div>
             <footer id="footer">
@@ -43,7 +47,20 @@
 
             
     </body>
-
+    <script src="./js/customElements/card.js"></script>
+    <script>
+        let card = [
+            {id:'card-1',detail:{png:'img_avatar'}},
+            {id:'card-2',detail:{png:'img_avatar'}},
+            {id:'card-3',detail:{png:'img_avatar'}}
+        ]
+        card.forEach((e)=>{
+            console.log(e);
+            let card = new Card(e.id);
+            card.data = e.detail;
+        })
+    </script>
+    
     <script src="./js/customElements/swithButton.js"></script>
     <script src="./js/table-of-data.js"></script>
     <script src="./js/customElements/header.js"></script>

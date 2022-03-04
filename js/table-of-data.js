@@ -14,7 +14,7 @@ class stasTable extends HTMLElement{
 
 
           table.table-of-data td, table.table-of-data th { border-bottom: 1px solid #ddd; text-align: right; }
-          table.table-of-data { border-collapse: collapse; width: 40%; margin:0 auto;background:#232a35;color:#f5f5f5;}
+          table.table-of-data { border-collapse: collapse; width: 40%; margin:0 auto;background:#232a35;color:#f5f5f5;border-top:4px solid 	#008000;border-radius: 5px;perspective: 5px;}
           table.table-of-data th, table.table-of-data td { padding: 8px; }
         </style>`;
     }
@@ -32,7 +32,7 @@ class stasTable extends HTMLElement{
     _refreshTable(data){ // add/refresh data in table
         let tableOfData = this.shadowRoot.children.table;
         let frag = document.createDocumentFragment();
-        let tableTitle = document.createElement('h3');
+        let tableTitle = document.createElement('h4');
         let tableHeadingRow = document.createElement('tr');
 
         tableTitle.textContent = data.title;
