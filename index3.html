@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- 网页标题 -->
+        <title>修仙Game</title>
+        <!-- 网页图标 -->
+        <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
+        <!-- JavaScript files -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://unpkg.com/@tabler/core@latest/dist/js/tabler.min.js"></script>
+        <!-- JavaScript 弹出提示框 -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- JavaScript 物品状态 -->
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <!-- JavaScript 拖拽 -->
+        <script src="http://sortablejs.github.io/Sortable/Sortable.js"></script>
+        <!-- JavaScript 通知 -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+         <!-- JavaScript 压缩 -->
+        <script src="https://cdn.melvor.net/core/v018/assets/js/pako.min.js"></script>
+
+
+        <script src="./farm.js"></script>
+        
+        <!-- CSS files -->
+        <link rel="stylesheet" href="https://unpkg.com/@tabler/core@latest/dist/css/tabler.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/@tabler/core@1.0.0-beta6/dist/css/tabler-flags.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/@tabler/core@1.0.0-beta6/dist/css/tabler-payments.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/@tabler/core@1.0.0-beta6/dist/css/tabler-vendors.min.css">
+
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <link rel="stylesheet" href="./my.css">
+    </head>
+
+    <!-- 深色 -->
+    <body class='theme-dark'>
+        <!-- 整体页面 -->
+        <div class="page">
+            <header class="navbar navbar-expand-md d-print-none">
+                <div class="container">
+                    <!-- 缩进栏 -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-expanded="True">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <!-- logo -->
+                    <h1 class="navbar-brand d-none-navbar-horizontal pe-0 pe-md-3">
+                        <a href=".">
+                          <img src="./logo_v6.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+                        </a>
+                    </h1>
+
+
+                    <!-- 登录状态栏 -->
+                    <div class="navbar-nav order-md-last">
+                        <div class="nav-item dropdown ">
+                            <a href="#" class="nav-link dropdown-toggle d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                                <span class="avatar avatar-sm" style="background-image: url(./combat.svg)"></span>
+                                <div class="d-none d-xl-block ps-2 ">
+                                    <div>Kard-</div>
+                                    <div class="mt-1 small text-muted">元婴期</span></div>
+                                </div>
+                            </a>
+                            
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <a href="#" class="dropdown-item">Set status</a>
+                                <a href="#" class="dropdown-item">Profile & account</a>
+                                <a href="#" class="dropdown-item">Feedback</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">Settings</a>
+                                <a href="#" class="dropdown-item">Logout</a>
+                            </div>
+                        </div> 
+                    </div>
+
+                </div>
+
+            </header>
+
+            
+
+            <div class="page-body">
+                <div class="container-xl">
+                    
+                    <!-- Nav tabs -->
+                    <div class="container">
+                        <!-- 页面按钮 -->
+                        <ul class="nav nav-tabs nav-justified show " id='navbar-menu'>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#login-contents" id="login-tab" data-bs-toggle="tab">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <img src='gp.svg'/>
+                                    </span>
+                                    Log In
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#register-contents" id="register-tab" data-bs-toggle="tab">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#maps-contents" id="maps-tab" data-bs-toggle="tab">地图</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#pack-contents" id="pack-tab" data-bs-toggle="tab">背包</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#lumbering-contents" id="lumbering-tab" data-bs-toggle="tab">伐木</a>
+                            </li>
+
+                        </ul>
+                        
+                        <!-- 页面内容 -->
+                        <div class="tab-content">
+                            <div id="login-contents" class="tab-pane active">
+                                <div class="page-body">
+                                    <table>
+                                        <tr>
+                                            <td>Username :</td>
+                                            <td><input type="text" id="ip-username" placeholder="Username"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Password :</td>
+                                            <td><input type="text" placeholder="Password" id="ip-password"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                        </div>
+
+
+                        <div id="register-contents" class="tab-pane fade">
+                            <div class="page-body">
+                                <table>
+                                    <tr>
+                                        <td>Name :</td>
+                                        <td><input type="text" placeholder="First Name" id="ip-f-name"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Last Name :</td>
+                                        <td><input type="text" placeholder="Last Name" id="ip-l-name"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>E-Mail :</td>
+                                        <td><input type="text" placeholder="Your E-Mail Id" id="ip-e-mail"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>A OTP will be sent to your mail id for verification.</td>
+                                        <td>
+                                            <Button class="btn btn-success" id="register-btn">Register</Button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+
+                        <div id="maps-contents" class="tab-pane fade">
+                            <div class="page-body">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Locations</h3>
+                                            <div class="ratio ratio-4x3">
+                                                <div>
+                                                    <div id="map-world" class="w-100 h-100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                            </div>
+                        </div>
+
+
+                        <div id="pack-contents" class="tab-pane fade">
+                            <div class="page-body">
+                                <div class="col-md-6">
+                                    <div id="grid" class="row">
+                                        <h4 class="row">Grid Example</h4>
+                                        <div id="InventoryGrid" class="row">
+                                            <div class="bank-item" data-toggle="popover" data-tooltip='天才地宝'>1</div><!--
+                                         --><div class="bank-item" data-toggle="popover">2</div><!--
+                                         --><div class="bank-item" data-toggle="popover">3</div><!--
+                                         --><div class="bank-item">4</div><!--
+                                         --><div class="bank-item">5</div><!--
+                                         --><div class="bank-item">6</div><!--
+                                         --><div class="bank-item">7</div><!--
+                                         --><div class="bank-item">8</div><!--
+                                         --><div class="bank-item">9</div><!--
+                                         --><div class="bank-item">10</div><!--
+                                         --><div class="bank-item">11</div><!--
+                                         --><div class="bank-item">12</div><!--
+                                         --><div class="bank-item">13</div><!--
+                                         --><div class="bank-item">14</div><!--
+                                         --><div class="bank-item">15</div><!--
+                                         --><div class="bank-item">16</div><!--
+                                         --><div class="bank-item">17</div><!--
+                                         --><div class="bank-item">18</div><!--
+                                         --><div class="bank-item">19</div><!--
+                                         --><div class="bank-item">20</div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                            </div>
+                        </div>
+
+                        <div id="lumbering-contents" class="tab-pane fade">
+                            <div class="page-body">
+                                
+
+                                
+                                <h4 class='row'>Skill</h4>
+                                <h4 class='row'>
+                                    <span class="bg-success rounded p-1 d-block text-center" id='skill-progress-level-lumbering'>
+                                        82/99
+                                    </span>
+                                </h4>
+                                
+                                <div class="progress">
+                                    <div class="progress-bar bg-blue" style="width: 75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                        
+                                
+                                
+                                <div class="row col-12 m-auto" id='tress'>
+
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                    
+                    </div>
+                </div>
+            </div>
+
+
+            
+            
+
+        </div>
+
+        
+
+        <script src="./game.js"></script>
+        <script src="./my.js"></script>
+        <script src="./enum.js"></script>
+    </body>
+
+    
+
+
+</html>
