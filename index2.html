@@ -35,7 +35,7 @@
                     <switch-button id="12" text="Ena2e Settings"></switch-button>
                     <switch-button id="123" text="E Settings"></switch-button>
 
-                    
+                    <div id="oco"></div>
 
                 </div>
             </div>
@@ -47,7 +47,11 @@
 
             
     </body>
+    <script src="./js/common/jquery-3.6.0.min.js"></script>
     <script src="./js/customElements/card.js"></script>
+    <script src="./js/table-of-data.js"></script>
+    <script src="./js/customElements/swithButton.js"></script>
+    <script src="./js/customElements/header.js"></script>
     <script>
         let card = [
             {id:'card-1',detail:{png:'img_avatar'}},
@@ -55,14 +59,30 @@
             {id:'card-3',detail:{png:'img_avatar'}}
         ]
         card.forEach((e)=>{
-            console.log(e);
-            let card = new Card(e.id);
-            card.data = e.detail;
+            let card = new Card(e.id, e.detail);
         })
+
+        let table = document.querySelector('table-of-data');
+        let data = {
+            title:'伐木',
+            headings: [ '数据', '#' ],
+            rows: [[
+            '砍伐数目',
+            '121'
+            ],
+            [ 'New York',
+            '<a href="https://en.wikipedia.org/wiki/List_of_islands_of_New_York">New York Islands</a>'
+            ],
+            [ '测试',
+            '9999'
+            ]]
+        };
+        table.data = data;
     </script>
+    <script src="./js/common/Sortable.min.js"></script>
     
-    <script src="./js/customElements/swithButton.js"></script>
-    <script src="./js/table-of-data.js"></script>
-    <script src="./js/customElements/header.js"></script>
+    
+    
+    
 
 </html>
