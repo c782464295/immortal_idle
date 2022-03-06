@@ -48,6 +48,7 @@
             
     </body>
     <script src="./js/common/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/@tabler/core@latest/dist/js/tabler.min.js"></script>
     <script src="./js/customElements/card.js"></script>
     <script src="./js/table-of-data.js"></script>
     <script src="./js/customElements/swithButton.js"></script>
@@ -78,6 +79,12 @@
             ]]
         };
         table.data = data;
+        window.addEventListener('get_ore', function(event){
+            // 如果是CustomEvent，传入的数据在event.detail中
+            console.log('得到数据为：', event.detail);
+
+            // ...后续相关操作
+        });
     </script>
     <script src="./js/common/Sortable.min.js"></script>
     

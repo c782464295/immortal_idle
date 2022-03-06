@@ -148,6 +148,9 @@ class SwitchButton extends HTMLElement{
        
     }
 
+    emit(data){
+      return data;
+    }
 
     get isChecked(){
         return  this._checked;

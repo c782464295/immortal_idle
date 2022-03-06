@@ -62,7 +62,20 @@ class Card extends HTMLElement{
         const isPressed = event.currentTarget.getAttribute('aria-checked') === 'true';
         event.currentTarget.setAttribute('aria-checked', String(!isPressed));
         this._checked = Boolean(!isPressed);
+
+        let myEvent = new CustomEvent('get_ore', {
+            bubbles: true,
+            cancelable: false,
+            composed: true,
+            detail:{
+                num:1// 将需要传递的数据写在detail中，以便在EventListener中获取
+                // 数据将会在event.detail中得到
+            },
+        });
+        this.shadowRoot.dispatchEvent(myEvent);
     }
+
+
 
     set data(val){
         this.shadowRoot.innerHTML = `
@@ -111,3 +124,16 @@ customElements.define('card-element', Card);
 /* let card = new Card('123')
 *  card.data = {png:'img_avatar',id:'2'}
 */
+
+
+
+/**
+ * //假设listener注册在window对象上
+window.addEventListener('get_ore', function(event){
+    // 如果是CustomEvent，传入的数据在event.detail中
+    console.log('得到数据为：', event.detail);
+​
+    // ...后续相关操作
+});
+
+ */

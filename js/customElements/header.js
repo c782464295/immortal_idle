@@ -1,8 +1,8 @@
 class Header extends HTMLElement{
     constructor(){
         super();
-        const shadowRoot = this.attachShadow({mode: 'open'});
-        shadowRoot.innerHTML = `
+        //const shadowRoot = this.attachShadow({mode: 'open'});
+        this.innerHTML = `
         <style>
             @import url("https://unpkg.com/@tabler/core@latest/dist/css/tabler.min.css");
             @import url("https://unpkg.com/@tabler/core@1.0.0-beta6/dist/css/tabler-flags.min.css");
@@ -49,6 +49,7 @@ class Header extends HTMLElement{
         </div>
         
     </header>
+    
       `;
     }
 
