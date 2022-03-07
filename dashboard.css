@@ -3,6 +3,11 @@
 * https://codepen.io/TurkAysenur/pen/ZEpxeYm
 */
 
+/*
+* 绘制svg path
+* https://jxnblk.github.io/paths/
+*/
+
 /* 字体引入 font-family: 'DM Sans', sans-serif;
 */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
@@ -304,6 +309,7 @@ body.light-mode .video-bg::before {
     padding: 0 16px 0 40px;
     margin-left: auto;
     flex-shrink: 0;
+    user-select: none;
 }
 
 .header-profile svg {
