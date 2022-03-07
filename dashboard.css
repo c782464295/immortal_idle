@@ -479,12 +479,12 @@ body.light-mode .video-bg::before {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    display: none;
 }
 .menu-link-main {
     text-decoration: none;
     color: var(--theme-color);
     padding: 0 30px;
-    
 }
 @media screen and (max-width: 1055px) {
     .menu-link-main {
