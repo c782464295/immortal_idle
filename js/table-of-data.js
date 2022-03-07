@@ -8,14 +8,23 @@ class stasTable extends HTMLElement{
     }
 
     connectedCallback(){
-        const shadowRoot = this.attachShadow({mode: 'open'});
-        shadowRoot.innerHTML =  `<table id="table" class="table-of-data"></table>
+        //const shadowRoot = this.attachShadow({mode: 'open'});
+        //shadowRoot.innerHTML =  
+        this.innerHTML = `<table id="table" class="table-of-data"></table>
         <style>
-
-
-          table.table-of-data td, table.table-of-data th { border-bottom: 1px solid #ddd; text-align: right; }
-          table.table-of-data { border-collapse: collapse; width: 40%; margin:0 auto;background:#232a35;color:#f5f5f5;border-top:4px solid 	#008000;border-radius: 5px;perspective: 5px;}
-          table.table-of-data th, table.table-of-data td { padding: 8px; }
+          table.table-of-data { background-color: var(--content-bg);border-collapse: collapse; width: 40%; margin:0 auto;border-radius: 10px;}
+          table.table-of-data h5{padding-left: 20px;}
+          table.table-of-data th,td {text-align: right; color: var(--theme-color); padding-right: 10px; }
+          
+          ::-webkit-scrollbar {
+              width: 6px;
+          } 
+          ::-webkit-scrollbar-track {
+              -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+          } 
+          ::-webkit-scrollbar-thumb {
+              -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+          }
         </style>`;
     }
 
@@ -30,9 +39,10 @@ class stasTable extends HTMLElement{
     }
 
     _refreshTable(data){ // add/refresh data in table
-        let tableOfData = this.shadowRoot.children.table;
+        //let tableOfData = this.shadowRoot.children.table;
+        let tableOfData = this.children.table;
         let frag = document.createDocumentFragment();
-        let tableTitle = document.createElement('h4');
+        let tableTitle = document.createElement('h5');
         let tableHeadingRow = document.createElement('tr');
 
         tableTitle.textContent = data.title;
@@ -74,8 +84,8 @@ let table = document.querySelector('table-of-data');
           'California',
           '<a href="https://en.wikipedia.org/wiki/Redwood_National_and_State_Parks">Redwood Forest</a>'
         ],
-        [ 'New York',
-          '<a href="https://en.wikipedia.org/wiki/List_of_islands_of_New_York">New York Islands</a>'
+        [ '击杀怪物',
+          '3000'
         ]]
       };
 table.data = data;
