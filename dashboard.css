@@ -6,6 +6,7 @@
 /*
 * 绘制svg path
 * https://jxnblk.github.io/paths/
+* https://yqnn.github.io/svg-path-editor/
 */
 
 /* 字体引入 font-family: 'DM Sans', sans-serif;
@@ -216,11 +217,11 @@ body.light-mode .video-bg::before {
         display: none;
     }
 }
-.header a.is-active{
+.header-menu a.is-active{
     color: var(--theme-color);
     border-bottom: 2px solid var(--theme-color);
 }
-.header a.header:hover{
+.header-menu a:hover{
     color: var(--theme-color);
     border-bottom: 2px solid var(--theme-color);
 }
@@ -438,7 +439,7 @@ body.light-mode .video-bg::before {
     transition: 0.3s;
 }
 
-.overlay-app .is-active{
+.overlay-app.is-active{
     visibility: visible;
     opacity: 1;
 }
@@ -534,7 +535,7 @@ body.light-mode .video-bg::before {
         padding: 20px;
     }
 }
-.content-wrapper-header .overlay {
+.content-wrapper .overlay {
     pointer-events: none;
     transition: 0.3s;
     background-color: var(--overlay-bg);
@@ -714,7 +715,7 @@ body.light-mode .video-bg::before {
         padding: 6px 14px;
     }
 }
-.status-button .open {
+.status-button.open {
     background: none;
     color: var(--button-inactive);
     border: 1px solid var(--button-inactive);
@@ -800,9 +801,8 @@ body.light-mode .video-bg::before {
 .pop-up {
     position: absolute;
     padding: 30px 40px;
-    top: 50%;
-    left: 50%;
-    transform: (translate(-50%, -50%));
+    top: 30%;
+    left: 40%;
     overflow-y: auto;
     box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.4);
     transition: all 0.3s;
@@ -816,7 +816,7 @@ body.light-mode .video-bg::before {
     flex-direction: column;
     white-space: normal;
 }
-.pop-up .visible {
+.pop-up.visible {
     visibility: visible;
     opacity: 1;
 }
@@ -847,7 +847,7 @@ body.light-mode .video-bg::before {
     width: auto;
 }
    
-.content-section .close {
+.content-section.close {
     margin-right: 0;
     width: 24px;
 }
@@ -895,7 +895,7 @@ body.light-mode .video-bg::before {
     margin-top: auto;
     margin-left: auto; 
 }
-.content-button-wrapper .open {
+.content-button-wrapper.open {
     margin-right: 8px;
 }
    
@@ -985,4 +985,3 @@ body.light-mode .video-bg::before {
 ::-webkit-scrollbar-track {
 }
 */
-   
