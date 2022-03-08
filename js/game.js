@@ -41,6 +41,7 @@ class Game{
         this.inventory = new inventory();
 
         console.log("%c Loading %s Successfully!", 'background:#000;color:lime;font-style:italic', "Immortal Idle");
+        this.ev = new EventHandle();
     }
 
     startMainLoop(){

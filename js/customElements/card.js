@@ -132,7 +132,6 @@ customElements.define('card-element', Card);
 window.addEventListener('get_ore', function(event){
     // 如果是CustomEvent，传入的数据在event.detail中
     console.log('得到数据为：', event.detail);
-​
     // ...后续相关操作
 });
 

@@ -40,6 +40,9 @@ class stasTable extends HTMLElement{
 
     _refreshTable(data){ // add/refresh data in table
         //let tableOfData = this.shadowRoot.children.table;
+        if(data == '' || data == undefined || data == null){
+          return;
+        }
         let tableOfData = this.children.table;
         let frag = document.createDocumentFragment();
         let tableTitle = document.createElement('h5');
