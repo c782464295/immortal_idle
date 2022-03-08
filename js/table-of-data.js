@@ -15,16 +15,6 @@ class stasTable extends HTMLElement{
           table.table-of-data { background-color: var(--content-bg);border-collapse: collapse; width: 40%; margin:0 auto;border-radius: 10px;}
           table.table-of-data h5{padding-left: 20px;}
           table.table-of-data th,td {text-align: right; color: var(--theme-color); padding-right: 10px; }
-          
-          ::-webkit-scrollbar {
-              width: 6px;
-          } 
-          ::-webkit-scrollbar-track {
-              -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-          } 
-          ::-webkit-scrollbar-thumb {
-              -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-          }
         </style>`;
     }
 

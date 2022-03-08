@@ -3,7 +3,7 @@ class Card extends HTMLElement{
         super();
         this.id = id;
         this._checked = undefined;
-        document.getElementById('oco').appendChild(this);
+        document.getElementById(this.id).appendChild(this);
         const shadowRoot = this.attachShadow({mode: 'open'});
         shadowRoot.innerHTML = `
         <style>
@@ -50,7 +50,7 @@ class Card extends HTMLElement{
 
 
     check(event){
-        let children = document.getElementById('oco').childNodes;
+        let children = document.getElementById(this.id).childNodes;
         for (let e in children){
 
             if(children[e].isChecked == true && children[e]!=this){
