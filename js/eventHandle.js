@@ -14,6 +14,7 @@ class EventHandle{
                 }
                 
                 table.data = data;
+                table.obj_data = this.p.stats.Woodcutting.statistics;
                 break;
         }
     }

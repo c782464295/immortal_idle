@@ -94,3 +94,11 @@ function isCyclic(obj) {
     detect(obj, 'obj');
     return detected;
   }
+
+
+/* 循环延时 await sleep(<duration>);
+ */
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
