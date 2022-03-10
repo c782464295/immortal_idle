@@ -37,11 +37,13 @@ class Dropdown extends HTMLElement{
         //console.log( ev.type, ev.target.textContent )
         //console.log(this.shadowRoot.querySelector('option').innerText);
         /* 自定义数据发送 */
-        let myEvent = new CustomEvent('selectedChange', {
+        let myEvent = new CustomEvent('ce', {
             bubbles: true,
             cancelable: false,
             composed: true,
+            
             detail:{
+                typename: "selectedChange",
                 num: this.querySelector('select').options[this.querySelector('select').selectedIndex].text,
                 // 将需要传递的数据写在detail中，以便在EventListener中获取
                 // 数据将会在event.detail中得到

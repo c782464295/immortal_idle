@@ -92,11 +92,12 @@ class TreeCard extends HTMLElement{
     action(){
         this.bar.value+=1;
         if(this.bar.value >= 100){
-            let myEvent = new CustomEvent('get_ore', {
+            let myEvent = new CustomEvent('ce', {
                 bubbles: true,
                 cancelable: false,
                 composed: true,
                 detail:{
+                    typename: "cut",
                     name: this.data.name,
                     num:1// 将需要传递的数据写在detail中，以便在EventListener中获取
                     // 数据将会在event.detail中得到

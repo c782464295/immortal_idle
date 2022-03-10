@@ -1,10 +1,10 @@
 class EventHandle{
     constructor(p){
         this.p = p;
-        window.addEventListener('selectedChange', this.handler.bind(this))
+        window.addEventListener('ce', this.handler.bind(this))
     }
     handler(e){
-        switch (e.type){
+        switch (e.detail.typename){
             case 'selectedChange':
                 let table = document.querySelector('table-of-data');
                 let data = {title:e.detail.num,
@@ -16,6 +16,9 @@ class EventHandle{
                 table.data = data;
                 table.obj_data = this.p.stats.Woodcutting.statistics;
                 break;
+            case "cut":
+                console.log(this.p.stats.Woodcutting.statistics);
+                this.p.stats.Woodcutting.inc(e.detail.name);
         }
     }
 }
