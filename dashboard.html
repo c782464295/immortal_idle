@@ -33,7 +33,12 @@
         <!-- 主页面 -->
         <div class="app">
             <div class="header">
-                <div class="menubutton">X</div>
+                
+                <svg class="togglemenu" viewBox="0 0 30 30" fill="currentColor" stroke-width="1.5">
+                    <path d="M 3 7 A 1.0001 1.0001 0 1 0 3 9 L 27 9 A 1.0001 1.0001 0 1 0 27 7 L 3 7 z M 3 14 A 1.0001 1.0001 0 1 0 3 16 L 27 16 A 1.0001 1.0001 0 1 0 27 14 L 3 14 z M 3 21 A 1.0001 1.0001 0 1 0 3 23 L 27 23 A 1.0001 1.0001 0 1 0 27 21 L 3 21 z"/>
+                </svg>
+                
+
                 <div class="menu-circle"></div>
                 <div class="header-menu">
                     <a class="menu-link is-active" href="#">Apps</a>
@@ -191,8 +196,11 @@
                         </div>
                     </div>
                     <div class="content-wrapper">
-                        <div class="content-section" id="f_id">
+                        <div class="content-section">
                             <div class="content-section-title">Apps in your plan</div>
+                            <div class="apps-card" id="f_id">
+
+                            </div>
                         </div>
                         <div class="content-section">
                             <div class="content-section-title">Installed</div>
@@ -285,7 +293,34 @@
     <script src="./js/customElements/treeCard.js"></script>
     <script src="./js/customElements/card.js"></script>
     <script>let tree_data = {png:'img_avatar',id:'2'};let card = new Card("farm-area",tree_data);new Card("farm-area",tree_data);new Card("farm-area",tree_data);</script>
-    <script>new TreeCard("f_id",{svg:'normal_tree',id:'2'});</script>
+    <script>
+        
+        let trees = [
+            {
+                id: 1,
+                name: '枯木',
+                type: 'normal',
+                levelRequired: 1,
+                baseInterval: 250,
+                baseExperience: 10,
+                media: './assets/normal_tree.svg',
+                description:'来自幽暗森林的奇异木材，可以成为诸多材料的原料',
+            },
+            {
+                id: 1,
+                name: '朽木',
+                type: 'normal',
+                levelRequired: 1,
+                baseInterval: 1000,
+                baseExperience: 10,
+                media: './assets/normal_tree.svg',
+                description:'来自幽暗森林的奇异木材，可以成为诸多材料的原料',
+            },
+            
+        ];
+        new TreeCard("f_id",trees[0]);
+        trees.forEach(function(item){new TreeCard("f_id",item);});
+    </script>
     <script src="./js/eventHandle.js"></script>
     <script src="./js/customElements/selectElement.js"></script>
     <script src="./js/table-of-data.js"></script>

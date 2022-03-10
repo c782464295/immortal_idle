@@ -2,18 +2,22 @@ class TreeCard extends HTMLElement{
     constructor(id, val){
         super();
         this.id = id;
+        this.data = val;
         this._checked = undefined;
         document.getElementById(this.id).appendChild(this);
+        this.timer = null;
         const shadowRoot = this.attachShadow({mode: 'open'});
         this.shadowRoot.innerHTML = `
         <style>
         .card{
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
-            width: 200px;
+            width: 400px;
+            height: 300px;
             display:inline-block;
             margin:20px;
             text-align:center;
+            -webkit-user-select: none; 
 
         }
           
@@ -27,6 +31,12 @@ class TreeCard extends HTMLElement{
 
         progress{
             opacity: 0;
+            width: 300px;
+            height: 20px;
+            background: #1da1f2;
+            box-shadow: 2px 14px 15px -7px rgba(30, 166, 250, 0.36);
+            border-radius: 50px;
+            transition: all 0.5s;
         }
         .card[aria-checked="true"] progress{
             opacity: 1;
@@ -38,15 +48,16 @@ class TreeCard extends HTMLElement{
         </style>
 
         <div class='card' id=${val.id} aria-checked="false">
-            <p>经验:5xp</p>
-            <img src="./assets/${val.svg}.svg" alt="Avatar" height="100px" width="100px">
+    <p>经验:${val.baseExperience*1000/val.baseInterval}xp/s</p>
+            <img src=${val.media} alt="Avatar" height="100px" width="100px">
             <div class="container">
                 <progress max=100 value=10></progress>
-                <h4><b>John Doe</b></h4> 
-                <p>Architect & Engineer</p>
+                <p><b>${val.name}</b></p>
+                <p>${val.description}</p>
             </div>
         </div>
         `
+        this.bar = this.shadowRoot.querySelector('progress');
         this.shadowRoot.querySelector('.card').addEventListener('click', this.check.bind(this), false);
     }
 
@@ -64,23 +75,38 @@ class TreeCard extends HTMLElement{
             }
         }
 
-        console.log(event.target.closest(".card").id);
+        if(this.timer == null){
+            this.timer = setInterval(()=>this.action(),20);
+        }else{
+            clearInterval(this.timer);
+            this.timer = null;
+        }
+
+        
         const isPressed = event.currentTarget.getAttribute('aria-checked') === 'true';
         event.currentTarget.setAttribute('aria-checked', String(!isPressed));
         this._checked = Boolean(!isPressed);
-
-        let myEvent = new CustomEvent('get_ore', {
-            bubbles: true,
-            cancelable: false,
-            composed: true,
-            detail:{
-                num:1// 将需要传递的数据写在detail中，以便在EventListener中获取
-                // 数据将会在event.detail中得到
-            },
-        });
-        this.dispatchEvent(myEvent);
+        
     }
 
+    action(){
+        this.bar.value+=1;
+        if(this.bar.value >= 100){
+            let myEvent = new CustomEvent('get_ore', {
+                bubbles: true,
+                cancelable: false,
+                composed: true,
+                detail:{
+                    name: this.data.name,
+                    num:1// 将需要传递的数据写在detail中，以便在EventListener中获取
+                    // 数据将会在event.detail中得到
+                },
+            });
+            this.dispatchEvent(myEvent);
+            this.bar.value = 0;
+        }
+
+    }
     get isChecked(){
         return  this._checked;
     }
