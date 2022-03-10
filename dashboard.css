@@ -385,9 +385,31 @@ body.light-mode .video-bg::before {
     flex-shrink: 0;
     
 }
+.menubutton {
+    color: var(--inactive-color);
+}
 @media screen and (max-width: 945px) {
     .left-side {
-        display: none;
+        animation: fadeAndHide 1s forwards;
+    }
+    .menubutton {
+        visibility: visible;
+    }
+    @keyframes fadeAndHide{
+        0% {flex-basis: 240px;}
+        100% {flex-basis: 0px;padding:0px;}
+    }
+}
+@media screen and (min-width: 946px) {
+    .left-side {
+        animation: showele 1s forwards;
+    }
+    .menubutton {
+        visibility: hidden;
+    }
+    @keyframes showele{
+        0% {flex-basis: 0px;}
+        100% {flex-basis: 240px;padding:26px;}
     }
 }
 .side-wrapper + .side-wrapper { /* 相邻选择符 + */
