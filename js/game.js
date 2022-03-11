@@ -54,7 +54,7 @@ class Game{
         console.log('s');
     }
 
-    stopMainLoop() {
+    stopMainLoop(){
         if (this.loopStarted) {
             clearInterval(this.loopInterval);
             this.loopStarted = false;

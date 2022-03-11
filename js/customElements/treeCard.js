@@ -6,8 +6,9 @@ class TreeCard extends HTMLElement{
         this._checked = undefined;
         document.getElementById(this.id).appendChild(this);
         this.timer = null;
+
         const shadowRoot = this.attachShadow({mode: 'open'});
-        this.shadowRoot.innerHTML = `
+        shadowRoot.innerHTML = `
         <style>
         .card{
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -57,11 +58,14 @@ class TreeCard extends HTMLElement{
             </div>
         </div>
         `
-        this.bar = this.shadowRoot.querySelector('progress');
-        this.shadowRoot.querySelector('.card').addEventListener('click', this.check.bind(this), false);
+        this.bar = shadowRoot.querySelector('progress');
+        shadowRoot.querySelector('.card').addEventListener('click', this.check.bind(this), false);
+
+        
     }
 
     connectedCallback(){
+        
         
     }
 
@@ -88,7 +92,14 @@ class TreeCard extends HTMLElement{
         this._checked = Boolean(!isPressed);
         
     }
-
+    static get observedAttributes(){// (3)
+        return ['value'];
+        // return [/* array of attribute names to monitor for changes */];
+    }
+    
+    attributeChangedCallback(name, oldValue, newValue){// (4)
+        // called when one of attributes listed above is modified
+    }
     action(){
         this.bar.value+=1;
         if(this.bar.value >= 100){
@@ -108,6 +119,26 @@ class TreeCard extends HTMLElement{
         }
 
     }
+
+    quickAction(diffTime){
+        if(this._checked){
+            for(let i=0;i < Math.floor(diffTime/this.data.baseInterval);i++) {
+                let myEvent = new CustomEvent('ce', {
+                    bubbles: true,
+                    cancelable: false,
+                    composed: true,
+                    detail:{
+                        typename: "cut",
+                        name: this.data.name,
+                        num:1// 将需要传递的数据写在detail中，以便在EventListener中获取
+                        // 数据将会在event.detail中得到
+                    },
+                });
+                this.dispatchEvent(myEvent);
+            }
+        }
+    }
+    
     get isChecked(){
         return  this._checked;
     }

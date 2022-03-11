@@ -22,6 +22,7 @@ class TimerManager{
 		// 用以恢复切换tab js不工作问题，暂时不考虑效率问题，等有明显卡顿再说
 		this.OldTimestamp = null;
 		this.NewTimestamp = null;
+		
 		document.addEventListener( 'visibilitychange' , () => {
 			if(document.hidden){
 				this.OldTimestamp = new Date().getTime();
@@ -31,15 +32,28 @@ class TimerManager{
 			}
 			if(this.OldTimestamp!=null && this.NewTimestamp!=null){
 				let diffTime = this.NewTimestamp - this.OldTimestamp;
-				
-				for(let i=0;i<diffTime/this.runtime;i++){
-					this.Tick();
-				} 
+				console.log(this);
+				this.quickTick(diffTime);
+				console.log("Offline time costs %d", new Date().getTime()-this.NewTimestamp);
 			}
 		}, false );
 	}
 
+	/* 用以离线时间的事件 不知道有没有BUG
+	*/
+	quickTick(diffTime){
+		this.timers.forEach((value, key, map)=>{
+			if (!value.paused) {
+				for(let i=0;i < Math.floor(diffTime/value.threshold);i++) {
+					value.func(...value.params);
 
+					if (value.oneTime) {
+						break;
+					}
+				}
+			}
+		});
+	}
 
 	Tick(){
 		

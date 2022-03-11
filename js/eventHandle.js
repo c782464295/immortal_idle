@@ -17,7 +17,6 @@ class EventHandle{
                 table.obj_data = this.p.stats.Woodcutting.statistics;
                 break;
             case "cut":
-                console.log(this.p.stats.Woodcutting.statistics);
                 this.p.stats.Woodcutting.inc(e.detail.name);
         }
     }
