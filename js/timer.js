@@ -6,6 +6,8 @@ class TimerInfo{
 		this.func = func;
 		this.params = params;
 		this.paused = false;
+
+		
 	}
 }
 /**
@@ -15,12 +17,32 @@ class TimerManager{
 	constructor(runtime = 100){
 		this.timers = new Map();
 		this.runtime = runtime;
-        window.setInterval(this.Tick.bind(this), this.runtime);  
+        window.setInterval(this.Tick.bind(this), this.runtime);
+
+		// 用以恢复切换tab js不工作问题，暂时不考虑效率问题，等有明显卡顿再说
+		this.OldTimestamp = null;
+		this.NewTimestamp = null;
+		document.addEventListener( 'visibilitychange' , () => {
+			if(document.hidden){
+				this.OldTimestamp = new Date().getTime();
+				this.NewTimestamp = null;
+			}else {
+				this.NewTimestamp = new Date().getTime();
+			}
+			if(this.OldTimestamp!=null && this.NewTimestamp!=null){
+				let diffTime = this.NewTimestamp - this.OldTimestamp;
+				
+				for(let i=0;i<diffTime/this.runtime;i++){
+					this.Tick();
+				} 
+			}
+		}, false );
 	}
 
 
 
 	Tick(){
+		
 		this.timers.forEach((value, key, map)=>{
 			if (!value.paused) {
 				value.current += 1 * this.runtime;
