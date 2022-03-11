@@ -79,6 +79,9 @@ class Card extends HTMLElement{
                 </div>
             </div>
             `
+            tippy(shadowRoot.querySelector('.card'), {
+                content: "I'm a Tippy tooltip!",
+            });
             shadowRoot.querySelector('.card').addEventListener('click', this.check.bind(this), false);
         
         
