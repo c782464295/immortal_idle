@@ -289,38 +289,27 @@
         </div>
 
     </body>
+    <script src="./js/common/Sortable.min.js"></script>
 
+    <script src="./js/data/trees.js"></script>
     <script src="./js/customElements/treeCard.js"></script>
     <script src="./js/customElements/card.js"></script>
-    <script>let tree_data = {png:'img_avatar',id:'2'};let card = new Card("farm-area",tree_data);new Card("farm-area",tree_data);new Card("farm-area",tree_data);</script>
     <script>
-        
-        let trees = [
-            {
-                id: 1,
-                name: '枯木',
-                type: 'normal',
-                levelRequired: 1,
-                baseInterval: 250,
-                baseExperience: 10,
-                media: './assets/normal_tree.svg',
-                description:'来自幽暗森林的奇异木材，可以成为诸多材料的原料',
-            },
-            {
-                id: 1,
-                name: '朽木',
-                type: 'normal',
-                levelRequired: 1,
-                baseInterval: 1000,
-                baseExperience: 10,
-                media: './assets/oak_tree.svg',
-                description:'来自幽暗森林的奇异木材，可以成为诸多材料的原料',
-            },
-            
-        ];
-        new TreeCard("f_id",trees[0]);
+        let tree_data0 = {p_id: "farm-area",png:'img_avatar',id:'1',ds:'a'};
+        let tree_data1 = {p_id: "farm-area",png:'img_avatar',id:'2',ds:'b'};
+        let tree_data2 = {p_id: "farm-area",png:'img_avatar',id:'3',ds:'c'};
+        let card0 = new Card();
+        card0.data=tree_data0;
+        let card1 = new Card();
+        card1.data=tree_data1;
+        let card2 = new Card();
+        card2.data=tree_data2;
+    </script>
+    <script>
         let wood = [];
-        trees.forEach(function(item){wood.push(new TreeCard("f_id",item));});
+        Trees.forEach(function(item){
+            wood.push(new TreeCard("f_id",item));
+        });
     </script>
     <script src="./js/eventHandle.js"></script>
     <script src="./js/customElements/selectElement.js"></script>

@@ -1,47 +1,8 @@
 class Card extends HTMLElement{
-    constructor(id, val){
+    constructor(){
         super();
-        this.id = id;
-        this._checked = undefined;
-        document.getElementById(this.id).appendChild(this);
-        const shadowRoot = this.attachShadow({mode: 'open'});
-        shadowRoot.innerHTML = `
-        <style>
-        .card{
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-            transition: 0.3s;
-            width: 200px;
-            display:inline-block;
-            margin:20px;
-        }
-          
-        .card:hover{
-            box-shadow: 0 8px 36px 0 rgba(0,0,0,0.9);
-        }
-          
-        .container{
-            padding: 2px 16px;
-        }
-
-        progress{
-            opacity: 0;
-        }
-
-        .card[aria-checked="true"] progress{
-            opacity: 1;
-        }
-        </style>
-
-        <div class='card' id=` + this.id + ` aria-checked="false">
-            <img src="./assets/`+ val.png +`.png" alt="Avatar" style="width:100%">
-            <div class="container">
-                <progress></progress>
-                <h4><b>John Doe</b></h4> 
-                <p>Architect & Engineer</p> 
-            </div>
-        </div>
-        `
-        shadowRoot.querySelector('.card').addEventListener('click', this.check.bind(this), false);
+        this.id = undefined;
+        
     }
 
     connectedCallback(){
@@ -50,6 +11,7 @@ class Card extends HTMLElement{
 
 
     check(event){
+        
         let children = document.getElementById(this.id).childNodes;
         for (let e in children){
 
@@ -72,44 +34,53 @@ class Card extends HTMLElement{
                 // 数据将会在event.detail中得到
             },
         });
-        this.shadowRoot.dispatchEvent(myEvent);
+        this.dispatchEvent(myEvent);
     }
 
 
 
     set data(val){
-        this.shadowRoot.innerHTML = `
-        <style>
-        .card{
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-            transition: 0.3s;
-            width: 200px;
-            display:inline-block;
-            margin:20px;
-        }
-          
-        .card:hover{
-            box-shadow: 0 8px 36px 0 rgba(0,0,0,0.9);
-        }
-          
-        .container{
-            padding: 2px 16px;
-        }
-
-        .container progress{
-            visibility: hidden;
-        }
-        </style>
-
-        <div class='card' id=` + this.id + ` aria-checked="false">
-            <img src="./assets/`+ val.png +`.png" alt="Avatar" style="width:100%">
-            <div class="container">
-                <progress></progress>
-                <h4><b>John Doe</b></h4> 
-                <p>Architect & Engineer</p> 
+        this.id = val.p_id;
+        document.getElementById("farm-area").appendChild(this);
+        const shadowRoot = this.attachShadow({mode: 'open'});
+        shadowRoot.innerHTML = `
+            <style>
+            .card{
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                transition: 0.3s;
+                width: 200px;
+                display:inline-block;
+                margin:20px;
+            }
+              
+            .card:hover{
+                box-shadow: 0 8px 36px 0 rgba(0,0,0,0.9);
+            }
+              
+            .container{
+                padding: 2px 16px;
+            }
+    
+            progress{
+                opacity: 0;
+            }
+    
+            .card[aria-checked="true"] progress{
+                opacity: 1;
+            }
+            </style>
+    
+            <div class='card' id=${val.id} aria-checked="false">
+                <img src="./assets/${val.png}.png" alt="Avatar" style="width:100%">
+                <div class="container">
+                    <progress></progress>
+                    <h4><b>${val.ds}</b></h4> 
+                    <p>Architect & Engineer</p> 
+                </div>
             </div>
-        </div>
-        `
+            `
+            shadowRoot.querySelector('.card').addEventListener('click', this.check.bind(this), false);
+        
         
     }
     get isChecked(){
