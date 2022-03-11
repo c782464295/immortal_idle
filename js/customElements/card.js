@@ -79,13 +79,44 @@ class Card extends HTMLElement{
                 </div>
             </div>
             `
-            tippy(shadowRoot.querySelector('.card'), {
-                content: "I'm a Tippy tooltip!",
+
+            const tInstance = tippy(shadowRoot.querySelector('.card'), {
+                //content: bankTooltip,
+                placement: "top",
+                allowHTML: true,
+                interactive: false,
+                animation: false,
+                touch: "hold",
+                onShow(instance){
+                    let html = `<div class="text-center">
+                            <div class="media d-flex align-items-center push">
+                                <div class="mr-3">
+                                    <img class="bank-img m-1" src="./assets/${val.png}.png">
+                                </div>
+                                <div class="media-body">
+                                    <div class="font-w600">${val.id}</div>
+                                    ${val.ds}
+                                    ${val.ds}
+                                    ${val.ds}
+                                    <div class="font-size-sm">
+                                        <img class="skill-icon-xs" src="assets/media/main/coins.svg">}
+                                        ${val.ds}
+                                        ${val.ds}
+                                        <br>
+                                    </div>
+                                    ${val.ds}
+                                </div>
+                            </div>
+                        </div>`;
+                    instance.setContent(html);
+                },
             });
             shadowRoot.querySelector('.card').addEventListener('click', this.check.bind(this), false);
         
         
     }
+
+    
     get isChecked(){
         return  this._checked;
     }
