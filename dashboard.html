@@ -90,6 +90,12 @@
                                 </svg>
                                 锻造
                             </a>
+                            <a href="#inventory-menu">
+                                <svg viewBox="0 0 512 512" fill="currentColor">
+                                    <path d="M128.688 115.594v147.75h285v-147.75h-285zm-111.844 20.47c17.374 47.14 54.372 80.413 94.906 93.81v-93.81H16.844zm414.375 12.31v88.657c21.457-9.083 42.92-25.257 64.374-47.374-21.52-22.562-42.633-35.173-64.375-41.28zm-226.25 132.47c-12.15 38.536-33.897 71.5-60.595 100.47l257.844-.002c-28.705-29.016-49.952-62.054-61.5-100.468H204.97zM101.843 400v43.78h337.562V400H101.844z"/>
+                                </svg>
+                                背包
+                            </a>
                         </div>
                     </div>
                     <div class="side-wrapper">
@@ -281,6 +287,18 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="main-container" id="inventory-menu">
+
+                    <div class="content-wrapper">
+                        <div class="content-section">
+                            <div class="content-section-title">我的背包</div>
+                        </div>
+                        <div class="apps-card" id="inventory-area">
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="overlay-app"></div>
@@ -298,7 +316,7 @@
     <script src="./js/customElements/treeCard.js"></script>
     <script src="./js/customElements/card.js"></script>
     <script>
-        Sortable.create(document.getElementById("farm-area"),{animation: 150})
+        Sortable.create(document.getElementById("farm-area"),{animation: 150});
         let tree_data0 = {p_id: "farm-area",png:'img_avatar',id:'1',ds:'a'};
         let tree_data1 = {p_id: "farm-area",png:'img_avatar',id:'2',ds:'b'};
         let tree_data2 = {p_id: "farm-area",png:'img_avatar',id:'3',ds:'c'};
@@ -316,6 +334,7 @@
         });
     </script>
     <script src="./js/eventHandle.js"></script>
+    <script src="./js/customElements/itemElement.js"></script>
     <script src="./js/customElements/selectElement.js"></script>
     <script src="./js/table-of-data.js"></script>
     <script src="./js/common/jquery-3.6.0.min.js"></script>
