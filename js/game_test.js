@@ -1,5 +1,11 @@
 class Game{
     constructor(){
+        /* 单例模式 */
+        if (typeof Game.instance === 'object') {
+            throw new Error("You can only create one instance!");
+        }
+        Game.instance = this;
+
         this.loopInterval = -1;
         this.loopStarted = false;
         this.maxOfflineTicks = 20 * 60 * 60 * 12;
@@ -107,4 +113,4 @@ class Game{
     }
 }
 
-game = new Game();
+let game = new Game();

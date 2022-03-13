@@ -112,7 +112,7 @@ class ItemCard extends HTMLElement{
                                     <div class="font-w600">${val.id}</div>
                                     ${val.description}
                                     <div class="font-size-sm">
-                                        <img class="skill-icon-xs" src="./assets/.svg">
+                                        <img class="skill-icon-xs" src="./assets/${val.svg}.svg">
                                         ${val.description}
                                         <br>
                                     </div>
@@ -135,8 +135,8 @@ class ItemCard extends HTMLElement{
 
 customElements.define('item-element', ItemCard);
 Sortable.create(document.getElementById("inventory-area"),{animation: 150})
-/* let card = new Card('123')
-*  card.data = {png:'img_avatar',id:'2'}
+/* let items = new ItemCard();
+*  items.data={p_id: "farm-area",svg:'protect_item',id:'1',description:'a', num:20}
 */
 
 
