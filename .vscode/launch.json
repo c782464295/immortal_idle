@@ -8,8 +8,9 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080/dashboard.html",
-            "webRoot": "${workspaceFolder}"
+            "url": "http://localhost:8080/test/dashboard.html",
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": true,
         }
     ]
 }

@@ -19,7 +19,7 @@ class TreeCard extends HTMLElement{
             margin:20px;
             text-align:center;
             -webkit-user-select: none; 
-
+            cursor: pointer;
         }
           
         .card:hover{
