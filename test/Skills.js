@@ -19,7 +19,7 @@ class GatheringSkill extends TickTimer {
         const canStart = true;
         if (canStart) {
             this.active = true;
-            this.start(200);
+            //this.start(200);
         }
         if(this.next != null) return  this.next.exec();
     }
@@ -36,7 +36,6 @@ class GatheringSkill extends TickTimer {
             if(this.next != null) return  this.next.renderChain();
         }
     }
-
 
 }
 

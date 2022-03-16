@@ -1,44 +1,51 @@
 'use strict'
-const PLAYER_STATE_IDEL = Symbol("idel");
-const PLAYER_STATE_MINE = Symbol("mine");
-const PLAYER_STATE_CUTWOOD = Symbol("cutwood");
- 
-
-
-
-
-class PlayerState {
-    constructor(status, nextStatus){
-        this.state = status;
-        this.nextStatus = nextStatus;
+class State{
+    constructor(p_game){
+        this.p_game = p_game;
     }
-    next(){
-        if(this.nextStatus!=null){
-            return new this.nextStatus();
-        }
-        return null;
+    Start(){
+        throw new Error("This method must be overided!");
+    }
+    End(){
+        throw new Error("This method must be overided!");
     }
 }
 
-class IdelState extends PlayerState{
-    constructor(){
-        super(PLAYER_STATE_IDEL, null);
+class IdelState extends State{
+    constructor(p_game){
+        super(p_game);
+    }
+    Start(){
+        console.log("Start Idel State!");
+    }
+    End(){
+        this.p_game.changeState(new MiningState(this.p_game));
+        console.log("End Idel State!");
     }
 }
 
-
-class MiningState extends PlayerState{
-    constructor(){
-        super(PLAYER_STATE_MINE, IdelState);
+class MiningState extends State{
+    constructor(p_game){
+        super(p_game);
+    }
+    Start(){
+        console.log("Start MiningState!");
+    }
+    End(){
+        console.log("End MiningState!");
     }
 }
 
-class Order{
-    constructor() {
-      this.pattern = new MiningState();
+class CutState extends State{
+    constructor(p_game){
+        super(p_game);
     }
-  
-    nextPattern() {
-      this.pattern = this.pattern.next();
+    Start(){
+        console.log("Start CutState!");
     }
-  }
+    End(){
+        console.log("End CutState!");
+    }
+}
+
+export {IdelState, MiningState, CutState};

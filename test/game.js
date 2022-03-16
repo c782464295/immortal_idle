@@ -1,6 +1,10 @@
 'use strict'
 import {GatheringSkill} from './Skills.js';
 import {TICK_INTERVAL} from './constant.js';
+import {IdelState} from './state.js';
+import { WoodCuting } from './woodcutting.js';
+
+
 class Game{
     constructor(){
         /* 单例模式 */
@@ -19,6 +23,11 @@ class Game{
             'GameName': 'Immortal Idle',
         };
 
+        this.playerState = new IdelState(this);
+
+        this.wood = new WoodCuting(this);
+
+
         this.ga = new GatheringSkill(this,'a');
         this.gb = new GatheringSkill(this,'b', this.ga);
         this.gc = new GatheringSkill(this,'c', this.gb);
@@ -27,6 +36,9 @@ class Game{
         
         ifvisible.on("focus", ()=>this.resumeGame());
         console.log("%c Loading %s Successfully!", 'background:#000;color:lime;font-style:italic', "Immortal Idle");
+    }
+    changeState(state){
+        this.playerState = state;
     }
 
     pauseGame(){
@@ -55,7 +67,7 @@ class Game{
         }
     }
     runTicks(ticksToRun) {
-        console.log(ticksToRun);
+        //console.log(ticksToRun);
         const startTimeStamp = performance.now();
         for (let i = 0; i < ticksToRun; i++) {
             this.tick();
@@ -81,7 +93,7 @@ class Game{
         this.previousTickTime += ticksToRun * TICK_INTERVAL;
     }
     render(){
-
+        this.wood.render();
     }
 
     serialize(){
@@ -118,14 +130,13 @@ class Game{
         //console.log(res);
 
         for (let [k,v] of Object.entries(this)) {
-            
             if(v.serialize == undefined){
-                
                 if(typeof(v) != 'object'){
-                    window["game"][k] = res[k];
+
+                    this[k] = res[k];
                 }
             }else{
-                window["game"][k].deserialize(res[k]);
+                v.deserialize(res[k]);
             }
         }
         return true;
@@ -133,8 +144,13 @@ class Game{
 }
 var game = new Game();
 game.startMainLoop();
+game.playerState.End();
 
+console.log(game.playerState);
+console.log(game.serialize());
+game.deserialize('H4sIAAAAAAAAA6tWysnPLwjJzE0tUrIy0gHzgksSi0pSU5SsSopKU3WUchMr/NPScjLzUkMyk7OLlawszEwMDAx0lAqKUssy80uLQcIgE4AyFnoGlmBgZmJkbG5kqKOUnqhkFa1rqANEBrFAbhIqNxmJWwsA6QHtGY0AAAA=')
+console.log(game.serialize());
 export {game};
 
-
-
+//H4sIAAAAAAAAA6tWysnPLwjJzE0tUrIy0gHzgksSi0pSU5SsSopKU3WUchMr/NPScjLzUkMyk7OLlawszEwMDAx0lAqKUssy80uLQcIgE4AyFnoGlmBgZmJkbG5kqKOUnqhkFa1rqANEBrFAbhIqNxmJWwsA6QHtGY0AAAA=
+//"previousTickTime" 88

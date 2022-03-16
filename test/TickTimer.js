@@ -1,7 +1,8 @@
 'use strict'
+import {TICK_INTERVAL} from './constant.js';
 class TickTimer {
-	#ticksLeft
-    #maxTicks
+	#ticksLeft;
+    #maxTicks;
     constructor(type, active = false) {
         this.type = type;
 		this.active = active;
@@ -23,13 +24,15 @@ class TickTimer {
 		throw new Error("This method must be overided!");
 	}
 	
-    start(time) {
-        const ticks = Math.floor(time / this.TICK_INTERVAL);
+    start(time_) {
+        const ticks = Math.floor(time_ / TICK_INTERVAL);
+        console.log(ticks);
         if (ticks < 1)
             throw new Error(`Tried to start timer: ${this.type} with invalid tick amount: ${ticks}`);
         this.active = true;
         this.#maxTicks = ticks;
         this.#ticksLeft = ticks;
+        
     }
     stop() {
         this.active = false;
@@ -37,12 +40,7 @@ class TickTimer {
     get isActive() {
         return this.active;
     }
-    get maxTicks() {
-        return this.#maxTicks;
-    }
-    get ticksLeft() {
-        return this.#ticksLeft;
-    }
+
     serialize() {
         const sData = [];
         sData.push(this.#ticksLeft, this.#maxTicks, this.active ? 1 : 0);
