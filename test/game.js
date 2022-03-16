@@ -28,9 +28,9 @@ class Game{
         this.wood = new WoodCuting(this);
 
 
-        this.ga = new GatheringSkill(this,'a');
-        this.gb = new GatheringSkill(this,'b', this.ga);
-        this.gc = new GatheringSkill(this,'c', this.gb);
+        //this.ga = new GatheringSkill(this,'a');
+        //this.gb = new GatheringSkill(this,'b', this.ga);
+        //this.gc = new GatheringSkill(this,'c', this.gb);
 
         ifvisible.on("blur", ()=>this.pauseGame());
         
@@ -79,7 +79,9 @@ class Game{
     }
 
     tick(){
-        this.gc.exec();
+        //this.gc.exec();
+        this.wood.tick();
+
     }
     processTime(){
         const currentTickTime = performance.now();
@@ -130,12 +132,14 @@ class Game{
         //console.log(res);
 
         for (let [k,v] of Object.entries(this)) {
+            console.log(k,v);
             if(v.serialize == undefined){
                 if(typeof(v) != 'object'){
 
                     this[k] = res[k];
                 }
             }else{
+                console.log(res);
                 v.deserialize(res[k]);
             }
         }
@@ -148,9 +152,7 @@ game.playerState.End();
 
 console.log(game.playerState);
 console.log(game.serialize());
-game.deserialize('H4sIAAAAAAAAA6tWysnPLwjJzE0tUrIy0gHzgksSi0pSU5SsSopKU3WUchMr/NPScjLzUkMyk7OLlawszEwMDAx0lAqKUssy80uLQcIgE4AyFnoGlmBgZmJkbG5kqKOUnqhkFa1rqANEBrFAbhIqNxmJWwsA6QHtGY0AAAA=')
+//game.deserialize('');
 console.log(game.serialize());
 export {game};
 
-//H4sIAAAAAAAAA6tWysnPLwjJzE0tUrIy0gHzgksSi0pSU5SsSopKU3WUchMr/NPScjLzUkMyk7OLlawszEwMDAx0lAqKUssy80uLQcIgE4AyFnoGlmBgZmJkbG5kqKOUnqhkFa1rqANEBrFAbhIqNxmJWwsA6QHtGY0AAAA=
-//"previousTickTime" 88

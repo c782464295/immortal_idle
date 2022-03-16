@@ -1,4 +1,5 @@
 'use strict'
+import TickTimer from './TickTimer.js';
 class TreeCard extends HTMLElement{
     #content;
     #card;
@@ -10,6 +11,7 @@ class TreeCard extends HTMLElement{
 
     constructor(callback){
         super();
+        
         this._checked = undefined;
 
         this.#content = new DocumentFragment();
@@ -28,22 +30,36 @@ class TreeCard extends HTMLElement{
         this.#container.appendChild(this.progress);
         this.#card.appendChild(this.#container);
 
+        
         this.setAttribute('aria-valuenow', 0);
 
+        this.p_name = document.createElement("p");
+        this.p_name_b = document.createElement("b");
+        this.p_name.appendChild(this.p_name_b);
+        this.p_description = document.createElement("p");
+        this.#container.appendChild(this.p_name);
+        this.#container.appendChild(this.p_description);
 
         this.#content.append(this.#card);
 
 
         this.onclick = callback;
 
-        
+        this.tickTimer = new TickTimer();
 
         
     }
+    
     setData(TreeData){
+        this.data = TreeData;
         this.#img.src = TreeData.img;
         this.#p.innerText = `经验:${TreeData.baseXP}xp/s`;
         this.id = TreeData.id;
+        this.p_name_b.innerText = TreeData.name;
+        this.p_description.innerText = TreeData.description;
+        this.tickTimer.action = function(){
+            this.start(TreeData.baseMinInterval);
+        };
     }
 
     hideElement() {
@@ -71,10 +87,16 @@ class TreeCard extends HTMLElement{
         // return [/* array of attribute names to monitor for changes */];
     }
     
+    render(){
+
+        this.setAttribute("aria-valuenow",(this.tickTimer.maxTicks - this.tickTimer.ticksLeft)/this.tickTimer.maxTicks*100);
+    }
+
     attributeChangedCallback(name, oldValue, newValue){// (4)
         // called when one of attributes listed above is modified
 
         this.progress.setAttribute('value', String(newValue));
+
     }
 }
 
@@ -84,6 +106,8 @@ class treeMenu extends HTMLElement{
     constructor(){
         super();
         this.wooddata = [{
+            name: "紫檀木",
+            description:'来自幽暗森林的奇异木材，可以成为诸多材料的原料',
             id: 1,
             baseXP: 5,
             strengthXP: 0,
@@ -94,10 +118,24 @@ class treeMenu extends HTMLElement{
             baseMinInterval: 4000,
             baseMaxInterval: 8000,
         }, {
+            name: "红檀木",
+            description:'来自幽暗森林的奇异木材，可以成为诸多材料的原料',
             id: 2,
-            baseXP: 10,
+            baseXP: 8,
             strengthXP: 0,
             level: 5,
+            masteryID: 0,
+            img: './normal_tree.svg',
+            itemID: 1,
+            baseMinInterval: 4000,
+            baseMaxInterval: 8000,
+        }, {
+            name: "金丝楠木",
+            description: '木质间透出条条金丝，好像蕴含着不可小觑的力量',
+            id: 3,
+            baseXP: 10,
+            strengthXP: 0,
+            level: 15,
             masteryID: 1,
             img: './oak_tree.svg',
             itemID: 2,
@@ -175,7 +213,18 @@ class treeMenu extends HTMLElement{
         }
         const isPressed = this.getAttribute('aria-checked') === 'true';
         this.setAttribute('aria-checked', String(!isPressed));
+        if(!isPressed){
+            this.tickTimer.start(2000);
+        }else{
+            this.tickTimer.stop();
+        }
+    }
 
+    tick(){
+        this.woodList.forEach(function(e){e.tickTimer.tick();});
+    }
+    render(){
+        this.woodList.forEach(function(e){e.render();});
     }
 
 }

@@ -1,3 +1,3 @@
 'use strict'
 
-export const TICK_INTERVAL = 200;
+export const TICK_INTERVAL = 50;

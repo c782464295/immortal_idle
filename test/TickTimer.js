@@ -26,7 +26,6 @@ class TickTimer {
 	
     start(time_) {
         const ticks = Math.floor(time_ / TICK_INTERVAL);
-        console.log(ticks);
         if (ticks < 1)
             throw new Error(`Tried to start timer: ${this.type} with invalid tick amount: ${ticks}`);
         this.active = true;
@@ -41,6 +40,13 @@ class TickTimer {
         return this.active;
     }
 
+    get ticksLeft(){
+        return this.#ticksLeft;
+    }
+
+    get maxTicks(){
+        return this.#maxTicks;
+    }
     serialize() {
         const sData = [];
         sData.push(this.#ticksLeft, this.#maxTicks, this.active ? 1 : 0);
