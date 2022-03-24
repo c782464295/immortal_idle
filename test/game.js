@@ -2,8 +2,9 @@
 import {GatheringSkill} from './Skills.js';
 import {TICK_INTERVAL} from './constant.js';
 import {IdelState} from './state.js';
-import { WoodCuting } from './woodcutting.js';
-
+import {WoodCuting} from './woodcutting.js';
+import {achieve_list} from './achivements.js';
+import {} from './locale.js';
 
 class Game{
     constructor(){
@@ -27,6 +28,7 @@ class Game{
 
         this.wood = new WoodCuting(this);
 
+        this.achivelist = achieve_list;
 
         //this.ga = new GatheringSkill(this,'a');
         //this.gb = new GatheringSkill(this,'b', this.ga);
@@ -35,6 +37,13 @@ class Game{
         ifvisible.on("blur", ()=>this.pauseGame());
         
         ifvisible.on("focus", ()=>this.resumeGame());
+        // 离开页面（关闭、刷新、跳转其他页面）才会触发
+        window.onbeforeunload = event => {
+            console.log('onbeforeload！！！！！')
+            if (event) {
+                event.returnValue = '关闭提示';
+            }
+        }
         console.log("%c Loading %s Successfully!", 'background:#000;color:lime;font-style:italic', "Immortal Idle");
     }
     changeState(state){
@@ -57,7 +66,7 @@ class Game{
     }
     loop(){
         this.processTime();
-        this.render();
+        //this.render();
     }
 
     stopMainLoop() {
@@ -96,6 +105,8 @@ class Game{
     }
     render(){
         this.wood.render();
+        console.log('render');
+        requestAnimationFrame(()=>this.render());
     }
 
     serialize(){
@@ -146,13 +157,18 @@ class Game{
         return true;
     }
 }
-var game = new Game();
-game.startMainLoop();
-game.playerState.End();
 
-console.log(game.playerState);
-console.log(game.serialize());
-//game.deserialize('');
-console.log(game.serialize());
-export {game};
 
+
+$(document).ready(function() {
+    var game = new Game();
+    game.startMainLoop();
+    game.playerState.End();
+    
+    console.log(game.playerState);
+    console.log(game.serialize());
+    //game.deserialize('');
+    console.log(game.serialize());
+    
+    window.game = game;
+})

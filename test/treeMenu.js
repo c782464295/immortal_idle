@@ -143,7 +143,6 @@ class treeMenu extends HTMLElement{
             baseMaxInterval: 8000,
         }];
         this.woodList = [];
-        
     }
     
     connectedCallback(){
@@ -202,6 +201,7 @@ class treeMenu extends HTMLElement{
             tmp_tree.setData(tree);
             this.appendChild(tmp_tree);
             this.woodList.push(tmp_tree);
+            //this.woodList[0].remove();
         });
         
     }
