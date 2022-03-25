@@ -1,3 +1,7 @@
+'use strict'
+import {} from './locale.js';
+import {TICK_INTERVAL} from './global.js';
+import {} from './indexLoc.js';
 class Game{
     constructor(){
         /* 单例模式 */
@@ -6,65 +10,92 @@ class Game{
         }
         Game.instance = this;
 
-        this.loopInterval = -1;
+        this.loopTimer = -1;
         this.loopStarted = false;
         this.maxOfflineTicks = 20 * 60 * 60 * 12;
-        this.notification = new notification();
-        this.test = true;
+        this.previousTickTime = performance.now();
+
         this.config = {
             'version': 0.1,
             'GameName': 'Immortal Idle',
         };
-        this.achievementManager = new AchievementManager();
-        this.achievementManager.init([
-            [
-                "Clicktastic", 
-                "You clicked 1000 times!", 
-                false,
-                () => {
-                    return (this.loopInterval > -2);
-                },
-                () => {
-                    this.notification.pop_warning('data_test');
-                },
-            ],
 
-            [
-                "Clicktastic", 
-                "You clicked 1000 times!", 
-                false,
-                () => {
-                    return this.test;
-                },
-                () => {
-                    this.notification.toast_warning('You clicked 1000 times!');
-                },
-            ]
-        ]);
-        this.gTimerManager = new TimerManager();
-        this.stats = new Statistics();
 
-        this.inventory = new inventory();
+        //this.ga = new GatheringSkill(this,'a');
+        //this.gb = new GatheringSkill(this,'b', this.ga);
+        //this.gc = new GatheringSkill(this,'c', this.gb);
 
+        ifvisible.on("blur", ()=>this.pauseGame());
+        
+        ifvisible.on("focus", ()=>this.resumeGame());
+        // 离开页面（关闭、刷新、跳转其他页面）才会触发
+        window.onbeforeunload = event => {
+            console.log('onbeforeload！！！！！')
+            if (event) {
+                event.returnValue = '关闭提示';
+            }
+        }
         console.log("%c Loading %s Successfully!", 'background:#000;color:lime;font-style:italic', "Immortal Idle");
-        this.ev = new EventHandle();
+    }
+    changeState(state){
+        this.playerState = state;
     }
 
+    pauseGame(){
+        console.log('GamePause');
+        this.stopMainLoop();
+    }
+    resumeGame(){
+        console.log('GameConsume');
+        this.startMainLoop();
+    }
     startMainLoop(){
         console.log('start main loop');
-        this.loopInterval = window.setInterval(this.loop.bind(this), 500);
+        this.loopTimer = window.setInterval(this.loop.bind(this), TICK_INTERVAL);
         this.loopStarted = true;
 
     }
     loop(){
-        console.log('s');
+        this.processTime();
+        //this.render();
     }
 
-    stopMainLoop(){
+    stopMainLoop() {
         if (this.loopStarted) {
-            clearInterval(this.loopInterval);
+            clearInterval(this.loopTimer);
             this.loopStarted = false;
         }
+    }
+    runTicks(ticksToRun) {
+        //console.log(ticksToRun);
+        const startTimeStamp = performance.now();
+        for (let i = 0; i < ticksToRun; i++) {
+            this.tick();
+        }
+        if (ticksToRun > 72000) {
+            const processingTime = performance.now() - startTimeStamp;
+            console.log(`Took ${processingTime / 1000}s to process ${ticksToRun} ticks. ${processingTime / ticksToRun}ms per tick.`);
+        }
+    }
+
+    tick(){
+
+
+    }
+    processTime(){
+        const currentTickTime = performance.now();
+        let ticksToRun = Math.floor((currentTickTime - this.previousTickTime) / TICK_INTERVAL);
+        if (ticksToRun > this.maxOfflineTicks) {
+            ticksToRun = this.maxOfflineTicks;
+            this.previousTickTime = currentTickTime - ticksToRun * TICK_INTERVAL;
+        }
+        this.runTicks(ticksToRun);
+        
+        this.previousTickTime += ticksToRun * TICK_INTERVAL;
+    }
+    render(){
+        console.log('render');
+        requestAnimationFrame(()=>this.render());
     }
 
     serialize(){
@@ -101,20 +132,29 @@ class Game{
         //console.log(res);
 
         for (let [k,v] of Object.entries(this)) {
-            
+            console.log(k,v);
             if(v.serialize == undefined){
-                
                 if(typeof(v) != 'object'){
-                    window["game"][k] = res[k];
+
+                    this[k] = res[k];
                 }
             }else{
-                window["game"][k].deserialize(res[k]);
+                console.log(res);
+                v.deserialize(res[k]);
             }
         }
         return true;
     }
 }
 
-game = new Game();
-game.inventory.init();
-$("#stat-money").html("Wallet: <span>${0}</span>".format(2221212));
+
+
+$(document).ready(function() {
+    var game = new Game();
+    game.startMainLoop();
+
+    console.log(game.serialize());
+    //game.deserialize('');
+    
+    window.game = game;
+})
