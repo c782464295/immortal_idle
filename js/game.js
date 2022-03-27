@@ -21,10 +21,6 @@ class Game{
         };
 
 
-        //this.ga = new GatheringSkill(this,'a');
-        //this.gb = new GatheringSkill(this,'b', this.ga);
-        //this.gc = new GatheringSkill(this,'c', this.gb);
-
         ifvisible.on("blur", ()=>this.pauseGame());
         
         ifvisible.on("focus", ()=>this.resumeGame());
@@ -37,9 +33,7 @@ class Game{
         }
         console.log("%c Loading %s Successfully!", 'background:#000;color:lime;font-style:italic', "Immortal Idle");
     }
-    changeState(state){
-        this.playerState = state;
-    }
+
 
     pauseGame(){
         console.log('GamePause');
@@ -53,7 +47,7 @@ class Game{
         console.log('start main loop');
         this.loopTimer = window.setInterval(this.loop.bind(this), TICK_INTERVAL);
         this.loopStarted = true;
-
+        this.render();
     }
     loop(){
         this.processTime();
@@ -80,8 +74,8 @@ class Game{
 
     tick(){
 
-
     }
+
     processTime(){
         const currentTickTime = performance.now();
         let ticksToRun = Math.floor((currentTickTime - this.previousTickTime) / TICK_INTERVAL);
