@@ -3,6 +3,7 @@ import {} from './locale.js';
 import {TICK_INTERVAL,global} from './global.js';
 import {} from './indexLoc.js';
 import {Mining} from './customelement/ore.js';
+import {achieve_list, checkAchievement} from './achivements.js';
 class Game{
     constructor(){
         /* 单例模式 */
@@ -22,6 +23,7 @@ class Game{
         };
 
         this.global = global;
+        this.achieves = achieve_list;
 
         ifvisible.on("blur", ()=>this.pauseGame());
         
@@ -86,6 +88,7 @@ class Game{
 
     tick(){
         this.minning.tick();
+        checkAchievement();
     }
 
     processTime(){
