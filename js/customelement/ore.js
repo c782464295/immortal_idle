@@ -17,6 +17,7 @@ class Ore extends HTMLElement{
     set data(val){
         this.baseInterval = val.baseInterval;
         this.requirelevel = val.requirelevel;
+        this._id = val.id;
         const shadowRoot = this.attachShadow({mode: 'open'});
         shadowRoot.innerHTML = `
         <style>
@@ -60,6 +61,7 @@ class Ore extends HTMLElement{
         .hidden {
             visibility: hidden;
             opacity: 1;
+            display:none;
         }
         </style>
 
@@ -139,6 +141,7 @@ class Ore extends HTMLElement{
 
         */
         console.log('mining-ore');
+        isNaN(global['pack'].storage[this._id])? global['pack'].storage[this._id]=1:global['pack'].storage[this._id]+=1;
         this.timer.start(this.baseInterval);
 
     }
@@ -194,6 +197,16 @@ var oreData = [
         description:'木质间透出条条金丝，好像蕴含着不可小觑的力量',
         requirelevel: 2
     },
+    {
+        id: 3,
+        name: loc('tree1'),
+        levelRequired: 1,
+        baseInterval: 1000,
+        baseExperience: 10,
+        media: './assets/svg/trees/willow_tree.svg',
+        description:'木质间透出条条金丝，好像蕴含着不可小觑的力量',
+        requirelevel: 1
+    },
     
 ];
 
@@ -234,6 +247,13 @@ class Mining {
         for(let i in this.ores){
             this.ores[i].tick();
         }
+    }
+    serialize(){
+        let json_string = [];
+        for(let i in this.ores){
+            json_string.push(this.ores[i].timer.serialize());
+        }
+        return json_string;
     }
 }
 export {Mining};

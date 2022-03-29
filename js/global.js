@@ -1,6 +1,14 @@
 export const TICK_INTERVAL = 50;
 export var save = window.localStorage;
 export var global = {
+    serialize(){
+        return JSON.stringify(this);
+    },
+    inventory(){}
+};
+global['pack'] = {
+    storage:{},
+    BagOfHolding:{}
 };
 
 global['Settings'] = {
@@ -32,3 +40,4 @@ global['PlayerStates'] = {
     magic:140,
     XP:0,
 };
+
