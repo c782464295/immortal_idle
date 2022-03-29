@@ -4,6 +4,7 @@ import {TICK_INTERVAL,global} from './global.js';
 import {} from './indexLoc.js';
 import {Mining} from './customelement/ore.js';
 import {achieve_list, checkAchievement} from './achivements.js';
+import {} from './utility.js';
 class Game{
     constructor(){
         /* 单例模式 */
