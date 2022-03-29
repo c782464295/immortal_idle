@@ -1,6 +1,7 @@
 'use strict'
 import {global} from './global.js';
 import {} from './utility.js';
+import {pop_warning,toast_warning} from './notify.js';
 
 var achieve_list = {
     mining: {
@@ -34,7 +35,8 @@ function checkAchievement(){
             if(achieve_list[k][achivement].state == false){
                 switch(k){
                     case 'mining':
-                        achieve_list[k][achivement].check(global.pack.storage[3])? (achieve_list[k][achivement].state = true,alert('a')): achieve_list[k][achivement].state = false;
+                        achieve_list[k][achivement].check(global.pack.storage[3])? (achieve_list[k][achivement].state = true,pop_warning('a'),toast_warning('a')): achieve_list[k][achivement].state = false;
+                        
                         break
                 }
             }
