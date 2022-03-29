@@ -16,6 +16,7 @@ class Ore extends HTMLElement{
     }
     set data(val){
         this.baseInterval = val.baseInterval;
+        this.requirelevel = val.requirelevel;
         const shadowRoot = this.attachShadow({mode: 'open'});
         shadowRoot.innerHTML = `
         <style>
@@ -137,7 +138,7 @@ class Ore extends HTMLElement{
             this.dispatchEvent(myEvent);
 
         */
-        console.log('mining-one');
+        console.log('mining-ore');
         this.timer.start(this.baseInterval);
 
     }
@@ -145,7 +146,8 @@ class Ore extends HTMLElement{
         this.timer.tick();
     }
     render(){
-        this.bar.value = 100- 100*this.timer._ticksLeft/this.timer._maxTicks
+        this.bar.value = 100- 100*this.timer._ticksLeft/this.timer._maxTicks;
+        this.requirelevel <= global.Level.mining?this.show():this.hide();
     }
     get isChecked(){
         return  this._checked;
