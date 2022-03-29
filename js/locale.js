@@ -1,7 +1,7 @@
 import { global } from './global.js';
 
 let strings;
-getString(global.settings.locale);
+getString(global.Settings.locale);
 
 
 export function loc(key, variables) {

@@ -18,6 +18,7 @@ class EventHandle{
                 break;
             case "cut":
                 this.p.stats.Woodcutting.inc(e.detail.name);
+                console.log('cuttree');
         }
     }
 }

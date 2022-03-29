@@ -1,7 +1,8 @@
 'use strict'
 import {} from './locale.js';
-import {TICK_INTERVAL} from './global.js';
+import {TICK_INTERVAL,global} from './global.js';
 import {} from './indexLoc.js';
+import {Mining} from './customelement/ore.js';
 class Game{
     constructor(){
         /* 单例模式 */
@@ -20,6 +21,7 @@ class Game{
             'GameName': 'Immortal Idle',
         };
 
+        this.global = global;
 
         ifvisible.on("blur", ()=>this.pauseGame());
         
@@ -31,6 +33,16 @@ class Game{
                 event.returnValue = '关闭提示';
             }
         }
+
+        this.minning = new Mining();
+
+
+
+
+
+
+
+
         console.log("%c Loading %s Successfully!", 'background:#000;color:lime;font-style:italic', "Immortal Idle");
     }
 
@@ -73,7 +85,7 @@ class Game{
     }
 
     tick(){
-
+        this.minning.tick();
     }
 
     processTime(){
@@ -88,7 +100,8 @@ class Game{
         this.previousTickTime += ticksToRun * TICK_INTERVAL;
     }
     render(){
-        console.log('render');
+        //console.log('render');
+        this.minning.render();
         requestAnimationFrame(()=>this.render());
     }
 
@@ -139,6 +152,9 @@ class Game{
         }
         return true;
     }
+    debug(isdebug){
+        isdebug?window.game = this:window.game = null;
+    }
 }
 
 
@@ -147,8 +163,9 @@ $(document).ready(function() {
     var game = new Game();
     game.startMainLoop();
 
+    game.debug(true);
     console.log(game.serialize());
     //game.deserialize('');
     
-    window.game = game;
+    
 })
