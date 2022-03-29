@@ -4,7 +4,12 @@ export var global = {
     serialize(){
         return JSON.stringify(this);
     },
-    inventory(){}
+    deserialize(data){
+        console.log(JSON.parse(data));
+        for(let k in JSON.parse(data)){
+            this[k] = JSON.parse(data)[k];
+        }
+    },
 };
 global['pack'] = {
     storage:{},

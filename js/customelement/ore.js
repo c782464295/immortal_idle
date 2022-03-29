@@ -255,5 +255,10 @@ class Mining {
         }
         return json_string;
     }
+    deserialize(data){
+        for(let i in data){
+            this.ores[i].timer.deserialize(data[i]);
+        }
+    }
 }
 export {Mining};
