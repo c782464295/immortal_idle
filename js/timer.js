@@ -45,7 +45,7 @@ class Timer {
     deserialize(sData, version) {
         this._ticksLeft = sData[0];
         this._maxTicks = sData[1];
-        this.active = sData[2] === 1;
+        this.active = (sData[2] === 1);
     }
 }
 export {Timer};

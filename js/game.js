@@ -31,10 +31,13 @@ class Game{
         ifvisible.on("focus", ()=>this.resumeGame());
         // 离开页面（关闭、刷新、跳转其他页面）才会触发
         window.onbeforeunload = event => {
-            console.log('onbeforeload！！！！！')
+           
             if (event) {
                 event.returnValue = '关闭提示';
+                window.localStorage.setItem('saveData', this.serialize());
+
             }
+            
         }
 
         this.minning = new Mining();
@@ -48,7 +51,11 @@ class Game{
 
         console.log("%c Loading %s Successfully!", 'background:#000;color:lime;font-style:italic', "Immortal Idle");
     }
-
+    init(){
+        if(window.localStorage.getItem('saveData')!==null){
+            this.deserialize(window.localStorage.getItem('saveData'));
+        }
+    }
 
     pauseGame(){
         console.log('GamePause');
@@ -165,6 +172,7 @@ class Game{
 
 $(document).ready(function() {
     var game = new Game();
+    game.init();
     game.startMainLoop();
 
     game.debug(true);

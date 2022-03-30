@@ -75,7 +75,7 @@ class Ore extends HTMLElement{
             </div>
         </div>
         `
-        
+        this.card = shadowRoot.querySelector('.card');
         this.bar = shadowRoot.querySelector('progress');
         shadowRoot.querySelector('.card').addEventListener('click', this.check.bind(this), false);
         return
@@ -149,7 +149,12 @@ class Ore extends HTMLElement{
         this.timer.tick();
     }
     render(){
-        this.bar.value = 100- 100*this.timer._ticksLeft/this.timer._maxTicks;
+        if(this.timer.active){
+            this.card.setAttribute('aria-checked', String(true));
+            this._checked = true;
+            this.bar.value = 100- 100*this.timer._ticksLeft/this.timer._maxTicks;
+        }
+        
         this.requirelevel <= global.Level.mining?this.show():this.hide();
     }
     get isChecked(){

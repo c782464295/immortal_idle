@@ -7,7 +7,7 @@ function pop_warning(data){
         title: data,
         showConfirmButton: true,
         //background: '#545',
-        timer: 5000
+        timer: 500000
     })
 }
 
