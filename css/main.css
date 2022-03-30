@@ -828,7 +828,9 @@ body.light-mode .video-bg::before {
         width: auto;
     }
 }
-
+.pop-up2 {
+    background-color: var(--popup-bg);
+}
 
 .pop-up {
     position: absolute;

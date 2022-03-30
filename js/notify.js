@@ -34,8 +34,38 @@ function toast_warning(data){
     }
     toastr.warning(data);
 }
-
-
+// 自定义
+let SwalLocale = Swal.mixin({
+    didOpen: ()=>{
+        
+    }
+    ,
+    customClass: {
+        container: '',
+        popup: 'pop-up2',
+        header: '',
+        title: '...',
+        closeButton: '...',
+        icon: '...',
+        image: '...',
+        content: '...',
+        htmlContainer: '...',
+        input: '...',
+        inputLabel: '...',
+        validationMessage: '...',
+        actions: '...',
+        confirmButton: '...',
+        denyButton: '...',
+        cancelButton: '...',
+        loader: '...',
+        footer: '....',
+        timerProgressBar: '....',
+    },
+    //background: "transparent", 
+    //backgroundColor: var(--popup-bg);
+    buttonsStyling: false,
+});
+SwalLocale.fire();
 function gpNotify(qty) {
     if (1) {
         let textClass = "success";

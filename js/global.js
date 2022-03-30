@@ -20,6 +20,7 @@ global['pack'] = {
 
 global['Settings'] = {
     locale:'zh-CN',
+    lightmode:1,
 };
 
 global['Level'] = {
@@ -56,6 +57,8 @@ global['Active'] = {
 global['items'] = {
     itemsAlreadyFound:[]
 }
+
+
 
 export var itemNotifyToProcess = [];
 export const storage = window.localStorage;

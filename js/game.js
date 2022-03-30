@@ -63,6 +63,8 @@ class Game{
             this.deserialize(storage.getItem('saveData'));
         }
         
+        console.log(this.global['Settings'].lightmode);
+        this.global['Settings'].lightmode == 1?document.body.classList.add('light-mode'):document.body.classList.remove('light-mode');
         let oldsnap = this.snapShot();
 
         let offlinetimestamp = new Date().getTime();
@@ -211,6 +213,11 @@ $(document).ready(function() {
     game.debug(true);
     console.log(game.serialize());
     //game.deserialize('');
-    
-    
+    // 明暗模式动态
+    const toggleButton1 = document.querySelector('.header-profile svg');
+    toggleButton1.addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        global['Settings'].lightmode = !global['Settings'].lightmode;
+    });
+
 })
