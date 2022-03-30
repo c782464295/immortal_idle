@@ -46,3 +46,6 @@ global['PlayerStates'] = {
     XP:0,
 };
 
+global['Active'] = {
+    currentAction:0,
+}

@@ -17,7 +17,9 @@ class Game{
         this.loopStarted = false;
         this.maxOfflineTicks = 20 * 60 * 60 * 12;
         this.previousTickTime = performance.now();
-
+        
+        this.lasttimestamp = new Date().getTime();
+        
         this.config = {
             'version': 0.1,
             'GameName': 'Immortal Idle',
@@ -34,6 +36,7 @@ class Game{
            
             if (event) {
                 event.returnValue = '关闭提示';
+                this.lasttimestamp = new Date().getTime();
                 window.localStorage.setItem('saveData', this.serialize());
 
             }
@@ -54,6 +57,12 @@ class Game{
     init(){
         if(window.localStorage.getItem('saveData')!==null){
             this.deserialize(window.localStorage.getItem('saveData'));
+        }
+        let offlinetimestamp = new Date().getTime();
+        if((offlinetimestamp - this.lasttimestamp)/TICK_INTERVAL<this.maxOfflineTicks){
+            this.runTicks((offlinetimestamp - this.lasttimestamp)/TICK_INTERVAL);
+        }else{
+            this.runTicks(this.maxOfflineTicks);
         }
     }
 
