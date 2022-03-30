@@ -1,10 +1,11 @@
 'use strict'
 import {} from './locale.js';
-import {TICK_INTERVAL,global} from './global.js';
+import {TICK_INTERVAL,global,storage} from './global.js';
 import {} from './indexLoc.js';
 import {Mining} from './customelement/ore.js';
 import {achieve_list, checkAchievement} from './achivements.js';
-import {} from './utility.js';
+import {deepClone} from './utility.js';
+import {gpNotify} from './notify.js';
 class Game{
     constructor(){
         /* 单例模式 */
@@ -28,6 +29,8 @@ class Game{
         this.global = global;
         this.achieves = achieve_list;
 
+        
+
         ifvisible.on("blur", ()=>this.pauseGame());
         
         ifvisible.on("focus", ()=>this.resumeGame());
@@ -37,7 +40,8 @@ class Game{
             if (event) {
                 event.returnValue = '关闭提示';
                 this.lasttimestamp = new Date().getTime();
-                window.localStorage.setItem('saveData', this.serialize());
+                //this.lasttimestamp = 0;
+                storage.setItem('saveData', this.serialize());
 
             }
             
@@ -55,15 +59,35 @@ class Game{
         console.log("%c Loading %s Successfully!", 'background:#000;color:lime;font-style:italic', "Immortal Idle");
     }
     init(){
-        if(window.localStorage.getItem('saveData')!==null){
-            this.deserialize(window.localStorage.getItem('saveData'));
+        if(storage.getItem('saveData')!==null){
+            this.deserialize(storage.getItem('saveData'));
         }
+        
+        let oldsnap = this.snapShot();
+
         let offlinetimestamp = new Date().getTime();
         if((offlinetimestamp - this.lasttimestamp)/TICK_INTERVAL<this.maxOfflineTicks){
             this.runTicks((offlinetimestamp - this.lasttimestamp)/TICK_INTERVAL);
         }else{
             this.runTicks(this.maxOfflineTicks);
         }
+
+        let newsnap = this.snapShot();
+        this.CreateModal(oldsnap,newsnap);
+    }
+
+    snapShot(){
+        const snapshot = {
+            level:global.Level,
+            items:deepClone(global.pack.storage),
+            exp:global.Exp
+        }
+        return snapshot;
+    }
+
+    CreateModal(oldsnap,newsnap){
+        console.log(newsnap.items[2]-oldsnap.items[2]);
+
     }
 
     pauseGame(){
@@ -105,7 +129,7 @@ class Game{
 
     tick(){
         this.minning.tick();
-        checkAchievement();
+        //checkAchievement();
     }
 
     processTime(){

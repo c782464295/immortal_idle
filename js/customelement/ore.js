@@ -2,6 +2,7 @@
 import {loc} from '../locale.js';
 import {global} from '../global.js';
 import {Timer} from '../timer.js';
+import {gpNotify,toast_warning} from '../notify.js';
 class Ore extends HTMLElement{
     constructor(p_dom){
         super();
@@ -140,13 +141,14 @@ class Ore extends HTMLElement{
             this.dispatchEvent(myEvent);
 
         */
-        console.log('mining-ore');
+        //console.log('mining-ore');
         isNaN(global['pack'].storage[this._id])? global['pack'].storage[this._id]=1:global['pack'].storage[this._id]+=1;
+        //gpNotify(20);
         this.timer.start(this.baseInterval);
-
+        //toast_warning('333');
     }
     tick(){
-        this.timer.tick();
+        if(this.timer.isActive) this.timer.tick();
     }
     render(){
         if(this.timer.active){

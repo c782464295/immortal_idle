@@ -12,6 +12,8 @@ export var global = {
     },
 };
 global['pack'] = {
+    baseBOFmax:5,
+    baseStomax:10,
     storage:{},
     BagOfHolding:{}
 };
@@ -49,3 +51,11 @@ global['PlayerStates'] = {
 global['Active'] = {
     currentAction:0,
 }
+
+
+global['items'] = {
+    itemsAlreadyFound:[]
+}
+
+export var itemNotifyToProcess = [];
+export const storage = window.localStorage;
