@@ -8,6 +8,12 @@ export function loc(key, variables) {
     return strings[key];
 }
 
+
+export function getItemName(itemID) {
+    return strings["itemsname"][itemID];
+}
+
+
 function getString(locale) {
     let defaultString;
 

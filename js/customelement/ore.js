@@ -3,6 +3,8 @@ import { loc } from '../locale.js';
 import { global } from '../global.js';
 import { Timer } from '../timer.js';
 import { gpNotify, toast_warning } from '../notify.js';
+import {ProgressBar} from './progress.js'
+
 class Ore extends HTMLElement {
     constructor(p_dom) {
         super();
@@ -25,7 +27,7 @@ class Ore extends HTMLElement {
         .card{
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
-            width: 400px;
+            width: 350px;
             height: 300px;
             display:inline-block;
             margin:20px;
@@ -155,6 +157,7 @@ class Ore extends HTMLElement {
             this.card.setAttribute('aria-checked', String(true));
             this._checked = true;
             this.bar.value = 100 - 100 * this.timer._ticksLeft / this.timer._maxTicks;
+            
         }
 
         this.requirelevel <= global.Level.mining ? this.show() : this.hide();
@@ -224,9 +227,14 @@ class Mining {
     constructor() {
         this.parentDOM = document.getElementById("ore-area");
         this.ores = [];
+        
         this.init();
+        
     }
     init() {
+        this.progress = new ProgressBar();
+        this.parentDOM.parentNode.insertBefore(this.progress, this.parentDOM);
+
         for (let i in oreData) {
             let tmp_dom = new Ore(this.parentDOM);
 
@@ -239,6 +247,8 @@ class Mining {
                 tmp_dom.show();
             }
         }
+
+        
     }
     update() {
         for (let i in oreData) {
@@ -249,6 +259,8 @@ class Mining {
         for (let i in this.ores) {
             this.ores[i].render();
         }
+        this.progress.value+=1;
+        this.progress.render();
     }
     tick() {
         for (let i in this.ores) {

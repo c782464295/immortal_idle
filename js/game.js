@@ -1,5 +1,5 @@
 'use strict'
-import { } from './locale.js';
+import { loc } from './locale.js';
 import { TICK_INTERVAL, global, storage } from './global.js';
 import { } from './indexLoc.js';
 import { Mining } from './customelement/ore.js';
@@ -7,6 +7,9 @@ import { Inventory } from './customelement/inventory.js';
 import { achieve_list, checkAchievement } from './achivements.js';
 import { deepClone } from './utility.js';
 import { gpNotify } from './notify.js';
+import { } from './items.js';
+
+
 class Game {
     constructor() {
         /* 单例模式 */

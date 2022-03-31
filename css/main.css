@@ -1034,3 +1034,4 @@ body.light-mode .video-bg::before {
     margin:0 auto;
     backdrop-filter: blur(var(--bg-blur));
 }
+
