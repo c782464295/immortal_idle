@@ -19,7 +19,7 @@ class Inventory {
 
         this.parentDOM = document.getElementById("");
         this.items = [];
-
+        this.items = global.inventory;
         this.init();
     }
 
