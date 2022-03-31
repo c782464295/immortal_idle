@@ -1,25 +1,25 @@
 "use strict";
-import {loc} from '../locale.js';
-import {global} from '../global.js';
-import {Timer} from '../timer.js';
-import {gpNotify,toast_warning} from '../notify.js';
-class Ore extends HTMLElement{
-    constructor(p_dom){
+import { loc } from '../locale.js';
+import { global } from '../global.js';
+import { Timer } from '../timer.js';
+import { gpNotify, toast_warning } from '../notify.js';
+class Ore extends HTMLElement {
+    constructor(p_dom) {
         super();
         this._checked = undefined;
 
         this.p_dom = p_dom;
 
         this.timer = new Timer('woodcut', this.action.bind(this));
-        
 
-        
+
+
     }
-    set data(val){
+    set data(val) {
         this.baseInterval = val.baseInterval;
         this.requirelevel = val.requirelevel;
         this._id = val.id;
-        const shadowRoot = this.attachShadow({mode: 'open'});
+        const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.innerHTML = `
         <style>
         .card{
@@ -67,7 +67,7 @@ class Ore extends HTMLElement{
         </style>
 
         <div class='card' id=${val.id} aria-checked="false">
-    <p>经验:${val.baseExperience*1000/val.baseInterval}xp/s</p>
+    <p>经验:${val.baseExperience * 1000 / val.baseInterval}xp/s</p>
             <img src=${val.media} alt="Avatar" height="100px" width="100px">
             <div class="container">
                 <progress max=100 value=10></progress>
@@ -81,50 +81,50 @@ class Ore extends HTMLElement{
         shadowRoot.querySelector('.card').addEventListener('click', this.check.bind(this), false);
         return
     }
-    get data(){
+    get data() {
         return this.val;
     }
-    connectedCallback(){
-        
-        
+    connectedCallback() {
+
+
     }
 
-    
 
-    check(event){
+
+    check(event) {
 
         let children = this.p_dom.childNodes;
 
-        for (let e in children){
+        for (let e in children) {
 
-            if(children[e].isChecked == true && children[e]!=this){
+            if (children[e].isChecked == true && children[e] != this) {
                 return
             }
         }
-        this.timer.isActive?this.timer.stop():this.timer.start(this.baseInterval);
+        this.timer.isActive ? this.timer.stop() : this.timer.start(this.baseInterval);
 
 
-        
+
         const isPressed = event.currentTarget.getAttribute('aria-checked') === 'true';
         event.currentTarget.setAttribute('aria-checked', String(!isPressed));
         this._checked = Boolean(!isPressed);
-        
+
     }
-    static get observedAttributes(){// (3)
+    static get observedAttributes() {// (3)
         return ['value'];
         // return [/* array of attribute names to monitor for changes */];
     }
-    
-    attributeChangedCallback(name, oldValue, newValue){// (4)
+
+    attributeChangedCallback(name, oldValue, newValue) {// (4)
         // called when one of attributes listed above is modified
     }
-    hide(){
+    hide() {
         this.shadowRoot.querySelector(".card").classList.add("hidden")
     }
-    show(){
+    show() {
         this.shadowRoot.querySelector(".card").classList.remove("hidden")
     }
-    action(){
+    action() {
 
         /*
             let myEvent = new CustomEvent('ce', {
@@ -142,25 +142,25 @@ class Ore extends HTMLElement{
 
         */
         //console.log('mining-ore');
-        isNaN(global['pack'].storage[this._id])? global['pack'].storage[this._id]=1:global['pack'].storage[this._id]+=1;
+        isNaN(global['pack'].storage[this._id]) ? global['pack'].storage[this._id] = 1 : global['pack'].storage[this._id] += 1;
         //gpNotify(20);
         this.timer.start(this.baseInterval);
         //toast_warning('333');
     }
-    tick(){
-        if(this.timer.isActive) this.timer.tick();
+    tick() {
+        if (this.timer.isActive) this.timer.tick();
     }
-    render(){
-        if(this.timer.active){
+    render() {
+        if (this.timer.active) {
             this.card.setAttribute('aria-checked', String(true));
             this._checked = true;
-            this.bar.value = 100- 100*this.timer._ticksLeft/this.timer._maxTicks;
+            this.bar.value = 100 - 100 * this.timer._ticksLeft / this.timer._maxTicks;
         }
-        
-        this.requirelevel <= global.Level.mining?this.show():this.hide();
+
+        this.requirelevel <= global.Level.mining ? this.show() : this.hide();
     }
-    get isChecked(){
-        return  this._checked;
+    get isChecked() {
+        return this._checked;
     }
 
 }
@@ -191,7 +191,7 @@ var oreData = [
         baseInterval: 2500,
         baseExperience: 10,
         media: './assets/svg/trees/normal_tree.svg',
-        description:'来自幽暗森林的奇异木材，可以成为诸多材料的原料',
+        description: '来自幽暗森林的奇异木材，可以成为诸多材料的原料',
         requirelevel: 1
     },
     {
@@ -201,7 +201,7 @@ var oreData = [
         baseInterval: 1000,
         baseExperience: 10,
         media: './assets/svg/trees/oak_tree.svg',
-        description:'木质间透出条条金丝，好像蕴含着不可小觑的力量',
+        description: '木质间透出条条金丝，好像蕴含着不可小觑的力量',
         requirelevel: 2
     },
     {
@@ -211,61 +211,61 @@ var oreData = [
         baseInterval: 1000,
         baseExperience: 10,
         media: './assets/svg/trees/willow_tree.svg',
-        description:'木质间透出条条金丝，好像蕴含着不可小觑的力量',
+        description: '木质间透出条条金丝，好像蕴含着不可小觑的力量',
         requirelevel: 1
     },
-    
+
 ];
 
 
 
 
 class Mining {
-    constructor(){
+    constructor() {
         this.parentDOM = document.getElementById("ore-area");
         this.ores = [];
         this.init();
     }
-    init(){
-        for(let i in oreData){
+    init() {
+        for (let i in oreData) {
             let tmp_dom = new Ore(this.parentDOM);
-            
+
             tmp_dom.data = oreData[i];
             this.parentDOM.appendChild(tmp_dom);
             this.ores.push(tmp_dom);
-            if(oreData[i].requirelevel > global.Level.mining){
+            if (oreData[i].requirelevel > global.Level.mining) {
                 tmp_dom.hide();
-            }else{
+            } else {
                 tmp_dom.show();
             }
         }
     }
-    update(){
-        for(let i in oreData){
-            oreData[i].requirelevel <= global.Level.mining?this.ores[i].show():this.ores[i].hide();
+    update() {
+        for (let i in oreData) {
+            oreData[i].requirelevel <= global.Level.mining ? this.ores[i].show() : this.ores[i].hide();
         }
     }
-    render(){
-        for(let i in this.ores){
+    render() {
+        for (let i in this.ores) {
             this.ores[i].render();
         }
     }
-    tick(){
-        for(let i in this.ores){
+    tick() {
+        for (let i in this.ores) {
             this.ores[i].tick();
         }
     }
-    serialize(){
+    serialize() {
         let json_string = [];
-        for(let i in this.ores){
+        for (let i in this.ores) {
             json_string.push(this.ores[i].timer.serialize());
         }
         return json_string;
     }
-    deserialize(data){
-        for(let i in data){
+    deserialize(data) {
+        for (let i in data) {
             this.ores[i].timer.deserialize(data[i]);
         }
     }
 }
-export {Mining};
+export { Mining };

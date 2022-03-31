@@ -1,5 +1,5 @@
 "use strict";
-import {TICK_INTERVAL,global} from './global.js';
+import { TICK_INTERVAL, global } from './global.js';
 class Timer {
     constructor(type, action) {
         this.type = type;
@@ -48,4 +48,4 @@ class Timer {
         this.active = (sData[2] === 1);
     }
 }
-export {Timer};
+export { Timer };

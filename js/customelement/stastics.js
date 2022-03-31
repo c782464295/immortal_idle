@@ -1,5 +1,5 @@
 "use strict";
-class stasTable extends HTMLElement{
+class stasTable extends HTMLElement {
 	constructor() {
 		// 必须的
 		super();

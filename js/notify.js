@@ -93,7 +93,20 @@ function gpNotify(qty) {
 
     }
 }
-
+function itemNotify(itemID, qty) {
+    if (showItemNotify === 1) {
+        clearTimeout(itemNotifyTimer);
+        itemNotifyToProcess.push({
+            itemID: itemID,
+            qty: qty
+        });
+        itemNotifyTimer = setTimeout(function() {
+            for (let i = 0; i < itemNotifyToProcess.length; i++)
+                processItemNotify(itemNotifyToProcess[i].itemID, itemNotifyToProcess[i].qty);
+            itemNotifyToProcess = [];
+        }, 50);
+    }
+}
 function stunNotify(damage) {
     Toastify({
         text: `<div class="text-center"><img class="notification-img" src="${cdnMedia(SKILLS[Skills.Thieving].media)}"><span class="badge badge-warning">${getLangString("TOASTS", "STUNNED")} </span> <span class="badge badge-danger"> ${templateLangString("TOASTS", "MINUS_HP", {

@@ -1,7 +1,7 @@
 if (!String.prototype.format) {
-    String.prototype.format = function() {
+    String.prototype.format = function () {
         var args = arguments;
-        return this.replace(/{(\d+)}/g, function(match, number) {
+        return this.replace(/{(\d+)}/g, function (match, number) {
             return typeof args[number] != 'undefined' ?
                 args[number] :
                 match;
@@ -13,7 +13,7 @@ Map.prototype.swap = function (a, b) {
     var all = [...this],
         indexA = all.findIndex(([v]) => v === a),
         indexB = all.findIndex(([v]) => v === b);
-    
+
     [all[indexA], all[indexB]] = [all[indexB], all[indexA]];
     this.forEach((_, k, m) => m.delete(k));
     all.forEach(([k, v]) => this.set(k, v));
@@ -21,7 +21,7 @@ Map.prototype.swap = function (a, b) {
 
 
 // Warn if overriding existing method
-if(Array.prototype.equals)
+if (Array.prototype.equals)
     console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
 // attach the .equals method to Array's prototype to call it on any array
 Array.prototype.equals = function (array) {
@@ -48,7 +48,7 @@ Array.prototype.equals = function (array) {
     return true;
 }
 // Hide method from for-in loops
-Object.defineProperty(Array.prototype, "equals", {enumerable: false});
+Object.defineProperty(Array.prototype, "equals", { enumerable: false });
 
 /**
  * rando(0,100)
@@ -64,36 +64,36 @@ function isCyclic(obj) {
     var stack = [];
     var stackSet = new Set();
     var detected = false;
-  
+
     function detect(obj, key) {
-      if (obj && typeof obj != 'object') { return; }
-  
-      if (stackSet.has(obj)) { // it's cyclic! Print the object and its locations.
-        var oldindex = stack.indexOf(obj);
-        var l1 = keys.join('.') + '.' + key;
-        var l2 = keys.slice(0, oldindex + 1).join('.');
-        console.log('CIRCULAR: ' + l1 + ' = ' + l2 + ' = ' + obj);
-        console.log(obj);
-        detected = true;
+        if (obj && typeof obj != 'object') { return; }
+
+        if (stackSet.has(obj)) { // it's cyclic! Print the object and its locations.
+            var oldindex = stack.indexOf(obj);
+            var l1 = keys.join('.') + '.' + key;
+            var l2 = keys.slice(0, oldindex + 1).join('.');
+            console.log('CIRCULAR: ' + l1 + ' = ' + l2 + ' = ' + obj);
+            console.log(obj);
+            detected = true;
+            return;
+        }
+
+        keys.push(key);
+        stack.push(obj);
+        stackSet.add(obj);
+        for (var k in obj) { //dive on the object's children
+            if (Object.prototype.hasOwnProperty.call(obj, k)) { detect(obj[k], k); }
+        }
+
+        keys.pop();
+        stack.pop();
+        stackSet.delete(obj);
         return;
-      }
-  
-      keys.push(key);
-      stack.push(obj);
-      stackSet.add(obj);
-      for (var k in obj) { //dive on the object's children
-        if (Object.prototype.hasOwnProperty.call(obj, k)) { detect(obj[k], k); }
-      }
-  
-      keys.pop();
-      stack.pop();
-      stackSet.delete(obj);
-      return;
     }
-  
+
     detect(obj, 'obj');
     return detected;
-  }
+}
 
 
 /* 循环延时 await sleep(<duration>);
@@ -104,21 +104,21 @@ function sleep(ms) {
 }
 
 
-export function deepClone(obj){
+export function deepClone(obj) {
     //in case of premitives
-    if(obj===null || typeof obj !== "object"){
+    if (obj === null || typeof obj !== "object") {
         return obj;
     }
 
     //date objects should be
-    if(obj instanceof Date){
+    if (obj instanceof Date) {
         return new Date(obj.getTime());
     }
 
     //handle Array
-    if(Array.isArray(obj)){
+    if (Array.isArray(obj)) {
         var clonedArr = [];
-        obj.forEach(function(element){
+        obj.forEach(function (element) {
             clonedArr.push(deepClone(element))
         });
         return clonedArr;
@@ -126,8 +126,8 @@ export function deepClone(obj){
 
     //lastly, handle objects
     let clonedObj = new obj.constructor();
-    for(var prop in obj){
-        if(obj.hasOwnProperty(prop)){
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
             clonedObj[prop] = deepClone(obj[prop]);
         }
     }
@@ -156,5 +156,5 @@ Date.prototype.Format = function (fmt) { // author: meizz
         fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
     for (var k in o)
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-            return fmt;
+    return fmt;
 }
