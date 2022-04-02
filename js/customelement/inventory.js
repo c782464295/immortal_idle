@@ -4,7 +4,10 @@ import { global } from '../global.js';
 class Item extends HTMLElement {
     constructor() {
         super();
+        Item.counter = Item.counter + 1 || 1;
+        
     }
+
     connectedCallback() {
 
         
@@ -58,7 +61,11 @@ class Inventory {
             console.log(currentValue);
             let tmp_item = new Item();
             tmp_item.data = index;
+            tippy(tmp_item, {
+                content: `I'm a Tippy ${index} tooltip!`,
+              });
             this.parentDOM.appendChild(tmp_item);
+            
         },this);
 
         Sortable.create(this.parentDOM, {
@@ -117,6 +124,10 @@ class Inventory {
         } else {
 
         }
+
+    }
+
+    render(){
 
     }
 
