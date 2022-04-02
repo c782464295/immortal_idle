@@ -158,6 +158,7 @@ class Ore extends HTMLElement {
             this._checked = true;
             this.bar.value = 100 - 100 * this.timer._ticksLeft / this.timer._maxTicks;
             
+            
         }
 
         this.requirelevel <= global.Level.mining ? this.show() : this.hide();
@@ -259,8 +260,9 @@ class Mining {
         for (let i in this.ores) {
             this.ores[i].render();
         }
-        this.progress.value+=1;
-        this.progress.render();
+        this.progress.max = 100;
+        this.progress.value +=1;
+        
     }
     tick() {
         for (let i in this.ores) {
