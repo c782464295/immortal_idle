@@ -1,43 +1,57 @@
 'use strict'
 import { global } from '../global.js';
+import { items } from '../items.js';
 
 class Item extends HTMLElement {
     constructor() {
         super();
         Item.counter = Item.counter + 1 || 1;
-        
+
     }
 
     connectedCallback() {
 
-        
-    
+
+
     }
-    set data(val){
+    set data(val) {
+        this.innerHTML = `
+        
+        <div class="item"><span>${val.qty}</span></div>
+        `
+        this._data = val;
+
+        this.setAttribute('data-id', val.id);
+    }
+    get data() {
+        return this._data;
+    }
+
+    render() {
         this.innerHTML = `
         <style>
-            .bank-img {
-                width: 64px;
-                height: 64px;
-                pointer-events: none
-            }
-            .bank-item {
-                position: relative;
-                height: 64px;
-                width: 64px;
-                background-image: url(https://cdn.melvor.net/core/v018/assets/media/main/bank_border.png?2);
-                background-size: contain;
-                background-color: transparent;
-                border-radius: 5px;
-            }
+        .bank-img {
+            width: 64px;
+            height: 64px;
+            pointer-events: none
+        }
+        .bank-item {
+            position: relative;
+            height: 64px;
+            width: 64px;
+            background-image: url(https://cdn.melvor.net/core/v018/assets/media/main/bank_border.png?2);
+            background-size: contain;
+            background-color: transparent;
+            border-radius: 5px;
+        }
 
-            item-element{margin: 10px 10px;}
-            
-            .item{position: relative;height: 64px;width: 64px;float: left;background-image: url(https://cdn.melvor.net/core/v018/assets/media/main/bank_border.png?2);background-size: contain;background-color: transparent;border-radius: 5px}
-            .item span{position: absolute;right: 0;bottom: 0;background: rgba(255, 255, 255, .5);border-radius: 2.5px;padding: 1.5px;color: black;}
+        item-element{margin: 10px 10px;}
+        
+        .item{position: relative;height: 64px;width: 64px;float: left;background-image: url(https://cdn.melvor.net/core/v018/assets/media/main/bank_border.png?2);background-size: contain;background-color: transparent;border-radius: 5px}
+        .item span{position: absolute;right: 0;bottom: 0;background: rgba(255, 255, 255, .5);border-radius: 2.5px;padding: 1.5px;color: black;}
 
-        </style>
-        <div class="item"><span>${val}</span></div>
+    </style>
+        <div class="item"><span>${this.data.qty}</span></div>
         `
     }
 }
@@ -46,42 +60,36 @@ customElements.define('item-element', Item);
 
 class Inventory {
     constructor() {
-        this.storage = global.inventory;
+
 
         this.parentDOM = document.getElementById("inventory-area");
         this.items = global.inventory;
-        
-        this.init();
+
+        this.isSort = false;
+
+        this.sortInsant = this.init();
 
     }
 
     init() {
-        
-        this.items.forEach(function(currentValue, index, arr){
-            console.log(currentValue);
-            let tmp_item = new Item();
-            tmp_item.data = index;
-            tippy(tmp_item, {
-                content: `I'm a Tippy ${index} tooltip!`,
-              });
-            this.parentDOM.appendChild(tmp_item);
-            
-        },this);
 
-        Sortable.create(this.parentDOM, {
+
+
+        return Sortable.create(this.parentDOM, {
             group: "inventory",
             animation: 150,
             delay: 200,
             delayOnTouchOnly: true,
             sort: true,
-            onEnd: function(evt) {
+            dataIdAttr: 'data-id',
+            onEnd: function (evt) {
                 tippy.hideAll();
             },
-            onMove: function() {
+            onMove: function () {
                 tippy.hideAll();
-                
+
             },
-            onChoose: function(evt) {
+            onChoose: function (evt) {
                 tippy.hideAll();
             },
             store: {
@@ -92,10 +100,10 @@ class Inventory {
                  */
                 get: function (sortable) {
                     var order = localStorage.getItem(sortable.options.group.name);
-                    if(order) sortable.sort(order.split('|'), false);
+                    if (order) sortable.sort(order.split('|'), false);
                     return order ? order.split('|') : [];
                 },
-        
+
                 /**
                  * Save the order of elements. Called onEnd (when the item is dropped).
                  * @param {Sortable}  sortable
@@ -106,29 +114,55 @@ class Inventory {
                 }
             }
         });
+
     }
+    sortInit() {
+        if (!this.isSort) {
 
-    sort() {
-        this.storage.sort(function (a, b) { return a.sellsFor - b.sellsFor });
-    }
-
-    addItem(itemID, quantity) {
-        if (this.storage.length == 0) {
-            this.storage.push({
-                id: itemID,
-                qty: quantity,
-                tab: tab,
-                sellsFor: 100,
-                locked: false,
-            });
-        } else {
-
+            this.isSort = true;
+            var order = localStorage.getItem(this.sortInsant.options.group.name);
+            if (order) this.sortInsant.sort(order.split('|'), false);
         }
-
+    }
+    close(){
+        var order = this.sortInsant.toArray();
+        localStorage.setItem(this.sortInsant.options.group.name, order.join('|'));
+    }
+    sort() {
+        global.inventory.sort(function (a, b) { return a.sellsFor - b.sellsFor });
     }
 
-    render(){
+    ishasItem(itemID) {
+        this.parentDOM.childNodes
+    }
+    addItem(itemID) {
+        let tmp_item = new Item();
+        tmp_item.data = global.inventory.filter(item => item.id == itemID)[0];
+        tippy(tmp_item, {
+            content: `I'm a Tippy ${items.filter(item => item.id == itemID)[0].description} tooltip!`,
+        });
+        this.parentDOM.appendChild(tmp_item);
+    }
 
+    render() {
+
+        let memory_iventory = global.inventory.map((obj) => obj.id);
+        let dom_iventory = [...this.parentDOM.children].map((obj) => obj.data.id);
+        //console.log(memory_iventory,dom_iventory);
+
+        let needToAdd = memory_iventory.filter(x => !dom_iventory.includes(x));
+        //console.log('add',needToAdd);
+
+        for (let i in needToAdd) {
+            this.addItem(needToAdd[i], i);
+        }
+        
+
+
+        for (let i of [...this.parentDOM.children]) {
+            i.render();
+        }
+        this.sortInit();
     }
 
     serialize() {

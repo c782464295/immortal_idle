@@ -34,6 +34,9 @@ class Game {
         this.achieves = achieve_list;
 
 
+        this.minning = new Mining();
+
+        this.inventory = new Inventory();
 
         ifvisible.on("blur", () => this.pauseGame());
 
@@ -46,14 +49,13 @@ class Game {
                 this.lasttimestamp = new Date().getTime();
                 //this.lasttimestamp = 0;
                 storage.setItem('saveData', this.serialize());
+                this.inventory.close();
 
             }
 
         }
 
-        this.minning = new Mining();
-
-        this.inventory = new Inventory();
+        
 
 
 
@@ -149,6 +151,7 @@ class Game {
     render() {
         //console.log('render');
         this.minning.render();
+        this.inventory.render();
         requestAnimationFrame(() => this.render());
     }
 

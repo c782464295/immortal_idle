@@ -11,10 +11,38 @@ export const items = [
             return getItemName("oka");
         },
         get description() {
+            return getItemName("oka1");
+        },
+        isEquipment: false,
+        sellPrice: 10,
+        media: "assets/media/bank/logs_normal.png?2",
+    },
+    {
+        category: "Woodcutting",
+        type: "Logs",
+        id:2,
+        get name() {
+            return getItemName("oka");
+        },
+        get description() {
+            return getItemName("oka2");
+        },
+        isEquipment: false,
+        sellPrice: 10,
+        media: "assets/media/bank/logs_normal.png?2",
+    },
+    {
+        category: "Woodcutting",
+        type: "Logs",
+        id:3,
+        get name() {
+            return getItemName("oka");
+        },
+        get description() {
             return getItemName("oka");
         },
         isEquipment: false,
-        sellPrice: 1,
+        sellPrice: 10,
         media: "assets/media/bank/logs_normal.png?2",
     },
     {

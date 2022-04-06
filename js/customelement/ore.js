@@ -3,7 +3,8 @@ import { loc } from '../locale.js';
 import { global } from '../global.js';
 import { Timer } from '../timer.js';
 import { gpNotify, toast_warning } from '../notify.js';
-import {ProgressBar} from './progress.js'
+import { ProgressBar } from './progress.js'
+import { items } from '../items.js'
 
 class Ore extends HTMLElement {
     constructor(p_dom) {
@@ -146,9 +147,26 @@ class Ore extends HTMLElement {
         //console.log('mining-ore');
         isNaN(global['pack'].storage[this._id]) ? global['pack'].storage[this._id] = 1 : global['pack'].storage[this._id] += 1;
         //gpNotify(20);
+
+        if (this.isItemExist(this._id)) {
+            let tmp = global.inventory.find(item => item.id == this._id);
+            tmp.qty += 1;
+        } else {
+            global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice});
+        }
+
         this.timer.start(this.baseInterval);
         //toast_warning('333');
     }
+
+    isItemExist(id) {
+        if (global.inventory.find(item => item.id == id) === undefined) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     tick() {
         if (this.timer.isActive) this.timer.tick();
     }
@@ -157,8 +175,8 @@ class Ore extends HTMLElement {
             this.card.setAttribute('aria-checked', String(true));
             this._checked = true;
             this.bar.value = 100 - 100 * this.timer._ticksLeft / this.timer._maxTicks;
-            
-            
+
+
         }
 
         this.requirelevel <= global.Level.mining ? this.show() : this.hide();
@@ -228,9 +246,9 @@ class Mining {
     constructor() {
         this.parentDOM = document.getElementById("ore-area");
         this.ores = [];
-        
+
         this.init();
-        
+
     }
     init() {
         this.progress = new ProgressBar();
@@ -249,7 +267,7 @@ class Mining {
             }
         }
 
-        
+
     }
     update() {
         for (let i in oreData) {
@@ -261,8 +279,8 @@ class Mining {
             this.ores[i].render();
         }
         this.progress.max = 100;
-        this.progress.value +=1;
-        
+        this.progress.value += 1;
+
     }
     tick() {
         for (let i in this.ores) {

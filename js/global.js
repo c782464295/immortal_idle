@@ -13,11 +13,8 @@ export var global = {
     },
 };
 global.inventory = [
-    { id: 15, locked: false, qty: 1, tab: 0, sellsFor: 80 },
-    { id: 17, locked: false, qty: 12, tab: 1, sellsFor: 70 },
-    { id: 11, locked: false, qty: 13, tab: 0, sellsFor: 30 },
-    { id: 12, locked: false, qty: 14, tab: 2, sellsFor: 20 },
-    { id: 13, locked: false, qty: 2, tab: 0, sellsFor: 10 },
+    //{ id: 15, locked: false, qty: 1, tab: 0, sellsFor: 80 },
+
 ];
 global['pack'] = {
     baseBOFmax: 5,
