@@ -152,7 +152,7 @@ class Ore extends HTMLElement {
     tick() {
         if (this.timer.isActive) this.timer.tick();
     }
-    render() {
+    async render() {
         if (this.timer.active) {
             this.card.setAttribute('aria-checked', String(true));
             this._checked = true;
