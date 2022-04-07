@@ -4,10 +4,10 @@ import { TICK_INTERVAL, global, storage } from './global.js';
 import { } from './indexLoc.js';
 import { Mining } from './customelement/ore.js';
 import { Inventory } from './customelement/inventory.js';
-import { achieve_list, checkAchievement } from './achivements.js';
 import { deepClone } from './utility.js';
 import { gpNotify } from './notify.js';
 import { } from './items.js';
+import { achievementManager } from './achivement.js';
 
 
 class Game {
@@ -31,12 +31,13 @@ class Game {
         };
 
         this.global = global;
-        this.achieves = achieve_list;
 
 
         this.minning = new Mining();
 
         this.inventory = new Inventory();
+
+        this.achievementManager = achievementManager;
 
         ifvisible.on("blur", () => this.pauseGame());
 
@@ -134,7 +135,8 @@ class Game {
 
     tick() {
         this.minning.tick();
-        //checkAchievement();
+        this.achievementManager.tick();
+
     }
 
     processTime() {
@@ -223,5 +225,28 @@ $(document).ready(function () {
         document.body.classList.toggle('light-mode');
         global['Settings'].lightmode = !global['Settings'].lightmode;
     });
+
+    const searchBar = document.querySelector('.search-bar input');
+    console.log(searchBar);
+    searchBar.addEventListener("input", function(event) {
+        console.log(this.value);
+        const options = {
+            shouldSort: true,
+            tokenize: true,
+            matchAllTokens: true,
+            findAllMatches: true,
+            threshold: 0.1,
+            location: 0,
+            distance: 100,
+            maxPatternLength: 32,
+            minMatchCharLength: 1,
+            keys: ["name", "qty", "id", "type", "description"],
+        };
+        const fuse = new Fuse(global.inventory,options);
+        let result = fuse.search(this.value);
+        console.log(result);
+    })
+
+
 
 })

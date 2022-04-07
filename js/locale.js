@@ -13,6 +13,10 @@ export function getItemName(itemID) {
     return strings["itemsname"][itemID];
 }
 
+export function getPetsName(itemID) {
+    return strings["petsname"][itemID];
+}
+
 
 function getString(locale) {
     let defaultString;

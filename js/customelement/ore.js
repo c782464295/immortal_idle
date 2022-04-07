@@ -127,6 +127,10 @@ class Ore extends HTMLElement {
     show() {
         this.shadowRoot.querySelector(".card").classList.remove("hidden")
     }
+    addXP(){
+        
+    }
+
     action() {
 
         /*

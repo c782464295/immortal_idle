@@ -164,7 +164,15 @@ class Inventory {
         }
         this.sortInit();
     }
-
+    
+    getTotalMoney() {
+        let totalGP = 0;
+        totalGP = global.inventory.map(x=>x.qty*x.sellsFor).reduce(function (x, y){return x+y});
+        return totalGP;
+    }
+    getMaxSpace() {
+        return 999;
+    }
     serialize() {
 
     }
