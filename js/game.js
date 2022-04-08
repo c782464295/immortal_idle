@@ -8,7 +8,7 @@ import { deepClone } from './utility.js';
 import { gpNotify } from './notify.js';
 import { } from './items.js';
 import { achievementManager } from './achivement.js';
-
+import { statistics } from './statistic.js';
 
 class Game {
     constructor() {
@@ -38,6 +38,7 @@ class Game {
         this.inventory = new Inventory();
 
         this.achievementManager = achievementManager;
+        this.statistics = statistics;
 
         ifvisible.on("blur", () => this.pauseGame());
 

@@ -4,7 +4,8 @@ import { global } from '../global.js';
 import { Timer } from '../timer.js';
 import { gpNotify, toast_warning } from '../notify.js';
 import { ProgressBar } from './progress.js'
-import { items } from '../items.js'
+import { items } from '../items.js';
+import { statistics } from '../statistic.js';
 
 class Ore extends HTMLElement {
     constructor(p_dom) {
@@ -158,6 +159,7 @@ class Ore extends HTMLElement {
         } else {
             global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice});
         }
+        statistics.Mining.inc('totalMining');
 
         this.timer.start(this.baseInterval);
         //toast_warning('333');
