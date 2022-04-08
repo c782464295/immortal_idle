@@ -8,7 +8,7 @@ import { deepClone } from './utility.js';
 import { gpNotify } from './notify.js';
 import { } from './items.js';
 import { achievementManager } from './achivement.js';
-import { statistics } from './statistic.js';
+import { statistics, GameStats } from './statistic.js';
 
 class Game {
     constructor() {
@@ -40,6 +40,8 @@ class Game {
         this.achievementManager = achievementManager;
         this.statistics = statistics;
 
+
+
         ifvisible.on("blur", () => this.pauseGame());
 
         ifvisible.on("focus", () => this.resumeGame());
@@ -57,7 +59,7 @@ class Game {
 
         }
 
-        
+
 
 
 
@@ -66,6 +68,9 @@ class Game {
     init() {
         if (storage.getItem('saveData') !== null) {
             this.deserialize(storage.getItem('saveData'));
+        }
+        if (this.statistics.Gamestats.get(GameStats.AccountCreationDate) === 0) {
+            this.statistics.Gamestats.set(GameStats.AccountCreationDate, Date.now());
         }
 
         console.log(this.global['Settings'].lightmode);
@@ -229,7 +234,7 @@ $(document).ready(function () {
 
     const searchBar = document.querySelector('.search-bar input');
     console.log(searchBar);
-    searchBar.addEventListener("input", function(event) {
+    searchBar.addEventListener("input", function (event) {
         console.log(this.value);
         const options = {
             shouldSort: true,
@@ -243,7 +248,7 @@ $(document).ready(function () {
             minMatchCharLength: 1,
             keys: ["name", "qty", "id", "type", "description"],
         };
-        const fuse = new Fuse(global.inventory,options);
+        const fuse = new Fuse(global.inventory, options);
         let result = fuse.search(this.value);
         console.log(result);
     })
