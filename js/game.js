@@ -8,7 +8,7 @@ import { deepClone } from './utility.js';
 import { gpNotify } from './notify.js';
 import { } from './items.js';
 import { achievementManager } from './achivement.js';
-import { statistics, GameStats } from './statistic.js';
+import { statistics, GameStats, getGameStatsTableData } from './statistic.js';
 
 class Game {
     constructor() {
@@ -160,6 +160,9 @@ class Game {
         //console.log('render');
         this.minning.render();
         this.inventory.render();
+
+        document.querySelector('table-of-data').data = getGameStatsTableData();
+
         requestAnimationFrame(() => this.render());
     }
 

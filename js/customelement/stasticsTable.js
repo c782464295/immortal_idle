@@ -39,6 +39,10 @@ class stasTable extends HTMLElement {
 
 	}
 
+	render(){
+		this.data = 0;
+	}
+
 	_refreshTable(data) { // add/refresh data in table
 		//let tableOfData = this.shadowRoot.children.table;
 		if (data == '' || data == undefined || data == null) {

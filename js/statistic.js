@@ -137,8 +137,8 @@ let statistics = new Statistics();
 
 
 const GameStats = {
-    AccountCreationDate:3,
-    3:'AccountCreationDate'
+    AccountCreationDate: 3,
+    3: 'AccountCreationDate'
 }
 
 
@@ -179,4 +179,19 @@ var ItemStats;
 }
 )(ItemStats || (ItemStats = {}));
 
-export { statistics, GameStats };
+function getGameStatsTableData() {
+    let data = {
+        title:'游戏统计表',
+        headings: [ '游戏时间', 'Place' ],
+        rows: [[
+            GameStats[GameStats.AccountCreationDate],
+            ((Date.now() - statistics.Gamestats.get(GameStats.AccountCreationDate))/36e5).toFixed(2)
+        ],
+        [ '击杀怪物',
+            '3000'
+        ]]
+    };
+    return data;
+}
+
+export { statistics, GameStats, getGameStatsTableData };
