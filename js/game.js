@@ -50,7 +50,10 @@ class Game {
 
             if (event) {
                 event.returnValue = '关闭提示';
-                this.saveGame();
+                this.lasttimestamp = new Date().getTime();
+                //this.lasttimestamp = 0;
+                storage.setItem('saveData', this.serialize());
+                this.inventory.close();
 
             }
 
@@ -165,10 +168,7 @@ class Game {
         requestAnimationFrame(() => this.render());
     }
     saveGame(){
-        this.lasttimestamp = new Date().getTime();
-        //this.lasttimestamp = 0;
         storage.setItem('saveData', this.serialize());
-        this.inventory.close();
         console.log('GameSaved');
     }
 
@@ -193,7 +193,6 @@ class Game {
             }
         }
         let saveString = JSON.stringify(res);
-        console.log(saveString);
         let cipher = btoa(pako.gzip(saveString, { to: 'string' }));
         localStorage.setItem('saveData', cipher);
         return cipher;

@@ -152,10 +152,10 @@ class Ore extends HTMLElement {
         //console.log('mining-ore');
         isNaN(global['pack'].storage[this._id]) ? global['pack'].storage[this._id] = 1 : global['pack'].storage[this._id] += 1;
         //gpNotify(20);
-
+        let qty = 1;
         if (this.isItemExist(this._id)) {
             let tmp = global.inventory.find(item => item.id == this._id);
-            tmp.qty += 1;
+            tmp.qty += qty;
         } else {
             global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice});
         }

@@ -124,7 +124,7 @@ class Inventory {
             if (order) this.sortInsant.sort(order.split('|'), false);
         }
     }
-    close(){
+    close() {
         var order = this.sortInsant.toArray();
         localStorage.setItem(this.sortInsant.options.group.name, order.join('|'));
     }
@@ -133,13 +133,21 @@ class Inventory {
     }
 
     ishasItem(itemID) {
-        this.parentDOM.childNodes
+        this.parentDOM.childNodes;
     }
     addItem(itemID) {
         let tmp_item = new Item();
         tmp_item.data = global.inventory.filter(item => item.id == itemID)[0];
         tippy(tmp_item, {
+            placement: "top",
+            allowHTML: true,
+            interactive: false,
+            animation: false,
+            Duration: 0,
             content: `I'm a Tippy ${items.filter(item => item.id == itemID)[0].description} tooltip!`,
+            //onShow(instance) {
+            //    instance.setContent(console.log(this));
+            //},
         });
         this.parentDOM.appendChild(tmp_item);
     }
@@ -156,7 +164,7 @@ class Inventory {
         for (let i in needToAdd) {
             this.addItem(needToAdd[i], i);
         }
-        
+
 
 
         for (let i of [...this.parentDOM.children]) {
@@ -164,10 +172,10 @@ class Inventory {
         }
         this.sortInit();
     }
-    
+
     getTotalMoney() {
         let totalGP = 0;
-        totalGP = global.inventory.map(x=>x.qty*x.sellsFor).reduce(function (x, y){return x+y});
+        totalGP = global.inventory.map(x => x.qty * x.sellsFor).reduce(function (x, y) { return x + y });
         return totalGP;
     }
     getMaxSpace() {
