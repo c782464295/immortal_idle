@@ -2,6 +2,9 @@ export const TICK_INTERVAL = 50;
 export var save = window.localStorage;
 export var global = {
     inventory: [],
+    options: {
+        disableFlyoutLabels: false
+    },
     serialize() {
         return JSON.stringify(this);
     },

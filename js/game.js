@@ -50,16 +50,13 @@ class Game {
 
             if (event) {
                 event.returnValue = '关闭提示';
-                this.lasttimestamp = new Date().getTime();
-                //this.lasttimestamp = 0;
-                storage.setItem('saveData', this.serialize());
-                this.inventory.close();
+                this.saveGame();
 
             }
 
         }
 
-
+        
 
 
 
@@ -113,6 +110,8 @@ class Game {
     startMainLoop() {
         console.log('start main loop');
         this.loopTimer = window.setInterval(this.loop.bind(this), TICK_INTERVAL);
+        // 定时保存
+        window.setInterval(this.saveGame.bind(this),10000);
         this.loopStarted = true;
         this.render();
     }
@@ -164,6 +163,13 @@ class Game {
         document.querySelector('table-of-data').data = getGameStatsTableData();
 
         requestAnimationFrame(() => this.render());
+    }
+    saveGame(){
+        this.lasttimestamp = new Date().getTime();
+        //this.lasttimestamp = 0;
+        storage.setItem('saveData', this.serialize());
+        this.inventory.close();
+        console.log('GameSaved');
     }
 
     serialize() {
@@ -226,7 +232,9 @@ $(document).ready(function () {
     game.startMainLoop();
 
     game.debug(true);
-    console.log(game.serialize());
+
+
+    
     //game.deserialize('');
     // 明暗模式动态
     const toggleButton1 = document.querySelector('.header-profile svg');
