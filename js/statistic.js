@@ -45,6 +45,53 @@ class StatisticsTracker{
 
 }
 
+class MappedStatTracker {
+    constructor() {
+        this.statsMap = new Map();
+    }
+    add(id, statID, qty) {
+        let tracker = this.statsMap.get(id);
+        if (tracker === undefined) {
+            tracker = new StatisticsTracker();
+            this.statsMap.set(id, tracker);
+        }
+        tracker.add(statID, qty);
+    }
+    get(id, statID) {
+        const tracker = this.statsMap.get(id);
+        if (tracker === undefined) {
+            return 0;
+        }
+        return tracker.get(statID);
+    }
+    getTracker(id) {
+        return this.statsMap.get(id) || new StatTracker();
+    }
+    toJSON(){
+        return {
+            statistics:[...this.statsMap],
+        }
+    }
+    serialize() {
+        return JSON.stringify(this);
+    }
+    deserialize(data) {
+        this.statsMap.clear();
+        //console.log(JSON.parse(data));
+        JSON.parse(data)["statistics"].forEach((item,index,array)=>{
+
+            let tracker = new StatisticsTracker();
+            this.statsMap.set(item[0], tracker);
+    
+            let statsItem = item[1]["statistics"];
+            console.log(statsItem);
+            statsItem.forEach((stat,index,array)=>{
+                tracker.add(stat[0], stat[1]);
+            })
+            
+        })
+    }
+}
 
 
 class Statistics{
@@ -53,6 +100,8 @@ class Statistics{
 		this.Woodcutting = new StatisticsTracker();
 		this.Fishing = new StatisticsTracker();
 		this.Firemaking = new StatisticsTracker();
+
+        this.Items = new MappedStatTracker();
     
     }
     serialize(){
@@ -61,6 +110,8 @@ class Statistics{
             Woodcutting:this.Woodcutting.serialize(),
             Fishing:this.Fishing.serialize(),
             Firemaking:this.Firemaking.serialize(),
+
+            Items:this.Items.serialize(),
         }
     }
     deserialize(data){
@@ -68,6 +119,8 @@ class Statistics{
         this.Woodcutting.deserialize(data['Woodcutting']);
         this.Fishing.deserialize(data['Fishing']);
         this.Firemaking.deserialize(data['Firemaking']);
+
+        this.Items.deserialize(data['Items']);
     }
 }
 
