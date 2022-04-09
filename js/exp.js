@@ -1,8 +1,10 @@
 "use strict";
+import { MAX_LEVEL } from './global.js';
 class Exp {
-    constructor() {
+    constructor(maxLevel) {
         this.table = [0];
         this.xpSum = 0;
+        this.maxLevel = maxLevel;
     }
     equate(level) {
         return Math.floor(level + 300 * Math.pow(2, level / 7));
@@ -18,15 +20,16 @@ class Exp {
             return this.table[level - 1];
         }
     }
-    xp_to_level(xp, level=1) {
-        while (this.level_to_xp(level) < xp)
+    xp_to_level(xp, level = 0) {
+        do {
             level++;
-            if(level > 99) return level;
+            if (level > this.maxLevel) break;
+        } while (this.level_to_xp(level) < xp);
         if (xp <= 0)
             level = 1;
-        return level;
+        return level-1;
     }
 }
-const exp = new Exp();
+const exp = new Exp(MAX_LEVEL);
 
-export {exp};
+export { exp };

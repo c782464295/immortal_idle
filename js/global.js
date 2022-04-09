@@ -1,6 +1,7 @@
 'use strict'
 import { exp } from './exp.js';
 export const TICK_INTERVAL = 50;
+export const MAX_LEVEL = 99;
 export var save = window.localStorage;
 export var global = {
     inventory: [],//{ id: 15, locked: false, qty: 1, tab: 0, sellsFor: 80 },
