@@ -7,14 +7,14 @@ import { ProgressBar } from './progress.js'
 import { items } from '../items.js';
 import { statistics } from '../statistic.js';
 
-class Ore extends HTMLElement {
+class Tree extends HTMLElement {
     constructor(p_dom) {
         super();
         this._checked = undefined;
 
         this.p_dom = p_dom;
 
-        this.timer = new Timer('mining', this.action.bind(this));
+        this.timer = new Timer('woodcut', this.action.bind(this));
 
 
 
@@ -196,9 +196,9 @@ class Ore extends HTMLElement {
 }
 
 
-customElements.define('ore-element', Ore);
+customElements.define('tree-element', Tree);
 
-var oreData = [
+var TreeData = [
     {
         id: 1,
         name: loc('tree0'),
@@ -245,10 +245,10 @@ var oreData = [
 
 
 
-class Mining {
+class WoodCutting {
     constructor() {
-        this.parentDOM = document.getElementById("ore-area");
-        this.ores = [];
+        this.parentDOM = document.getElementById("woodcutting-area");
+        this.trees = [];
 
         this.init();
 
@@ -257,13 +257,13 @@ class Mining {
         this.progress = new ProgressBar();
         this.parentDOM.parentNode.insertBefore(this.progress, this.parentDOM);
 
-        for (let i in oreData) {
-            let tmp_dom = new Ore(this.parentDOM);
+        for (let i in TreeData) {
+            let tmp_dom = new Tree(this.parentDOM);
 
-            tmp_dom.data = oreData[i];
+            tmp_dom.data = TreeData[i];
             this.parentDOM.appendChild(tmp_dom);
-            this.ores.push(tmp_dom);
-            if (oreData[i].requirelevel > global.NonBattleSkill.miningLevel) {
+            this.trees.push(tmp_dom);
+            if (TreeData[i].requirelevel > global.NonBattleSkill.miningLevel) {
                 tmp_dom.hide();
             } else {
                 tmp_dom.show();
@@ -273,34 +273,34 @@ class Mining {
 
     }
     update() {
-        for (let i in oreData) {
-            oreData[i].requirelevel <= global.NonBattleSkill.miningLevel ? this.ores[i].show() : this.ores[i].hide();
+        for (let i in TreeData) {
+            TreeData[i].requirelevel <= global.NonBattleSkill.miningLevel ? this.trees[i].show() : this.trees[i].hide();
         }
     }
     render() {
-        for (let i in this.ores) {
-            this.ores[i].render();
+        for (let i in this.trees) {
+            this.trees[i].render();
         }
         this.progress.max = 100;
         this.progress.value += 1;
 
     }
     tick() {
-        for (let i in this.ores) {
-            this.ores[i].tick();
+        for (let i in this.trees) {
+            this.trees[i].tick();
         }
     }
     serialize() {
         let json_string = [];
-        for (let i in this.ores) {
-            json_string.push(this.ores[i].timer.serialize());
+        for (let i in this.trees) {
+            json_string.push(this.trees[i].timer.serialize());
         }
         return json_string;
     }
     deserialize(data) {
         for (let i in data) {
-            this.ores[i].timer.deserialize(data[i]);
+            this.trees[i].timer.deserialize(data[i]);
         }
     }
 }
-export { Mining };
+export { WoodCutting };

@@ -4,6 +4,7 @@ import { TICK_INTERVAL, global, storage } from './global.js';
 import { } from './indexLoc.js';
 import { } from './items.js';
 import { Mining } from './customelement/ore.js';
+import { WoodCutting } from './customelement/woods.js';
 import { Inventory } from './customelement/inventory.js';
 import { deepClone } from './utility.js';
 import { gpNotify } from './notify.js';
@@ -35,6 +36,7 @@ class Game {
 
 
         this.minning = new Mining();
+        this.WoodCutting = new WoodCutting();
 
         this.inventory = new Inventory();
 
@@ -144,6 +146,7 @@ class Game {
 
     tick() {
         this.minning.tick();
+        this.WoodCutting.tick();
         this.achievementManager.tick();
 
     }
@@ -162,6 +165,7 @@ class Game {
     render() {
         //console.log('render');
         this.minning.render();
+        this.WoodCutting.render();
         this.inventory.render();
 
         document.querySelector('table-of-data').data = getGameStatsTableData();
@@ -199,6 +203,24 @@ class Game {
         return cipher;
 
 
+    }
+    printSaveString(){
+        let res = {};
+        for (let [k, v] of Object.entries(this)) {
+
+            if (v.serialize == undefined) {
+
+                if (typeof (v) != 'object') {
+                    res[k.toString()] = v;
+                }
+
+
+            } else {
+                res[k.toString()] = v.serialize();
+            }
+        }
+        let saveString = JSON.stringify(res);
+        return res;
     }
     deserialize(data) {
         let cipher = pako.ungzip(atob(data), { to: 'string' })
