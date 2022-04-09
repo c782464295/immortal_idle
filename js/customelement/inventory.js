@@ -144,7 +144,7 @@ class Inventory {
             interactive: false,
             animation: false,
             Duration: 0,
-            content: `I'm a Tippy ${items.filter(item => item.id == itemID)[0].description} tooltip!`,
+            content: `<img class="bank-img m-1" src="${items.filter(item => item.id == itemID)[0].media} ">I'm a Tippy ${items.filter(item => item.id == itemID)[0].description} tooltip!`,
             //onShow(instance) {
             //    instance.setContent(console.log(this));
             //},

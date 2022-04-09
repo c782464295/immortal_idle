@@ -2,11 +2,12 @@
 import { loc } from './locale.js';
 import { TICK_INTERVAL, global, storage } from './global.js';
 import { } from './indexLoc.js';
+import { } from './items.js';
 import { Mining } from './customelement/ore.js';
 import { Inventory } from './customelement/inventory.js';
 import { deepClone } from './utility.js';
 import { gpNotify } from './notify.js';
-import { } from './items.js';
+
 import { achievementManager } from './achivement.js';
 import { statistics, GameStats, getGameStatsTableData } from './statistic.js';
 

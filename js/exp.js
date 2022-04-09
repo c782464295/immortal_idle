@@ -23,10 +23,10 @@ class Exp {
             level++;
             if(level > 99) return level;
         if (xp <= 0)
-            level = 2;
+            level = 1;
         return level;
     }
 }
 const exp = new Exp();
 
-export default exp;
+export {exp};

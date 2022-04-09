@@ -15,7 +15,7 @@ export const items = [
         },
         isEquipment: false,
         sellPrice: 10,
-        media: "assets/media/bank/logs_normal.png?2",
+        media: "assets/svg/trees/normal_tree.svg",
     },
     {
         category: "Woodcutting",
@@ -29,7 +29,21 @@ export const items = [
         },
         isEquipment: false,
         sellPrice: 10,
-        media: "assets/media/bank/logs_normal.png?2",
+        media: "assets/svg/trees/oak_tree.svg",
+    },
+    {
+        category: "Woodcutting",
+        type: "Logs",
+        id:15,
+        get name() {
+            return getItemName("oka");
+        },
+        get description() {
+            return getItemName("oka2");
+        },
+        isEquipment: false,
+        sellPrice: 10,
+        media: "assets/svg/trees/oak_tree.svg",
     },
     {
         category: "Woodcutting",
@@ -43,7 +57,7 @@ export const items = [
         },
         isEquipment: false,
         sellPrice: 10,
-        media: "assets/media/bank/logs_normal.png?2",
+        media: "assets/svg/trees/willow_tree.svg",
     },
     {
         category: "Raw Fish",

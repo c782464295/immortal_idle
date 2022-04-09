@@ -22,6 +22,7 @@ class Ore extends HTMLElement {
     set data(val) {
         this.baseInterval = val.baseInterval;
         this.requirelevel = val.requirelevel;
+        this.baseExperience = val.baseExperience;
         this._id = val.id;
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.innerHTML = `
@@ -161,6 +162,7 @@ class Ore extends HTMLElement {
         }
         statistics.Mining.inc('totalMining');
 
+        global.NonBattleSkill.miningExp += this.baseExperience;
         this.timer.start(this.baseInterval);
         //toast_warning('333');
     }
@@ -185,7 +187,7 @@ class Ore extends HTMLElement {
 
         }
 
-        this.requirelevel <= global.Level.mining ? this.show() : this.hide();
+        this.requirelevel <= global.NonBattleSkill.miningLevel ? this.show() : this.hide();
     }
     get isChecked() {
         return this._checked;
@@ -196,21 +198,6 @@ class Ore extends HTMLElement {
 
 customElements.define('ore-element', Ore);
 
-/* let card = new Card('123')
-*  card.data = {png:'img_avatar',id:'2'}
-*/
-
-
-
-/**
- * //假设listener注册在window对象上
-window.addEventListener('get_ore', function(event){
-    // 如果是CustomEvent，传入的数据在event.detail中
-    console.log('得到数据为：', event.detail);
-    // ...后续相关操作
-});
-
- */
 var oreData = [
     {
         id: 1,
@@ -225,9 +212,9 @@ var oreData = [
     {
         id: 2,
         name: loc('tree1'),
-        levelRequired: 1,
+        levelRequired: 5,
         baseInterval: 1000,
-        baseExperience: 10,
+        baseExperience: 20,
         media: './assets/svg/trees/oak_tree.svg',
         description: '木质间透出条条金丝，好像蕴含着不可小觑的力量',
         requirelevel: 2
@@ -235,12 +222,12 @@ var oreData = [
     {
         id: 3,
         name: loc('tree1'),
-        levelRequired: 1,
+        levelRequired: 10,
         baseInterval: 1000,
         baseExperience: 10,
         media: './assets/svg/trees/willow_tree.svg',
-        description: '木质间透出条条金丝，好像蕴含着不可小觑的力量',
-        requirelevel: 1
+        description: '天才地宝',
+        requirelevel: 10
     },
 
 ];
@@ -266,7 +253,7 @@ class Mining {
             tmp_dom.data = oreData[i];
             this.parentDOM.appendChild(tmp_dom);
             this.ores.push(tmp_dom);
-            if (oreData[i].requirelevel > global.Level.mining) {
+            if (oreData[i].requirelevel > global.NonBattleSkill.miningLevel) {
                 tmp_dom.hide();
             } else {
                 tmp_dom.show();
@@ -277,7 +264,7 @@ class Mining {
     }
     update() {
         for (let i in oreData) {
-            oreData[i].requirelevel <= global.Level.mining ? this.ores[i].show() : this.ores[i].hide();
+            oreData[i].requirelevel <= global.NonBattleSkill.miningLevel ? this.ores[i].show() : this.ores[i].hide();
         }
     }
     render() {
