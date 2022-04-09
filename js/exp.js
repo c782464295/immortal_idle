@@ -1,5 +1,5 @@
 "use strict";
-import { MAX_LEVEL } from './global.js';
+export const MAX_LEVEL = 99;
 class Exp {
     constructor(maxLevel) {
         this.table = [0];
