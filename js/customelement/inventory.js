@@ -8,21 +8,28 @@ class Item extends HTMLElement {
         super();
         Item.counter = Item.counter + 1 || 1;
         this.container = document.createElement("div");
-        this.container.className = "item new-item-glow";
+        this.container.className = "item";
         this.text = document.createElement("span");
         this.img = document.createElement("img");
         this.img.className = "item-img";
+        
     }
 
     connectedCallback() {
         this.container.appendChild(this.img);
         this.container.appendChild(this.text);
         this.appendChild(this.container);
+        
     }
 
     set data(val) {
         this._data = val;
         this.setAttribute('data-id', val.id);
+        this.addEventListener("click", function(){
+            console.log('lci');
+            global.itemsAlreadyFound.push(val.id);
+            this.removeGlow();
+        });
     }
     get data() {
         return this._data;
@@ -33,6 +40,13 @@ class Item extends HTMLElement {
 
         this.img.src = item.media;
         this.text.innerText = beautify(this.data.qty);
+    }
+
+    addGlow(){
+        this.container.classList.add("new-item-glow");
+    }
+    removeGlow(){
+        this.container.classList.remove("new-item-glow");
     }
 }
 
@@ -131,6 +145,7 @@ class Inventory {
                         <img src="${items.filter(item => item.id == itemID)[0].media}" width="50px" height="50px">
                     </th>
                     <th>
+                        ${items.filter(item => item.id == itemID)[0].description}<br/>
                         ${items.filter(item => item.id == itemID)[0].description}
                     </th>
                 </tr>
@@ -141,6 +156,7 @@ class Inventory {
             //},
         });
         this.parentDOM.appendChild(tmp_item);
+        return tmp_item;
     }
 
     render() {
@@ -153,7 +169,11 @@ class Inventory {
         //console.log('add',needToAdd);
 
         for (let i in needToAdd) {
-            this.addItem(needToAdd[i], i);
+            let item = this.addItem(needToAdd[i], i);
+
+            if(!global.itemsAlreadyFound.includes(needToAdd[i])){
+                item.addGlow();
+            }
         }
 
 

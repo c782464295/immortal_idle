@@ -11,6 +11,7 @@ export var global = {
         locale: 'zh-CN',
         lightmode: 1,
     },
+    itemsAlreadyFound: [],
     currentAction:'',
     NonBattleSkill : new Proxy({
         miningExp: 0,
@@ -30,7 +31,6 @@ export var global = {
         prayLevel: 1
     },{
         set : function(target, attr, value){
-            console.log(target,attr,value);
             if(attr.indexOf('Exp')!=-1){
                
                 target[attr.replace('Exp','Level')] = exp.xp_to_level(value);
@@ -90,9 +90,6 @@ global['PlayerStates'] = {
 
 
 
-global['items'] = {
-    itemsAlreadyFound: []
-}
 
 
 
