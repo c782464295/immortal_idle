@@ -11,7 +11,7 @@ export var global = {
         locale: 'zh-CN',
         lightmode: 1,
     },
-
+    currentAction:'',
     NonBattleSkill : new Proxy({
         miningExp: 0,
         woodcuttingExp: 0,
@@ -88,9 +88,6 @@ global['PlayerStates'] = {
     XP: 0,
 };
 
-global['Active'] = {
-    currentAction: 0,
-}
 
 
 global['items'] = {

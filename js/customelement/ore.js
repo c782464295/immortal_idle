@@ -103,8 +103,11 @@ class Ore extends HTMLElement {
         for (let e in children) {
 
             if (children[e].isChecked == true && children[e] != this) {
-                return
+                return;
             }
+        }
+        if (global.currentAction != 'Mining' && global.currentAction != '' ){
+                return;
         }
         this.timer.isActive ? this.timer.stop() : this.timer.start(this.baseInterval);
 
@@ -113,6 +116,8 @@ class Ore extends HTMLElement {
         const isPressed = event.currentTarget.getAttribute('aria-checked') === 'true';
         event.currentTarget.setAttribute('aria-checked', String(!isPressed));
         this._checked = Boolean(!isPressed);
+
+        isPressed ? global.currentAction = '' : global.currentAction = 'Mining';
 
     }
     static get observedAttributes() {// (3)
@@ -129,8 +134,8 @@ class Ore extends HTMLElement {
     show() {
         this.shadowRoot.querySelector(".card").classList.remove("hidden")
     }
-    addXP(){
-        
+    addXP() {
+
     }
 
     action() {
@@ -158,7 +163,7 @@ class Ore extends HTMLElement {
             let tmp = global.inventory.find(item => item.id == this._id);
             tmp.qty += qty;
         } else {
-            global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice});
+            global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice });
         }
         statistics.Mining.inc('totalMining');
 
@@ -206,7 +211,7 @@ var oreData = [
         baseInterval: 2500,
         baseExperience: 10,
         media: './assets/svg/trees/normal_tree.svg',
-        description: '来自幽暗森林的奇异木材，可以成为诸多材料的原料',
+        description: '矿石1',
         requirelevel: 1
     },
     {
@@ -216,7 +221,7 @@ var oreData = [
         baseInterval: 1000,
         baseExperience: 20,
         media: './assets/svg/trees/oak_tree.svg',
-        description: '木质间透出条条金丝，好像蕴含着不可小觑的力量',
+        description: '矿石12',
         requirelevel: 2
     },
     {
@@ -226,7 +231,7 @@ var oreData = [
         baseInterval: 1000,
         baseExperience: 10,
         media: './assets/svg/trees/willow_tree.svg',
-        description: '天才地宝',
+        description: '矿石13',
         requirelevel: 10
     },
     {

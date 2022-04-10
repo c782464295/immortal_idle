@@ -103,8 +103,11 @@ class Tree extends HTMLElement {
         for (let e in children) {
 
             if (children[e].isChecked == true && children[e] != this) {
-                return
+               return;
             }
+        }
+        if (global.currentAction != 'woodcutting' && global.currentAction != ''){
+            return;
         }
         this.timer.isActive ? this.timer.stop() : this.timer.start(this.baseInterval);
 
@@ -113,6 +116,8 @@ class Tree extends HTMLElement {
         const isPressed = event.currentTarget.getAttribute('aria-checked') === 'true';
         event.currentTarget.setAttribute('aria-checked', String(!isPressed));
         this._checked = Boolean(!isPressed);
+
+        isPressed ? global.currentAction = '' : global.currentAction = 'woodcutting';
 
     }
     static get observedAttributes() {// (3)
@@ -129,8 +134,8 @@ class Tree extends HTMLElement {
     show() {
         this.shadowRoot.querySelector(".card").classList.remove("hidden")
     }
-    addXP(){
-        
+    addXP() {
+
     }
 
     action() {
@@ -158,7 +163,7 @@ class Tree extends HTMLElement {
             let tmp = global.inventory.find(item => item.id == this._id);
             tmp.qty += qty;
         } else {
-            global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice});
+            global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice });
         }
         statistics.Mining.inc('totalMining');
 
