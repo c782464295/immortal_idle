@@ -1,7 +1,8 @@
 'use strict'
-
+import { items } from './items.js';
+import { global } from './global.js';
 // 目前会导致显示问题
-function pop_warning(data){
+function pop_warning(data) {
     Swal.fire({
         position: 'center',
         icon: 'success',
@@ -14,7 +15,7 @@ function pop_warning(data){
 
 
 
-function toast_warning(data){
+function toast_warning(data) {
     toastr.options = {
         "closeButton": false,
         "debug": false,
@@ -36,8 +37,8 @@ function toast_warning(data){
 }
 // 自定义
 let SwalLocale = Swal.mixin({
-    didOpen: ()=>{
-        
+    didOpen: () => {
+
     }
     ,
     customClass: {
@@ -86,7 +87,7 @@ function gpNotify(qty) {
             style: {
                 background: "transparent",
             },
-            onClick: function(){}, // Callback after click
+            onClick: function () { }, // Callback after click
             stopOnFocus: false,
             escapeMarkup: false,
         }).showToast();
@@ -100,16 +101,31 @@ function itemNotify(itemID, qty) {
             itemID: itemID,
             qty: qty
         });
-        itemNotifyTimer = setTimeout(function() {
+        itemNotifyTimer = setTimeout(function () {
             for (let i = 0; i < itemNotifyToProcess.length; i++)
                 processItemNotify(itemNotifyToProcess[i].itemID, itemNotifyToProcess[i].qty);
             itemNotifyToProcess = [];
         }, 50);
     }
 }
+
+function processItemNotify(itemID, qty) {
+    let item = items.filter(function (currentValue) { return currentValue.id == itemID})[0];
+    Toastify({
+        text: `<img src="${item.media}"/><span class="badge-success">+${qty}&nbsp&nbsp(${global.inventory.filter(function (currentValue) { return currentValue.id == itemID})[0].qty})</span>`,
+        duration: 2000,
+        gravity: "bottom",
+        position: "center",
+        backgroundColor: "transparent",
+        stopOnFocus: false,
+        escapeMarkup: false,
+        className: "itemNotify"
+    }).showToast();
+}
+
 function stunNotify(damage) {
     Toastify({
-        text: `<div class="text-center"><img class="notification-img" src="${cdnMedia(SKILLS[Skills.Thieving].media)}"><span class="badge badge-warning">${getLangString("TOASTS", "STUNNED")} </span> <span class="badge badge-danger"> ${templateLangString("TOASTS", "MINUS_HP", {
+        text: `<div class="text-center"><img class="notification-img" src="${cdnMedia(SKILLS[Skills.Thieving].media)}"><span class="badge-warning">${getLangString("TOASTS", "STUNNED")} </span> <span class="badge badge-danger"> ${templateLangString("TOASTS", "MINUS_HP", {
             damage: `${damage}`
         })}</span></div>`,
         duration: 2000,
@@ -148,4 +164,4 @@ class NotificationQueue {
     }
 }
 
-export {pop_warning,toast_warning,gpNotify,NotificationQueue};
+export { pop_warning, toast_warning, gpNotify, itemNotify, processItemNotify, NotificationQueue };

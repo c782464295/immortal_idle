@@ -220,6 +220,7 @@ class Game {
             }
         }
         let saveString = JSON.stringify(res);
+        console.log(saveString);
         return res;
     }
     deserialize(data) {

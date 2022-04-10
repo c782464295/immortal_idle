@@ -30,8 +30,8 @@ class Ore extends HTMLElement {
         .card{
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
-            width: 350px;
-            height: 300px;
+            width: 90%;
+            height: 280px;
             display:inline-block;
             margin:20px;
             text-align:center;
@@ -207,44 +207,93 @@ var oreData = [
     {
         id: 1,
         name: loc('tree0'),
-        levelRequired: 1,
-        baseInterval: 2500,
-        baseExperience: 10,
-        media: './assets/ores/rock_coal.svg',
         description: '矿石1',
-        requirelevel: 1
+        baseExperience: 7,
+        baseInterval: 5000,
+        requirelevel: 1,
+        media: './assets/ores/rock_coal.svg'
     },
     {
         id: 2,
-        name: loc('tree1'),
-        levelRequired: 5,
-        baseInterval: 1000,
-        baseExperience: 20,
+        name: loc('tree0'),
+        description: '矿石2',
+        baseExperience: 7,
+        baseInterval: 5000,
+        requirelevel: 1,
         media: './assets/ores/rock_adamantite.svg',
-        description: '矿石12',
-        requirelevel: 2
     },
     {
         id: 3,
-        name: loc('tree1'),
-        levelRequired: 10,
-        baseInterval: 1000,
-        baseExperience: 10,
+        name: loc('tree0'),
+        description: '矿石3',
+        baseExperience: 18,
+        baseInterval: 10000,
+        requirelevel: 15,
         media: './assets/ores/rock_copper.svg',
-        description: '矿石13',
-        requirelevel: 10
     },
     {
-        id: 3,
-        name: loc('tree1'),
-        levelRequired: 10,
-        baseInterval: 1000,
-        baseExperience: 10,
+        id: 4,
+        name: loc('tree0'),
+        description: '矿石4',
+        baseExperience: 25,
+        baseInterval: 10000,
+        requirelevel: 30,
         media: './assets/ores/rock_dragonite.svg',
-        description: '天才地宝之二',
-        requirelevel: 50
     },
-
+    {
+        id: 5,
+        name: loc('tree0'),
+        description: '矿石4',
+        baseExperience: 42,
+        baseInterval: 15000,
+        requirelevel: 30,
+        media: './assets/ores/rock_dragonite.svg',
+    },
+    {
+        id: 6,
+        name: loc('tree0'),
+        description: '矿石4',
+        baseExperience: 51,
+        baseInterval: 15000,
+        requirelevel: 40,
+        media: './assets/ores/rock_dragonite.svg',
+    },
+    {
+        id: 7,
+        name: loc('tree0'),
+        description: '矿石4',
+        baseExperience: 64,
+        baseInterval: 20000,
+        requirelevel: 50,
+        media: './assets/ores/rock_dragonite.svg',
+    },
+    {
+        id: 8,
+        name: loc('tree0'),
+        description: '矿石4',
+        baseExperience: 105,
+        baseInterval: 30000,
+        requirelevel: 70,
+        media: './assets/ores/rock_dragonite.svg',
+    },
+    {
+        id: 9,
+        name: loc('tree0'),
+        description: '矿石4',
+        baseExperience: 225,
+        baseInterval: 60000,
+        requirelevel: 80,
+        media: './assets/ores/rock_dragonite.svg',
+    },
+    {
+        id: 10,
+        name: loc('tree0'),
+        description: '矿石4',
+        baseExperience: 525,
+        baseInterval: 120000,
+        requirelevel: 95,
+        media: './assets/ores/rock_dragonite.svg',
+    }
 ];
 
 

@@ -1181,3 +1181,25 @@ item-element {
     0 0 7px 3px #f0f, /* middle magenta */
     0 0 10px 7px #0ff; /* outer cyan */
 }
+
+
+.itemNotify img{
+    height: 32px;
+    width: 32px;
+    margin-right: 4px
+}
+
+
+.badge-success {
+    color: #fff;
+    background-color: #30c78d;
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+}

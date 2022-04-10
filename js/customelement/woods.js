@@ -2,7 +2,7 @@
 import { loc } from '../locale.js';
 import { global } from '../global.js';
 import { Timer } from '../timer.js';
-import { gpNotify, toast_warning } from '../notify.js';
+import { processItemNotify } from '../notify.js';
 import { ProgressBar } from './progress.js'
 import { items } from '../items.js';
 import { statistics } from '../statistic.js';
@@ -30,8 +30,8 @@ class Tree extends HTMLElement {
         .card{
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
-            width: 350px;
-            height: 300px;
+            width: 90%;
+            height: 280px;
             display:inline-block;
             margin:20px;
             text-align:center;
@@ -103,10 +103,10 @@ class Tree extends HTMLElement {
         for (let e in children) {
 
             if (children[e].isChecked == true && children[e] != this) {
-               return;
+                return;
             }
         }
-        if (global.currentAction != 'woodcutting' && global.currentAction != ''){
+        if (global.currentAction != 'woodcutting' && global.currentAction != '') {
             return;
         }
         this.timer.isActive ? this.timer.stop() : this.timer.start(this.baseInterval);
@@ -139,25 +139,8 @@ class Tree extends HTMLElement {
     }
 
     action() {
-
-        /*
-            let myEvent = new CustomEvent('ce', {
-                bubbles: true,
-                cancelable: false,
-                composed: true,
-                detail:{
-                    typename: "cut",
-                    name: this.data.id,
-                    num:1// 将需要传递的数据写在detail中，以便在EventListener中获取
-                    // 数据将会在event.detail中得到
-                },
-            });
-            this.dispatchEvent(myEvent);
-
-        */
-        //console.log('mining-ore');
         isNaN(global['pack'].storage[this._id]) ? global['pack'].storage[this._id] = 1 : global['pack'].storage[this._id] += 1;
-        //gpNotify(20);
+
         let qty = 1;
         if (this.isItemExist(this._id)) {
             let tmp = global.inventory.find(item => item.id == this._id);
@@ -165,11 +148,11 @@ class Tree extends HTMLElement {
         } else {
             global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice });
         }
-        statistics.Mining.inc('totalMining');
-
-        global.NonBattleSkill.miningExp += this.baseExperience;
+        statistics.Woodcutting.inc('totalWoodcutting');
+        processItemNotify(this._id, qty);
+        global.NonBattleSkill.woodcuttingExp += this.baseExperience;
         this.timer.start(this.baseInterval);
-        //toast_warning('333');
+
     }
 
     isItemExist(id) {
@@ -192,7 +175,7 @@ class Tree extends HTMLElement {
 
         }
 
-        this.requirelevel <= global.NonBattleSkill.miningLevel ? this.show() : this.hide();
+        this.requirelevel <= global.NonBattleSkill.woodcuttingLevel ? this.show() : this.hide();
     }
     get isChecked() {
         return this._checked;
@@ -207,43 +190,85 @@ var TreeData = [
     {
         id: 1,
         name: loc('tree0'),
-        levelRequired: 1,
-        baseInterval: 2500,
+        description: '来自幽暗森林的奇异木材，可以成为料的原料',
         baseExperience: 10,
-        media: './assets/woods/magic_tree.svg',
-        description: '来自幽暗森林的奇异木材，可以成为诸多材料的原料',
-        requirelevel: 1
+        baseInterval: 1000,
+        requirelevel: 1,
+        media: './assets/woods/magic_tree.svg'
     },
     {
         id: 2,
-        name: loc('tree1'),
-        levelRequired: 5,
-        baseInterval: 1000,
-        baseExperience: 20,
-        media: './assets/woods/mahogany_tree.svg',
-        description: '木质间透出条条金丝，好像蕴含着不可小觑的力量',
-        requirelevel: 2
+        name: loc('tree0'),
+        description: '来自幽暗森林的奇异木材，可以成为料的原料',
+        baseExperience: 15,
+        baseInterval: 4000,
+        requirelevel: 10,
+        media: './assets/woods/magic_tree.svg'
     },
     {
         id: 3,
-        name: loc('tree1'),
-        levelRequired: 10,
-        baseInterval: 1000,
-        baseExperience: 10,
-        media: './assets/woods/locked_tree.svg',
-        description: '天才地宝',
-        requirelevel: 10
+        name: loc('tree0'),
+        description: '来自幽暗森林的奇异木材，可以成为料的原料',
+        baseExperience: 22,
+        baseInterval: 5000,
+        requirelevel: 25,
+        media: './assets/woods/magic_tree.svg'
     },
     {
-        id: 3,
-        name: loc('tree1'),
-        levelRequired: 10,
-        baseInterval: 1000,
-        baseExperience: 10,
-        media: './assets/woods/maple_tree.svg',
-        description: '天才地宝之二',
-        requirelevel: 50
+        id: 4,
+        name: loc('tree0'),
+        description: '来自幽暗森林的奇异木材，可以成为料的原料',
+        baseExperience: 30,
+        baseInterval: 6000,
+        requirelevel: 35,
+        media: './assets/woods/magic_tree.svg'
     },
+    {
+        id: 5,
+        name: loc('tree0'),
+        description: '来自幽暗森林的奇异木材，可以成为料的原料',
+        baseExperience: 40,
+        baseInterval: 8000,
+        requirelevel: 45,
+        media: './assets/woods/magic_tree.svg'
+    },
+    {
+        id: 6,
+        name: loc('tree0'),
+        description: '来自幽暗森林的奇异木材，可以成为料的原料',
+        baseExperience: 60,
+        baseInterval: 10000,
+        requirelevel: 55,
+        media: './assets/woods/magic_tree.svg'
+    },
+    {
+        id: 7,
+        name: loc('tree0'),
+        description: '来自幽暗森林的奇异木材，可以成为料的原料',
+        baseExperience: 80,
+        baseInterval: 12000,
+        requirelevel: 60,
+        media: './assets/woods/magic_tree.svg'
+    },
+    {
+        id: 8,
+        name: loc('tree0'),
+        description: '来自幽暗森林的奇异木材，可以成为料的原料',
+        baseExperience: 140,
+        baseInterval: 20000,
+        requirelevel: 75,
+        media: './assets/woods/magic_tree.svg'
+    },
+    {
+        id: 9,
+        name: loc('tree0'),
+        description: '来自幽暗森林的奇异木材，可以成为料的原料',
+        baseExperience: 180,
+        baseInterval: 15000,
+        requirelevel: 90,
+        media: './assets/woods/magic_tree.svg'
+    },
+
 
 ];
 
@@ -268,7 +293,7 @@ class WoodCutting {
             tmp_dom.data = TreeData[i];
             this.parentDOM.appendChild(tmp_dom);
             this.trees.push(tmp_dom);
-            if (TreeData[i].requirelevel > global.NonBattleSkill.miningLevel) {
+            if (TreeData[i].requirelevel > global.NonBattleSkill.woodcuttingLevel) {
                 tmp_dom.hide();
             } else {
                 tmp_dom.show();
@@ -279,7 +304,7 @@ class WoodCutting {
     }
     update() {
         for (let i in TreeData) {
-            TreeData[i].requirelevel <= global.NonBattleSkill.miningLevel ? this.trees[i].show() : this.trees[i].hide();
+            TreeData[i].requirelevel <= global.NonBattleSkill.woodcuttingLevel ? this.trees[i].show() : this.trees[i].hide();
         }
     }
     render() {
