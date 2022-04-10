@@ -1,6 +1,7 @@
 'use strict'
 import { global } from '../global.js';
 import { items } from '../items.js';
+import { beautify } from '../numBeautify.js';
 
 class Item extends HTMLElement {
     constructor() {
@@ -28,30 +29,9 @@ class Item extends HTMLElement {
     }
 
     render() {
+        let item = items.filter(function (currentValue, index, arr) { return currentValue.id == this.data.id }, this)[0];
         this.innerHTML = `
-        <style>
-        .bank-img {
-            width: 64px;
-            height: 64px;
-            pointer-events: none
-        }
-        .bank-item {
-            position: relative;
-            height: 64px;
-            width: 64px;
-            background-image: url(https://cdn.melvor.net/core/v018/assets/media/main/bank_border.png?2);
-            background-size: contain;
-            background-color: transparent;
-            border-radius: 5px;
-        }
-
-        item-element{margin: 10px 10px;}
-        
-        .item{position: relative;height: 64px;width: 64px;float: left;background-image: url(https://cdn.melvor.net/core/v018/assets/media/main/bank_border.png?2);background-size: contain;background-color: transparent;border-radius: 5px}
-        .item span{position: absolute;right: 0;bottom: 0;background: rgba(255, 255, 255, .5);border-radius: 2.5px;padding: 1.5px;color: black;}
-
-    </style>
-        <div class="item"><span>${this.data.qty}</span></div>
+        <div class="item"><img class="item-img" src=${item.media}><span>${beautify(this.data.qty)}</span></div>
         `
     }
 }
@@ -144,7 +124,18 @@ class Inventory {
             interactive: false,
             animation: false,
             Duration: 0,
-            content: `<img class="bank-img m-1" src="${items.filter(item => item.id == itemID)[0].media} ">I'm a Tippy ${items.filter(item => item.id == itemID)[0].description} tooltip!`,
+            content: `
+            <table>
+                <tr>
+                    <th width="50px" height="50px">
+                        <img src="${items.filter(item => item.id == itemID)[0].media}" width="50px" height="50px">
+                    </th>
+                    <th>
+                        ${items.filter(item => item.id == itemID)[0].description}
+                    </th>
+                </tr>
+            </table>
+            `,
             //onShow(instance) {
             //    instance.setContent(console.log(this));
             //},

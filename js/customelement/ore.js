@@ -210,7 +210,7 @@ var oreData = [
         levelRequired: 1,
         baseInterval: 2500,
         baseExperience: 10,
-        media: './assets/svg/trees/normal_tree.svg',
+        media: './assets/ores/rock_coal.svg',
         description: '矿石1',
         requirelevel: 1
     },
@@ -220,7 +220,7 @@ var oreData = [
         levelRequired: 5,
         baseInterval: 1000,
         baseExperience: 20,
-        media: './assets/svg/trees/oak_tree.svg',
+        media: './assets/ores/rock_adamantite.svg',
         description: '矿石12',
         requirelevel: 2
     },
@@ -230,7 +230,7 @@ var oreData = [
         levelRequired: 10,
         baseInterval: 1000,
         baseExperience: 10,
-        media: './assets/svg/trees/willow_tree.svg',
+        media: './assets/ores/rock_copper.svg',
         description: '矿石13',
         requirelevel: 10
     },
@@ -240,7 +240,7 @@ var oreData = [
         levelRequired: 10,
         baseInterval: 1000,
         baseExperience: 10,
-        media: './assets/svg/trees/willow_tree.svg',
+        media: './assets/ores/rock_dragonite.svg',
         description: '天才地宝之二',
         requirelevel: 50
     },

@@ -210,7 +210,7 @@ var TreeData = [
         levelRequired: 1,
         baseInterval: 2500,
         baseExperience: 10,
-        media: './assets/svg/trees/normal_tree.svg',
+        media: './assets/woods/magic_tree.svg',
         description: '来自幽暗森林的奇异木材，可以成为诸多材料的原料',
         requirelevel: 1
     },
@@ -220,7 +220,7 @@ var TreeData = [
         levelRequired: 5,
         baseInterval: 1000,
         baseExperience: 20,
-        media: './assets/svg/trees/oak_tree.svg',
+        media: './assets/woods/mahogany_tree.svg',
         description: '木质间透出条条金丝，好像蕴含着不可小觑的力量',
         requirelevel: 2
     },
@@ -230,7 +230,7 @@ var TreeData = [
         levelRequired: 10,
         baseInterval: 1000,
         baseExperience: 10,
-        media: './assets/svg/trees/willow_tree.svg',
+        media: './assets/woods/locked_tree.svg',
         description: '天才地宝',
         requirelevel: 10
     },
@@ -240,7 +240,7 @@ var TreeData = [
         levelRequired: 10,
         baseInterval: 1000,
         baseExperience: 10,
-        media: './assets/svg/trees/willow_tree.svg',
+        media: './assets/woods/maple_tree.svg',
         description: '天才地宝之二',
         requirelevel: 50
     },

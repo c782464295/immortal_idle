@@ -15,7 +15,7 @@ export const items = [
         },
         isEquipment: false,
         sellPrice: 10,
-        media: "assets/svg/trees/normal_tree.svg",
+        media: "assets/items/logs_magic.png",
     },
     {
         category: "Woodcutting",
@@ -29,21 +29,7 @@ export const items = [
         },
         isEquipment: false,
         sellPrice: 10,
-        media: "assets/svg/trees/oak_tree.svg",
-    },
-    {
-        category: "Woodcutting",
-        type: "Logs",
-        id:15,
-        get name() {
-            return getItemName("oka");
-        },
-        get description() {
-            return getItemName("oka2");
-        },
-        isEquipment: false,
-        sellPrice: 10,
-        media: "assets/svg/trees/oak_tree.svg",
+        media: "assets/items/logs_mahogany.png",
     },
     {
         category: "Woodcutting",
@@ -57,7 +43,7 @@ export const items = [
         },
         isEquipment: false,
         sellPrice: 10,
-        media: "assets/svg/trees/willow_tree.svg",
+        media: "assets/items/logs_yew.png",
     },
     {
         category: "Raw Fish",
@@ -71,7 +57,7 @@ export const items = [
         },
         isEquipment: false,
         sellPrice: 1,
-        media: "assets/media/bank/logs_normal.png?2",
+        media: "assets/items/logs_magic.png",
     },
     {
         category: "Cooking",
@@ -86,7 +72,7 @@ export const items = [
         canEat: true,
         healsFor: 3,
         sellPrice: 1,
-        media: "assets/media/bank/logs_normal.png?2",
+        media: "assets/items/logs_magic.png",
     },
     {
         category: "Mining",
@@ -100,7 +86,7 @@ export const items = [
         },
         isEquipment: false,
         sellPrice: 1,
-        media: "assets/media/bank/logs_normal.png?2",
+        media: "assets/items/logs_magic.png",
     },
     {
         category: "Farming",
@@ -118,7 +104,7 @@ export const items = [
         timeToGrow: 7200,
         isEquipment: false,
         sellPrice: 1,
-        media: "assets/media/bank/logs_normal.png?2",
+        media: "assets/items/logs_magic.svg",
     },
 ]
 
