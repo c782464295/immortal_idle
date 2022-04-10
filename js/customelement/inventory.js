@@ -7,21 +7,21 @@ class Item extends HTMLElement {
     constructor() {
         super();
         Item.counter = Item.counter + 1 || 1;
-
+        this.container = document.createElement("div");
+        this.container.className = "item new-item-glow";
+        this.text = document.createElement("span");
+        this.img = document.createElement("img");
+        this.img.className = "item-img";
     }
 
     connectedCallback() {
-
-
-
+        this.container.appendChild(this.img);
+        this.container.appendChild(this.text);
+        this.appendChild(this.container);
     }
-    set data(val) {
-        this.innerHTML = `
-        
-        <div class="item"><span>${val.qty}</span></div>
-        `
-        this._data = val;
 
+    set data(val) {
+        this._data = val;
         this.setAttribute('data-id', val.id);
     }
     get data() {
@@ -30,9 +30,9 @@ class Item extends HTMLElement {
 
     render() {
         let item = items.filter(function (currentValue, index, arr) { return currentValue.id == this.data.id }, this)[0];
-        this.innerHTML = `
-        <div class="item"><img class="item-img" src=${item.media}><span>${beautify(this.data.qty)}</span></div>
-        `
+
+        this.img.src = item.media;
+        this.text.innerText = beautify(this.data.qty);
     }
 }
 
