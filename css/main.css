@@ -1217,3 +1217,12 @@ item-element {
     vertical-align: baseline;
     border-radius: .25rem;
 }
+
+.achieve-card {
+    width: 150px;
+    height: 150px;
+    background-color: #0ff;
+    border: 1px solid red; 
+    margin:10px;
+}
+
