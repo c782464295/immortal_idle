@@ -11,6 +11,10 @@ export var global = {
         locale: 'zh-CN',
         lightmode: 1,
     },
+    currency:{
+        money:0,
+        taskMoney:0
+    },
     itemsAlreadyFound: [],
     currentAction:'',
     NonBattleSkill : new Proxy({

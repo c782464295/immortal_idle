@@ -7,7 +7,7 @@ import { Mining } from './customelement/ore.js';
 import { WoodCutting } from './customelement/woods.js';
 import { Inventory } from './customelement/inventory.js';
 import { deepClone } from './utility.js';
-import {} from './customelement/stasticsTable.js'
+import { } from './customelement/stasticsTable.js'
 
 import { achievementManager } from './achivement.js';
 import { statistics, GameStats, getGameStatsTableData } from './statistic.js';
@@ -66,7 +66,7 @@ class Game {
 
         }
 
-        
+
 
 
 
@@ -86,7 +86,7 @@ class Game {
 
         let offlinetimestamp = new Date().getTime();
         if ((offlinetimestamp - this.lasttimestamp) / TICK_INTERVAL < this.maxOfflineTicks) {
-            this.runTicks((offlinetimestamp - this.lasttimestamp) / TICK_INTERVAL);
+            this.runTicks(Math.floor((offlinetimestamp - this.lasttimestamp) / TICK_INTERVAL));
         } else {
             this.runTicks(this.maxOfflineTicks);
         }
@@ -97,15 +97,36 @@ class Game {
 
     snapShot() {
         const snapshot = {
-            skill: global.NonBattleSkill,
-            items: global.inventory,
+            skill: deepClone(global.NonBattleSkill),
+            items: deepClone(global.inventory),
+            currency: deepClone(global.currency),
         }
         console.log(snapshot);
         return snapshot;
     }
 
+    calDiffGeneral(oldsnap, newsnap) {
+        let newObj = Object.keys(newsnap).reduce((a, k) => {
+            a[k] = newsnap[k] - oldsnap[k];
+            return a;
+        }, {});
+        return newObj;
+
+    }
+    calDiffItem(oldsnap, newsnap) {
+        let newObj = Object.keys(newsnap).reduce((a, k) => {
+            a[newsnap[k].id] = newsnap[k].qty - oldsnap[k].qty;
+            return a;
+        }, {});
+        return newObj;
+
+    }
+
     CreateModal(oldsnap, newsnap) {
-        console.log(newsnap.items[2] - oldsnap.items[2]);
+
+        console.log(this.calDiffGeneral(oldsnap.skill, newsnap.skill));
+        console.log(this.calDiffItem(oldsnap.items, newsnap.items));
+        console.log(this.calDiffGeneral(oldsnap.currency, newsnap.currency));
 
     }
 
@@ -121,7 +142,7 @@ class Game {
         console.log('start main loop');
         this.loopTimer = window.setInterval(this.loop.bind(this), TICK_INTERVAL);
         // 定时保存
-        window.setInterval(this.saveGame.bind(this),10000);
+        window.setInterval(this.saveGame.bind(this), 10000);
         this.loopStarted = true;
         this.render();
     }
@@ -176,7 +197,7 @@ class Game {
         notificationQueue.notify();
         requestAnimationFrame(() => this.render());
     }
-    saveGame(){
+    saveGame() {
         storage.setItem('saveData', this.serialize());
         console.log('GameSaved');
     }
@@ -208,7 +229,7 @@ class Game {
 
 
     }
-    printSaveString(){
+    printSaveString() {
         let res = {};
         for (let [k, v] of Object.entries(this)) {
 
@@ -240,7 +261,7 @@ class Game {
                     this[k] = res[k];
                 }
             } else {
-                
+
                 v.deserialize(res[k]);
             }
         }
@@ -253,17 +274,17 @@ class Game {
 
 
 var game = new Game();
-export {game};
+export { game };
 
 $(document).ready(function () {
-    
+
     game.init();
     game.startMainLoop();
 
     game.debug(true);
 
 
-    
+
     //game.deserialize('');
     // 明暗模式动态
     const toggleButton1 = document.querySelector('.header-profile svg');
