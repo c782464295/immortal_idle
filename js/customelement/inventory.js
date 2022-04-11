@@ -27,7 +27,7 @@ class Item extends HTMLElement {
         this.setAttribute('data-id', val.id);
         this.addEventListener("click", function(){
             console.log('lci');
-            global.itemsAlreadyFound.push(val.id);
+            if(!global.itemsAlreadyFound.includes(val.id)) global.itemsAlreadyFound.push(val.id);
             this.removeGlow();
         });
     }

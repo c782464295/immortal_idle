@@ -111,7 +111,7 @@ function itemNotify(itemID, qty) {
 
 function processItemNotify(itemID, qty) {
     let item = items.filter(function (currentValue) { return currentValue.id == itemID})[0];
-    Toastify({
+    return Toastify({
         text: `<img src="${item.media}"/><span class="badge-success">+${qty}&nbsp&nbsp(${global.inventory.filter(function (currentValue) { return currentValue.id == itemID})[0].qty})</span>`,
         duration: 2000,
         gravity: "bottom",
@@ -120,7 +120,7 @@ function processItemNotify(itemID, qty) {
         stopOnFocus: false,
         escapeMarkup: false,
         className: "itemNotify"
-    }).showToast();
+    });
 }
 
 function stunNotify(damage) {
@@ -145,17 +145,22 @@ function bankFullNotify() {
         stopOnFocus: false,
     }).showToast();
 }
+/* it's necessary to manage notification for the purpose of limiting 
+don't show too much after offline making browser stuck
+*/
 class NotificationQueue {
-    constructor(maxNotifiactions = 15) {
+    constructor(maxNotifiactions = 10) {
         this.maxNotifiactions = maxNotifiactions;
         this.queue = [];
     }
     notify() {
-
+        this.queue.forEach((notification)=>{notification.showToast()});
+        this.queue = [];
     }
     add(notification) {
         if (this.queue.length === this.maxNotifiactions) {
-            this.queue.splice(0, 1);
+            // delete the first 5 elements
+            this.queue.splice(0, 5);
         }
         this.queue.push(notification);
     }
@@ -164,4 +169,5 @@ class NotificationQueue {
     }
 }
 
-export { pop_warning, toast_warning, gpNotify, itemNotify, processItemNotify, NotificationQueue };
+let notificationQueue = new NotificationQueue();
+export { pop_warning, toast_warning, gpNotify, itemNotify, processItemNotify, notificationQueue };

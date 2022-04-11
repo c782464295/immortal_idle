@@ -1,5 +1,5 @@
 'use strict'
-
+/* invoke this function when display a number variable in dom */
 function beautify(x, n) {
 	if (x >= 1e6) {
 		var z = Math.floor(logFloor(x) / 3);

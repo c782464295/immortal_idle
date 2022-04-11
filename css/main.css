@@ -1,18 +1,28 @@
 /*
-* 来自
+* from
 * https://codepen.io/TurkAysenur/pen/ZEpxeYm
 */
 
 /*
-* 绘制svg path
+* draw path
 * https://jxnblk.github.io/paths/
 * https://yqnn.github.io/svg-path-editor/
 * https://www.svgrepo.com/vectors/
 */
 
-/* 字体引入 font-family: 'DM Sans', sans-serif;
+/*  font-family: 'DM Sans', sans-serif;
 */
 /* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+*/
+
+@font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../fonts/inter-v7-latin-ext_latin-600.woff2') format('woff2');
+    
+}
 
 /* 定义元素盒子的计算方式
 */
@@ -1177,13 +1187,16 @@ item-element {
 
 .new-item-glow {
     box-shadow:
-    0 0 3px 1px #fff,  /* inner white */
-    0 0 7px 3px #f0f, /* middle magenta */
-    0 0 10px 7px #0ff; /* outer cyan */
+        0 0 3px 1px #fff,
+        /* inner white */
+        0 0 7px 3px #f0f,
+        /* middle magenta */
+        0 0 10px 7px #0ff;
+    /* outer cyan */
 }
 
 
-.itemNotify img{
+.itemNotify img {
     height: 32px;
     width: 32px;
     margin-right: 4px

@@ -7,10 +7,12 @@ import { Mining } from './customelement/ore.js';
 import { WoodCutting } from './customelement/woods.js';
 import { Inventory } from './customelement/inventory.js';
 import { deepClone } from './utility.js';
-import { gpNotify } from './notify.js';
 
 import { achievementManager } from './achivement.js';
 import { statistics, GameStats, getGameStatsTableData } from './statistic.js';
+
+
+import { notificationQueue } from './notify.js';
 
 class Game {
     constructor() {
@@ -55,7 +57,7 @@ class Game {
                 event.returnValue = '关闭提示';
                 this.lasttimestamp = new Date().getTime();
                 //this.lasttimestamp = 0;
-                //storage.setItem('saveData', this.serialize());
+                storage.setItem('saveData', this.serialize());
                 this.inventory.close();
 
             }
@@ -97,6 +99,7 @@ class Game {
             items: deepClone(global.pack.storage),
             exp: global.Exp
         }
+        console.log(snapshot);
         return snapshot;
     }
 
@@ -169,7 +172,7 @@ class Game {
         this.inventory.render();
 
         document.querySelector('table-of-data').data = getGameStatsTableData();
-
+        notificationQueue.notify();
         requestAnimationFrame(() => this.render());
     }
     saveGame(){

@@ -2,7 +2,7 @@
 import { loc } from '../locale.js';
 import { global } from '../global.js';
 import { Timer } from '../timer.js';
-import { processItemNotify } from '../notify.js';
+import { processItemNotify, notificationQueue } from '../notify.js';
 import { ProgressBar } from './progress.js'
 import { items } from '../items.js';
 import { statistics } from '../statistic.js';
@@ -149,7 +149,8 @@ class Tree extends HTMLElement {
             global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice });
         }
         statistics.Woodcutting.inc('totalWoodcutting');
-        processItemNotify(this._id, qty);
+        
+        notificationQueue.add(processItemNotify(this._id, qty));
         global.NonBattleSkill.woodcuttingExp += this.baseExperience;
         this.timer.start(this.baseInterval);
 
