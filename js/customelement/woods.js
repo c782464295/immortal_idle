@@ -149,6 +149,7 @@ class Tree extends HTMLElement {
             global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice });
         }
         statistics.Woodcutting.inc('totalWoodcutting');
+        statistics.Woodcutting.add('totalTimeConsume', this.baseInterval);
         
         notificationQueue.add(processItemNotify(this._id, qty));
         global.NonBattleSkill.woodcuttingExp += this.baseExperience;

@@ -1,4 +1,6 @@
 "use strict";
+import { game } from '../game.js';
+
 class stasTable extends HTMLElement {
 	constructor() {
 		// 必须的
@@ -19,28 +21,35 @@ class stasTable extends HTMLElement {
 				</style>`;
 	}
 
+	formatDuring(mss) {
+		var days = parseInt(mss / (1000 * 60 * 60 * 24));
+		var hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		var minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+		var seconds = (mss % (1000 * 60)) / 1000;
+		return days + " 天 " + hours + " 小时 " + minutes + " 分钟 " + seconds + " 秒 ";
+	}
+
 	set data(val) {
 		this._refreshTable(val);
 		this._data = val;
 	}
 
-	set obj_data(val) {
-		clearInterval(this.timer);
-		this.p_data = val;
-		this.timer = setInterval(this.fresh_auto.bind(this), 200);
-	}
 
-	get obj_data() {
-		return (this.p_data || {});
-	}
+	render() {
+		let data = {
+			title: 'Woodcutting',
+			headings: ['名称', '#'], rows: []
+		};
 
-	get data() {
-		return (this._data || {});
 
-	}
-
-	render(){
-		this.data = 0;
+		for (let item of game.statistics['Woodcutting'].statistics) {
+			if(item[0] == 'totalTimeConsume') {
+				data.rows.push([item[0], this.formatDuring(item[1])]);
+				continue;
+			}
+			data.rows.push([item[0], item[1]]);
+		}
+		this.data = data;
 	}
 
 	_refreshTable(data) { // add/refresh data in table
@@ -78,12 +87,6 @@ class stasTable extends HTMLElement {
 		tableOfData.innerHTML = ''; //clear the table
 		tableOfData.appendChild(frag);
 	}
-	/*
-	for (var i=0;i<999;i++){ 
-			await sleep(50);
-			game.stats.Woodcutting.statistics.set("TimeSpent", i);
-	}
-	*/
 
 	fresh_auto() {
 		let data = {

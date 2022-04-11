@@ -7,6 +7,7 @@ import { Mining } from './customelement/ore.js';
 import { WoodCutting } from './customelement/woods.js';
 import { Inventory } from './customelement/inventory.js';
 import { deepClone } from './utility.js';
+import {} from './customelement/stasticsTable.js'
 
 import { achievementManager } from './achivement.js';
 import { statistics, GameStats, getGameStatsTableData } from './statistic.js';
@@ -44,7 +45,6 @@ class Game {
 
         this.achievementManager = achievementManager;
         this.statistics = statistics;
-
 
 
         ifvisible.on("blur", () => this.pauseGame());
@@ -171,7 +171,7 @@ class Game {
         this.WoodCutting.render();
         this.inventory.render();
 
-        document.querySelector('table-of-data').data = getGameStatsTableData();
+        document.querySelector('table-of-data').render();
         notificationQueue.notify();
         requestAnimationFrame(() => this.render());
     }
@@ -251,9 +251,11 @@ class Game {
 }
 
 
+var game = new Game();
+export {game};
 
 $(document).ready(function () {
-    var game = new Game();
+    
     game.init();
     game.startMainLoop();
 
