@@ -62,8 +62,6 @@ class AchievementManager {
         return sData;
     }
     deserialize(sData, version) {
-        console.log(sData);
-        console.log();
         sData.forEach(e => this.achievements.filter(item => item.id == e[0])[0].state = e[1])
     }
 }

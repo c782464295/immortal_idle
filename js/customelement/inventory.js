@@ -167,7 +167,7 @@ class Inventory {
 
         let needToAdd = memory_iventory.filter(x => !dom_iventory.includes(x));
         //console.log('add',needToAdd);
-
+        // add new item
         for (let i in needToAdd) {
             let item = this.addItem(needToAdd[i], i);
 
@@ -177,8 +177,9 @@ class Inventory {
         }
 
 
-
+        // update
         for (let i of [...this.parentDOM.children]) {
+            if(i.data.qty == 0) i.remove();
             i.render();
         }
         this.sortInit();

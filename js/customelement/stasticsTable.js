@@ -15,7 +15,7 @@ class stasTable extends HTMLElement {
 		//shadowRoot.innerHTML =  
 		this.innerHTML = `<table id="table" class="table-of-data"></table>
 				<style>
-					table.table-of-data { background-color: var(--content-bg);border-collapse: collapse; width: 40%; margin:0 auto;border-radius: 10px;}
+					table.table-of-data { background-color: var(--content-bg);border-collapse: collapse; width: 80%; margin:0 auto;border-radius: 10px;}
 					table.table-of-data h5{padding-left: 20px;}
 					table.table-of-data th,td {text-align: right; color: var(--theme-color); padding-right: 10px; }
 				</style>`;
@@ -103,19 +103,3 @@ class stasTable extends HTMLElement {
 
 
 customElements.define('table-of-data', stasTable);
-
-/***
-let table = document.querySelector('table-of-data');
-			let data = {
-				title:'table name',
-				headings: [ 'State', 'Place' ],
-				rows: [[
-					'California',
-					'<a href="https://en.wikipedia.org/wiki/Redwood_National_and_State_Parks">Redwood Forest</a>'
-				],
-				[ '击杀怪物',
-					'3000'
-				]]
-			};
-table.data = data;
-*/

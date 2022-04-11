@@ -91,12 +91,12 @@ export const items = [
     {
         category: "Farming",
         type: "Seeds",
-        id:11,
+        id:111,
         get name() {
-            return getItemName("oka");
+            return getItemName("mucai");
         },
         get description() {
-            return getItemName("oka");
+            return getItemName("mucai");
         },
         farmingLevel: 1,
         farmingXP: 8,
@@ -104,7 +104,7 @@ export const items = [
         timeToGrow: 7200,
         isEquipment: false,
         sellPrice: 1,
-        media: "assets/items/logs_magic.svg",
+        media: "assets/items/apple_pie.png",
     },
 ]
 

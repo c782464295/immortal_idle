@@ -15,6 +15,8 @@ import { statistics, GameStats, getGameStatsTableData } from './statistic.js';
 
 import { notificationQueue } from './notify.js';
 
+import { } from './recipes.js';
+
 class Game {
     constructor() {
         /* 单例模式 */
@@ -95,9 +97,8 @@ class Game {
 
     snapShot() {
         const snapshot = {
-            level: global.Level,
-            items: deepClone(global.pack.storage),
-            exp: global.Exp
+            skill: global.NonBattleSkill,
+            items: global.inventory,
         }
         console.log(snapshot);
         return snapshot;
@@ -239,7 +240,7 @@ class Game {
                     this[k] = res[k];
                 }
             } else {
-                console.log(res);
+                
                 v.deserialize(res[k]);
             }
         }
