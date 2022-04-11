@@ -422,10 +422,11 @@ body.light-mode .video-bg::before {
 }
 
 @media screen and (max-width: 945px) {
+    /*
     .left-side {
         animation: fadeAndHide 1s forwards;
     }
-
+    */
     .togglemenu {
         visibility: visible;
         display: flex;
