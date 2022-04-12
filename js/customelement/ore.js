@@ -2,7 +2,7 @@
 import { loc } from '../locale.js';
 import { global } from '../global.js';
 import { Timer } from '../timer.js';
-import { gpNotify, toast_warning } from '../notify.js';
+import { processItemNotify, notificationQueue } from '../notify.js';
 import { ProgressBar } from './progress.js'
 import { items } from '../items.js';
 import { statistics } from '../statistic.js';
@@ -166,7 +166,9 @@ class Ore extends HTMLElement {
             global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice });
         }
         statistics.Mining.inc('totalMining');
+        statistics.Mining.add('totalTimeConsume', this.baseInterval);
 
+        notificationQueue.add(processItemNotify(this._id, qty));
         global.NonBattleSkill.miningExp += this.baseExperience;
         this.timer.start(this.baseInterval);
         //toast_warning('333');

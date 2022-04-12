@@ -9,19 +9,21 @@ class achivementUI extends HTMLElement {
 
         this.container = document.createElement("div");
         this.container.className = "achieve-card";
-
+        this.img = document.createElement("img");
 
         this._data = undefined;
     }
     set data(val) {
+        this.img.src = val.media;
         this._data = val;
     }
 
     connectedCallback() {
+        this.container.appendChild(this.img);
         this.appendChild(this.container);
     }
     render() {
-        this.container.innerText = this._data.description + this._data.state;
+        this.container.setAttribute('active', this._data.state);
     }
 
 }
@@ -34,7 +36,7 @@ const achieve_list = [
         name: 'a',
         state: false,
         description: '成就1',
-        media: '',
+        media: './assets/achievements/firemaking.png',
         checkFunction: (x) => { return x.inventory.length > 0 ? true : false; },
     },
     {
@@ -42,7 +44,7 @@ const achieve_list = [
         name: 'a',
         state: false,
         description: '成就2',
-        media: '',
+        media: './assets/achievements/woodcutting.png',
         checkFunction: (x) => { return 1 > 0 ? true : false; },
     },
 
@@ -53,6 +55,7 @@ class Achievement {
         this.name = name;
         this.description = description;
         this.state = false;
+        this.media = media;
         this.checkFunction = checkFunction;
     }
 

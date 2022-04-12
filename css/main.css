@@ -1226,3 +1226,6 @@ item-element {
     margin:10px;
 }
 
+.achieve-card[active = false]{
+    filter: grayscale(100%);
+}
