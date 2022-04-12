@@ -9,7 +9,7 @@ import { Inventory } from './customelement/inventory.js';
 import { deepClone } from './utility.js';
 import { } from './customelement/stasticsTable.js'
 
-import { achievementManager } from './achivement.js';
+import { achievementManager } from './customelement/achivement.js';
 import { statistics, GameStats, getGameStatsTableData } from './statistic.js';
 
 
@@ -192,6 +192,8 @@ class Game {
         this.minning.render();
         this.WoodCutting.render();
         this.inventory.render();
+
+        this.achievementManager.render();
 
         document.querySelector('table-of-data').render();
         notificationQueue.notify();
