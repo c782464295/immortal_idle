@@ -1221,7 +1221,7 @@ item-element {
 .achieve-card {
     width: 150px;
     height: 150px;
-    background-color: #0ff;
+    background-color: transparent;
     border: 1px solid red; 
     margin:10px;
 }
