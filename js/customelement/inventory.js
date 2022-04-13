@@ -205,7 +205,7 @@ class Inventory {
                     <th>
                         ${items.filter(item => item.id == itemID)[0].name}<br/>
                         ${items.filter(item => item.id == itemID)[0].description}<br/>
-                        ${0>1?'a':''}
+                        ${items.filter(item => item.id == itemID)[0].farmingXP != undefined?`恢复${items.filter(item => item.id == itemID)[0].farmingXP}`:''}
                     </th>
                 </tr>
             </table>
