@@ -158,3 +158,16 @@ Date.prototype.Format = function (fmt) { // author: meizz
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
+
+
+export function copyToClipboard(input) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(input).then(() => {
+            console.log("Copied to clipboard successfully.");
+        }, (err) => {
+            console.log("Failed to copy the text to clipboard.", err);
+        });
+    } else if (window.clipboardData) {
+        window.clipboardData.setData("Text", input);
+    }
+}

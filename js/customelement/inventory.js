@@ -37,7 +37,7 @@ class Item extends HTMLElement {
 
     render() {
         let item = items.filter(function (currentValue, index, arr) { return currentValue.id == this.data.id }, this)[0];
-
+        
         this.img.src = item.media;
         this.text.innerText = beautify(this.data.qty);
     }

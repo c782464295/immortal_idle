@@ -12,7 +12,6 @@ import { } from './customelement/stasticsTable.js'
 import { achievementManager } from './customelement/achivement.js';
 import { statistics, GameStats, getGameStatsTableData } from './statistic.js';
 
-
 import { notificationQueue } from './notify.js';
 
 import { } from './recipes.js';
@@ -204,6 +203,38 @@ class Game {
         console.log('GameSaved');
     }
 
+    openExportSave() {
+        Swal.fire({
+            title: 'nice',
+            html: `
+            <h5 class="font-w400 text-combat-smoke font-size-sm mb-1"</h5>
+                    <h5 class="font-w600 text-danger font-size-sm"></h5>
+                        <div class="form-group">
+                            <textarea class="form-control" id="export-save-character-selection" name="export-save-character-selection" rows="8" onclick="navigator.clipboard.writeText(window.localStorage.getItem('saveData'));">${window.localStorage.getItem('saveData')}</textarea>
+                        </div>
+                    `,
+            showCancelButton: false,
+        });
+    }
+    openImportSave() {
+        Swal.fire({
+            title: '导入',
+            html: `<h5 class="font-w400 text-combat-smoke font-size-sm"></h5>
+                        <div class="form-group">
+                            <textarea class="form-control" id="import-save-character-selection" name="import-save-character-selection" rows="8" placeholder="1" onclick="this.select();"></textarea>
+                        </div>`,
+            showCancelButton: true,
+            confirmButtonText: 'yes',
+        }).then((result) => {
+            if (result.value) {
+                let save = $("#import-save-character-selection").val();
+                this.stopMainLoop();
+                this.deserialize(save);
+                this.saveGame();
+                location.reload();
+            }
+        });
+    }
     serialize() {
         //console.log(Object.keys(this));
         //console.log(Object.values(this));
