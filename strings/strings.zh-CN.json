@@ -3,16 +3,17 @@
   "inventory-menu-name": "物品栏",
   "battle-menu-name": "战斗",
   "tree0": "紫檀香木",
-  "indexloc":{
+  "indexloc": {
     "shop-menu": "藏宝阁",
     "inventory-menu-name": "物品栏",
     "battle-menu-name": "战斗",
     "tree0": "紫檀香木"
   },
-  "itemsname":{
-    "oka":"无敌小天才",
-    "oka1":"无敌1",
-    "oka2":"无敌2",
-    "mucai":"树莓派"
+  "itemsname": {
+    "oka": "无敌小天才",
+    "oka1": "无敌1",
+    "oka2": "无敌2",
+    "mucai": "树莓派",
+    "mucaimiaoshu": "很好吃的树莓派"
   }
 }

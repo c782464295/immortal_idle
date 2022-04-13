@@ -96,7 +96,7 @@ export const items = [
             return getItemName("mucai");
         },
         get description() {
-            return getItemName("mucai");
+            return getItemName("mucaimiaoshu");
         },
         farmingLevel: 1,
         farmingXP: 8,

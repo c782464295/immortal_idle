@@ -76,11 +76,13 @@ class Search extends HTMLElement {
                 distance: 100,
                 maxPatternLength: 32,
                 minMatchCharLength: 1,
-                keys: ["qty", "id", "sellsFor", "name"],
+                keys: ["name", "id", "qty", "description", "sellsFor"],
             };
             let searchObj = deepClone(global.inventory);
             for (let i in searchObj) {
-                searchObj[i].name = items.filter(function (currentValue) { return currentValue.id == searchObj[i].id})[0].name;
+                let tmp_item = items.filter(function (currentValue) { return currentValue.id == searchObj[i].id })[0];
+                searchObj[i].name = tmp_item.name;
+                searchObj[i].description = tmp_item.description;
             }
 
             const fuse = new Fuse(searchObj, options);
@@ -201,8 +203,9 @@ class Inventory {
                         <img src="${items.filter(item => item.id == itemID)[0].media}" width="50px" height="50px">
                     </th>
                     <th>
+                        ${items.filter(item => item.id == itemID)[0].name}<br/>
                         ${items.filter(item => item.id == itemID)[0].description}<br/>
-                        ${items.filter(item => item.id == itemID)[0].description}
+                        ${0>1?'a':''}
                     </th>
                 </tr>
             </table>
