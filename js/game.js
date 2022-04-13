@@ -326,26 +326,7 @@ $(document).ready(function () {
         global['Settings'].lightmode = !global['Settings'].lightmode;
     });
 
-    const searchBar = document.querySelector('.search-bar input');
-    console.log(searchBar);
-    searchBar.addEventListener("input", function (event) {
-        console.log(this.value);
-        const options = {
-            shouldSort: true,
-            tokenize: true,
-            matchAllTokens: true,
-            findAllMatches: true,
-            threshold: 0.1,
-            location: 0,
-            distance: 100,
-            maxPatternLength: 32,
-            minMatchCharLength: 1,
-            keys: ["name", "qty", "id", "type", "description"],
-        };
-        const fuse = new Fuse(global.inventory, options);
-        let result = fuse.search(this.value);
-        console.log(result);
-    })
+
 
 
 

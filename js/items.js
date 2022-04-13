@@ -8,7 +8,7 @@ export const items = [
         type: "Logs",
         id:1,
         get name() {
-            return getItemName("oka");
+            return getItemName("oka1");
         },
         get description() {
             return getItemName("oka1");
@@ -22,7 +22,7 @@ export const items = [
         type: "Logs",
         id:2,
         get name() {
-            return getItemName("oka");
+            return getItemName("oka2");
         },
         get description() {
             return getItemName("oka2");

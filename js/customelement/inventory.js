@@ -2,7 +2,7 @@
 import { global } from '../global.js';
 import { items } from '../items.js';
 import { beautify } from '../numBeautify.js';
-
+import { deepClone } from '../utility.js';
 class Item extends HTMLElement {
     constructor() {
         super();
@@ -12,22 +12,22 @@ class Item extends HTMLElement {
         this.text = document.createElement("span");
         this.img = document.createElement("img");
         this.img.className = "item-img";
-        
+
     }
 
     connectedCallback() {
         this.container.appendChild(this.img);
         this.container.appendChild(this.text);
         this.appendChild(this.container);
-        
+
     }
 
     set data(val) {
         this._data = val;
         this.setAttribute('data-id', val.id);
-        this.addEventListener("click", function(){
+        this.addEventListener("click", function () {
             console.log('lci');
-            if(!global.itemsAlreadyFound.includes(val.id)) global.itemsAlreadyFound.push(val.id);
+            if (!global.itemsAlreadyFound.includes(val.id)) global.itemsAlreadyFound.push(val.id);
             this.removeGlow();
         });
     }
@@ -37,20 +37,72 @@ class Item extends HTMLElement {
 
     render() {
         let item = items.filter(function (currentValue, index, arr) { return currentValue.id == this.data.id }, this)[0];
-        
+
         this.img.src = item.media;
         this.text.innerText = beautify(this.data.qty);
     }
 
-    addGlow(){
+    addGlow() {
         this.container.classList.add("new-item-glow");
     }
-    removeGlow(){
+    removeGlow() {
         this.container.classList.remove("new-item-glow");
     }
 }
 
 customElements.define('item-element', Item);
+class Search extends HTMLElement {
+    constructor() {
+        super();
+
+    }
+    connectedCallback() {
+        this.searchBar = document.createElement('div');
+        this.searchBar.className = 'search-bar';
+        this.input = document.createElement('input');
+        this.input.setAttribute("type", "text");
+        this.input.setAttribute("placeholder", "搜搜");
+        this.searchBar.appendChild(this.input);
+        document.getElementById("search-menu").appendChild(this.searchBar);
+
+        this.input.addEventListener("input", function (event) {
+            const options = {
+                shouldSort: true,
+                tokenize: true,
+                matchAllTokens: true,
+                findAllMatches: true,
+                threshold: 0.1,
+                location: 0,
+                distance: 100,
+                maxPatternLength: 32,
+                minMatchCharLength: 1,
+                keys: ["qty", "id", "sellsFor", "name"],
+            };
+            let searchObj = deepClone(global.inventory);
+            for (let i in searchObj) {
+                searchObj[i].name = items.filter(function (currentValue) { return currentValue.id == searchObj[i].id})[0].name;
+            }
+
+            const fuse = new Fuse(searchObj, options);
+            let result = fuse.search(this.value);
+
+            if (result.length > 0) {
+                document.querySelectorAll(`item-element`).forEach((elem) => {
+                    elem.classList.add("hidden");
+                })
+                for (let i = 0; i < result.length; i++) {
+                    document.querySelector(`item-element[data-id='${result[i].id}']`).classList.remove("hidden");
+                }
+            }
+            if (this.value == '') {
+                document.querySelectorAll(`item-element`).forEach((elem) => {
+                    elem.classList.remove("hidden");
+                })
+            }
+        })
+    }
+}
+customElements.define('search-element', Search);
 
 class Inventory {
     constructor() {
@@ -61,7 +113,11 @@ class Inventory {
 
         this.isSort = false;
 
+
         this.sortInsant = this.init();
+
+    }
+    connectedCallback() {
 
     }
 
@@ -171,7 +227,7 @@ class Inventory {
         for (let i in needToAdd) {
             let item = this.addItem(needToAdd[i], i);
 
-            if(!global.itemsAlreadyFound.includes(needToAdd[i])){
+            if (!global.itemsAlreadyFound.includes(needToAdd[i])) {
                 item.addGlow();
             }
         }
@@ -179,7 +235,7 @@ class Inventory {
 
         // update
         for (let i of [...this.parentDOM.children]) {
-            if(i.data.qty == 0) i.remove();
+            if (i.data.qty == 0) i.remove();
             i.render();
         }
         this.sortInit();

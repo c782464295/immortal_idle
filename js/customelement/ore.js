@@ -64,11 +64,6 @@ class Ore extends HTMLElement {
             box-shadow: 0 8px 36px 0 rgba(0,0,0,0.9);
         }
 
-        .hidden {
-            visibility: hidden;
-            opacity: 1;
-            display:none;
-        }
         </style>
 
         <div class='card' id=${val.id} aria-checked="false">

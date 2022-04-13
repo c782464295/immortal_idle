@@ -1141,7 +1141,11 @@ item-element {
     margin: 10px 10px;
 }
 
-
+.hidden {
+    visibility: hidden;
+    opacity: 1;
+    display:none;
+}
 
 .item {
     margin-top: 2.5px;
