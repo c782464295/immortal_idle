@@ -6,6 +6,7 @@ import { processItemNotify, notificationQueue } from '../notify.js';
 import { ProgressBar } from './progress.js'
 import { items } from '../items.js';
 import { statistics } from '../statistic.js';
+import { nonBattleModifiersManager } from '../nonBattleModiers.js';
 
 class Tree extends HTMLElement {
     constructor(p_dom) {
@@ -142,6 +143,9 @@ class Tree extends HTMLElement {
         isNaN(global['pack'].storage[this._id]) ? global['pack'].storage[this._id] = 1 : global['pack'].storage[this._id] += 1;
 
         let qty = 1;
+        Math.random() * 100 < nonBattleModifiersManager.getFinalValue('CuttingDoubleRate') ? (qty = 2,statistics.Woodcutting.inc('doubleCut')): qty = 1;
+
+
         if (this.isItemExist(this._id)) {
             let tmp = global.inventory.find(item => item.id == this._id);
             tmp.qty += qty;
@@ -150,7 +154,7 @@ class Tree extends HTMLElement {
         }
         statistics.Woodcutting.inc('totalWoodcutting');
         statistics.Woodcutting.add('totalTimeConsume', this.baseInterval);
-        
+
         notificationQueue.add(processItemNotify(this._id, qty));
         global.NonBattleSkill.woodcuttingExp += this.baseExperience;
         this.timer.start(this.baseInterval);
