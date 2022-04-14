@@ -7,7 +7,7 @@ class stasTable extends HTMLElement {
 		super();
 		// 元素创建
 
-
+		let tickCount = 20;
 	}
 
 	connectedCallback() {
@@ -36,6 +36,14 @@ class stasTable extends HTMLElement {
 
 
 	render() {
+		this.tickCount-=1;
+		if(this.tickCount>0){
+			return;
+		}else{
+			this.tickCount = 20;
+		}
+		
+
 		let data = {
 			title: 'Woodcutting',
 			headings: ['名称', '#'], rows: []

@@ -218,7 +218,7 @@ class Inventory {
         return tmp_item;
     }
 
-    render() {
+    async render() {
 
         let memory_iventory = global.inventory.map((obj) => obj.id);
         let dom_iventory = [...this.parentDOM.children].map((obj) => obj.data.id);

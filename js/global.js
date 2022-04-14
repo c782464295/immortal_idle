@@ -10,6 +10,7 @@ export var global = {
     Settings: {
         locale: 'zh-CN',
         lightmode: 1,
+        saveClosing: true,
     },
     currency:{
         money:0,

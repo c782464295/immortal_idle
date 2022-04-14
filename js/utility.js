@@ -171,3 +171,10 @@ export function copyToClipboard(input) {
         window.clipboardData.setData("Text", input);
     }
 }
+
+export function generateGaussianNumber($mean, $stdDev) {
+    const $randNumA = Math.random();
+    const $randNumB = Math.random();
+    const $randNumNorm = Math.sqrt(-2.0 * Math.log($randNumA)) * Math.cos(2.0 * 3.141592653589793238462643383279502884197169399375 * $randNumB);
+    return $mean + $stdDev * $randNumNorm;
+}
