@@ -200,7 +200,7 @@ class Inventory {
             <table>
                 <tr>
                     <th width="50px" height="50px">
-                        <img src="${items.filter(item => item.id == itemID)[0].media}" width="50px" height="50px">
+                        <img src="${items.filter(item => item.id == itemID)[0].media}">
                     </th>
                     <th>
                         ${items.filter(item => item.id == itemID)[0].name}<br/>

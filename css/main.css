@@ -21,7 +21,7 @@
     font-weight: 600;
     font-display: swap;
     src: url('../fonts/inter-v7-latin-ext_latin-600.woff2') format('woff2');
-    
+
 }
 
 /* 定义元素盒子的计算方式
@@ -422,6 +422,7 @@ body.light-mode .video-bg::before {
 }
 
 @media screen and (max-width: 945px) {
+
     /*
     .left-side {
         animation: fadeAndHide 1s forwards;
@@ -1136,6 +1137,10 @@ body.light-mode .video-bg::before {
 }
 
 
+.notification-img {
+    height: 100%;
+    width: 100%;
+}
 
 item-element {
     margin: 10px 10px;
@@ -1144,7 +1149,7 @@ item-element {
 .hidden {
     visibility: hidden;
     opacity: 1;
-    display:none;
+    display: none;
 }
 
 .item {
@@ -1201,12 +1206,17 @@ item-element {
 }
 
 
-.itemNotify img {
-    height: 32px;
-    width: 32px;
-    margin-right: 4px
+.itemNotify {
+    height: 60px;
+    width: 200px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
+.itemNotify table{
+    height: 100%;
+
+}
 
 .badge-success {
     color: #fff;
@@ -1226,10 +1236,10 @@ item-element {
     width: 150px;
     height: 150px;
     background-color: transparent;
-    border: 1px solid red; 
-    margin:10px;
+    border: 1px solid red;
+    margin: 10px;
 }
 
-.achieve-card[active = false]{
+.achieve-card[active=false] {
     filter: grayscale(100%);
 }

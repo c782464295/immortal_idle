@@ -55,7 +55,7 @@ class Game {
         window.onbeforeunload = event => {
 
             if (event) {
-                event.returnValue = '关闭提示';
+                //event.returnValue = '关闭提示';
                 this.lasttimestamp = new Date().getTime();
                 //this.lasttimestamp = 0;
                 storage.setItem('saveData', this.serialize());

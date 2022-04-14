@@ -112,13 +112,29 @@ function itemNotify(itemID, qty) {
 function processItemNotify(itemID, qty) {
     let item = items.filter(function (currentValue) { return currentValue.id == itemID})[0];
     return Toastify({
-        text: `<img src="${item.media}"/><span class="badge-success">+${qty}&nbsp&nbsp(${global.inventory.filter(function (currentValue) { return currentValue.id == itemID})[0].qty})</span>`,
+        text: `
+        <table>
+            <tr>
+                <th width="32px" height="32px">
+                    <img src="${items.filter(item => item.id == itemID)[0].media}" width="100%" height="100%">
+                 </th>
+                <th>
+
+                    <span class="badge-success">
+                        +${qty}&nbsp&nbsp(${global.inventory.filter(function (currentValue) { return currentValue.id == itemID})[0].qty})
+                    </span>
+
+                </th>
+            </tr>
+        </table>
+        `,
         duration: 2000,
         gravity: "bottom",
         position: "center",
         backgroundColor: "transparent",
         stopOnFocus: false,
         escapeMarkup: false,
+
         className: "itemNotify"
     });
 }
