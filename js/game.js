@@ -15,6 +15,7 @@ import { statistics, GameStats, getGameStatsTableData } from './statistic.js';
 import { notificationQueue } from './notify.js';
 
 import { } from './recipes.js';
+import { } from './customelement/textChange.js';
 
 class Game {
     constructor() {
@@ -26,7 +27,7 @@ class Game {
 
         this.loopTimer = -1;
         this.loopStarted = false;
-        this.maxOfflineTicks = 20 * 60 * 60 * 12;
+        this.maxOfflineTicks = 1000 / TICK_INTERVAL * 60 * 60 * 12;
         this.previousTickTime = performance.now();
 
         this.lasttimestamp = new Date().getTime();
@@ -56,13 +57,13 @@ class Game {
 
             if (event) {
                 //event.returnValue = '关闭提示';
-                if(global.Settings.saveClosing) {
+                if (global.Settings.saveClosing) {
                     this.lasttimestamp = new Date().getTime();
                     //this.lasttimestamp = 0;
                     storage.setItem('saveData', this.serialize());
                     this.inventory.close();
                 }
-                
+
             }
 
         }
@@ -108,9 +109,9 @@ class Game {
 
     calDiffGeneral(oldsnap, newsnap) {
         let newObj = Object.keys(newsnap).reduce((a, k) => {
-            try{
+            try {
                 a[k] = newsnap[k] - oldsnap[k];
-            }catch(e){}
+            } catch (e) { }
             return a;
         }, {});
         return newObj;
@@ -118,9 +119,9 @@ class Game {
     }
     calDiffItem(oldsnap, newsnap) {
         let newObj = Object.keys(newsnap).reduce((a, k) => {
-            try{
+            try {
                 a[newsnap[k].id] = newsnap[k].qty - oldsnap[k].qty;
-            }catch(e){}
+            } catch (e) { }
             return a;
         }, {});
         return newObj;
@@ -223,7 +224,7 @@ class Game {
             showCancelButton: false,
         });
     }
-    
+
     openImportSave() {
         Swal.fire({
             title: '导入',
@@ -242,6 +243,21 @@ class Game {
                 location.reload();
             }
         });
+    }
+    downloadTextFile(fileName, fileText, fileType = 'text/plain') {
+        const file = new Blob([fileText], {
+            type: fileType
+        });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(file);
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(function () {
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        }, 0);
     }
 
     resetGame() {
@@ -343,171 +359,171 @@ $(document).ready(function () {
     var guiPresets = {
         "preset": "Default",
         "remembered": {
-          "Default": {
-            "0": {
-              "fworkSpeed": 2,
-              "fworkAccel": 4,
-              "showShockwave": false,
-              "showTarget": true,
-              "partCount": 30,
-              "partSpeed": 5,
-              "partSpeedVariance": 10,
-              "partWind": 50,
-              "partFriction": 5,
-              "partGravity": 1,
-              "flickerDensity": 20,
-              "hueMin": 150,
-              "hueMax": 200,
-              "hueVariance": 30,
-              "lineWidth": 1,
-              "clearAlpha": 25
+            "Default": {
+                "0": {
+                    "fworkSpeed": 2,
+                    "fworkAccel": 4,
+                    "showShockwave": false,
+                    "showTarget": true,
+                    "partCount": 30,
+                    "partSpeed": 5,
+                    "partSpeedVariance": 10,
+                    "partWind": 50,
+                    "partFriction": 5,
+                    "partGravity": 1,
+                    "flickerDensity": 20,
+                    "hueMin": 150,
+                    "hueMax": 200,
+                    "hueVariance": 30,
+                    "lineWidth": 1,
+                    "clearAlpha": 25
+                }
+            },
+            "Anti Gravity": {
+                "0": {
+                    "fworkSpeed": 4,
+                    "fworkAccel": 10,
+                    "showShockwave": true,
+                    "showTarget": false,
+                    "partCount": 150,
+                    "partSpeed": 5,
+                    "partSpeedVariance": 10,
+                    "partWind": 10,
+                    "partFriction": 10,
+                    "partGravity": -10,
+                    "flickerDensity": 30,
+                    "hueMin": 0,
+                    "hueMax": 360,
+                    "hueVariance": 30,
+                    "lineWidth": 1,
+                    "clearAlpha": 50
+                }
+            },
+            "Battle Field": {
+                "0": {
+                    "fworkSpeed": 10,
+                    "fworkAccel": 20,
+                    "showShockwave": true,
+                    "showTarget": true,
+                    "partCount": 200,
+                    "partSpeed": 30,
+                    "partSpeedVariance": 5,
+                    "partWind": 0,
+                    "partFriction": 5,
+                    "partGravity": 0,
+                    "flickerDensity": 0,
+                    "hueMin": 20,
+                    "hueMax": 30,
+                    "hueVariance": 10,
+                    "lineWidth": 1,
+                    "clearAlpha": 40
+                }
+            },
+            "Mega Blast": {
+                "0": {
+                    "fworkSpeed": 3,
+                    "fworkAccel": 3,
+                    "showShockwave": true,
+                    "showTarget": true,
+                    "partCount": 500,
+                    "partSpeed": 50,
+                    "partSpeedVariance": 5,
+                    "partWind": 0,
+                    "partFriction": 0,
+                    "partGravity": 0,
+                    "flickerDensity": 0,
+                    "hueMin": 0,
+                    "hueMax": 360,
+                    "hueVariance": 30,
+                    "lineWidth": 20,
+                    "clearAlpha": 20
+                }
+            },
+            "Nimble": {
+                "0": {
+                    "fworkSpeed": 10,
+                    "fworkAccel": 50,
+                    "showShockwave": false,
+                    "showTarget": false,
+                    "partCount": 120,
+                    "partSpeed": 10,
+                    "partSpeedVariance": 10,
+                    "partWind": 100,
+                    "partFriction": 50,
+                    "partGravity": 0,
+                    "flickerDensity": 20,
+                    "hueMin": 0,
+                    "hueMax": 360,
+                    "hueVariance": 30,
+                    "lineWidth": 1,
+                    "clearAlpha": 80
+                }
+            },
+            "Slow Launch": {
+                "0": {
+                    "fworkSpeed": 2,
+                    "fworkAccel": 2,
+                    "showShockwave": false,
+                    "showTarget": false,
+                    "partCount": 200,
+                    "partSpeed": 10,
+                    "partSpeedVariance": 0,
+                    "partWind": 100,
+                    "partFriction": 0,
+                    "partGravity": 2,
+                    "flickerDensity": 50,
+                    "hueMin": 0,
+                    "hueMax": 360,
+                    "hueVariance": 20,
+                    "lineWidth": 4,
+                    "clearAlpha": 10
+                }
+            },
+            "Perma Trail": {
+                "0": {
+                    "fworkSpeed": 4,
+                    "fworkAccel": 10,
+                    "showShockwave": false,
+                    "showTarget": false,
+                    "partCount": 150,
+                    "partSpeed": 10,
+                    "partSpeedVariance": 10,
+                    "partWind": 100,
+                    "partFriction": 3,
+                    "partGravity": 0,
+                    "flickerDensity": 0,
+                    "hueMin": 0,
+                    "hueMax": 360,
+                    "hueVariance": 20,
+                    "lineWidth": 1,
+                    "clearAlpha": 0
+                }
             }
-          },
-          "Anti Gravity": {
-            "0": {
-              "fworkSpeed": 4,
-              "fworkAccel": 10,
-              "showShockwave": true,
-              "showTarget": false,
-              "partCount": 150,
-              "partSpeed": 5,
-              "partSpeedVariance": 10,
-              "partWind": 10,
-              "partFriction": 10,
-              "partGravity": -10,
-              "flickerDensity": 30,
-              "hueMin": 0,
-              "hueMax": 360,
-              "hueVariance": 30,
-              "lineWidth": 1,
-              "clearAlpha": 50
-            }
-          },
-          "Battle Field": {
-            "0": {
-              "fworkSpeed": 10,
-              "fworkAccel": 20,
-              "showShockwave": true,
-              "showTarget": true,
-              "partCount": 200,
-              "partSpeed": 30,
-              "partSpeedVariance": 5,
-              "partWind": 0,
-              "partFriction": 5,
-              "partGravity": 0,
-              "flickerDensity": 0,
-              "hueMin": 20,
-              "hueMax": 30,
-              "hueVariance": 10,
-              "lineWidth": 1,
-              "clearAlpha": 40
-            }
-          },
-          "Mega Blast": {
-            "0": {
-              "fworkSpeed": 3,
-              "fworkAccel": 3,
-              "showShockwave": true,
-              "showTarget": true,
-              "partCount": 500,
-              "partSpeed": 50,
-              "partSpeedVariance": 5,
-              "partWind": 0,
-              "partFriction": 0,
-              "partGravity": 0,
-              "flickerDensity": 0,
-              "hueMin": 0,
-              "hueMax": 360,
-              "hueVariance": 30,
-              "lineWidth": 20,
-              "clearAlpha": 20
-            }
-          },
-          "Nimble": {
-            "0": {
-              "fworkSpeed": 10,
-              "fworkAccel": 50,
-              "showShockwave": false,
-              "showTarget": false,
-              "partCount": 120,
-              "partSpeed": 10,
-              "partSpeedVariance": 10,
-              "partWind": 100,
-              "partFriction": 50,
-              "partGravity": 0,
-              "flickerDensity": 20,
-              "hueMin": 0,
-              "hueMax": 360,
-              "hueVariance": 30,
-              "lineWidth": 1,
-              "clearAlpha": 80
-            }
-          },
-          "Slow Launch": {
-            "0": {
-              "fworkSpeed": 2,
-              "fworkAccel": 2,
-              "showShockwave": false,
-              "showTarget": false,
-              "partCount": 200,
-              "partSpeed": 10,
-              "partSpeedVariance": 0,
-              "partWind": 100,
-              "partFriction": 0,
-              "partGravity": 2,
-              "flickerDensity": 50,
-              "hueMin": 0,
-              "hueMax": 360,
-              "hueVariance": 20,
-              "lineWidth": 4,
-              "clearAlpha": 10
-            }
-          },
-          "Perma Trail": {
-            "0": {
-              "fworkSpeed": 4,
-              "fworkAccel": 10,
-              "showShockwave": false,
-              "showTarget": false,
-              "partCount": 150,
-              "partSpeed": 10,
-              "partSpeedVariance": 10,
-              "partWind": 100,
-              "partFriction": 3,
-              "partGravity": 0,
-              "flickerDensity": 0,
-              "hueMin": 0,
-              "hueMax": 360,
-              "hueVariance": 20,
-              "lineWidth": 1,
-              "clearAlpha": 0
-            }
-          }
         },
         "closed": true,
         "folders": {
-          "Fireworks": {
-            "preset": "Default",
-            "closed": false,
-            "folders": {}
-          },
-          "Particles": {
-            "preset": "Default",
-            "closed": true,
-            "folders": {}
-          },
-          "Color": {
-            "preset": "Default",
-            "closed": true,
-            "folders": {}
-          },
-          "Other": {
-            "preset": "Default",
-            "closed": true,
-            "folders": {}
-          }
+            "Fireworks": {
+                "preset": "Default",
+                "closed": false,
+                "folders": {}
+            },
+            "Particles": {
+                "preset": "Default",
+                "closed": true,
+                "folders": {}
+            },
+            "Color": {
+                "preset": "Default",
+                "closed": true,
+                "folders": {}
+            },
+            "Other": {
+                "preset": "Default",
+                "closed": true,
+                "folders": {}
+            }
         }
-      };
+    };
 
     var gui = new dat.GUI({
         autoPlace: false,
@@ -518,17 +534,17 @@ $(document).ready(function () {
     customContainer.appendChild(gui.domElement);
 
     var fworks = {
-        partCount:parseInt(getComputedStyle(document.documentElement)
-        .getPropertyValue('--bg-blur').replace('px','')),partSpeed:0,
+        partCount: parseInt(getComputedStyle(document.documentElement)
+            .getPropertyValue('--bg-blur').replace('px', '')), partSpeed: 0,
 
     };
     var guiParticles = gui.addFolder('Particles');
     guiParticles.add(fworks, 'partCount').min(0).max(100).step(1).onChange(
-        function(){
+        function () {
             document.documentElement.style
-            .setProperty('--bg-blur',  `${this.getValue()}px`);
+                .setProperty('--bg-blur', `${this.getValue()}px`);
         }
-      );	
+    );
     guiParticles.add(fworks, 'partSpeed').min(1).max(100).step(1);
 
 

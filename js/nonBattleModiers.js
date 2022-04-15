@@ -103,18 +103,11 @@ class NonBattleModifiersManager {
     }
 }
 
-/*
 
-
-nonBattleModifiersManager.addModifier("BirdNestDropRate",new BaseModifier(2,'a',5));
-
-
-
-*/
 let nonBattleModifiersManager = new NonBattleModifiersManager();
 
 let test = new BaseModifier(2,'a',50);
 nonBattleModifiersManager.addModifier("CuttingDoubleRate",test);
 
-nonBattleModifiersManager.removeModifier("CuttingDoubleRate",test);
+//onBattleModifiersManager.removeModifier("CuttingDoubleRate",test);
 export { nonBattleModifiersManager };

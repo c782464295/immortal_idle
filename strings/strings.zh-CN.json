@@ -15,5 +15,10 @@
     "oka2": "无敌2",
     "mucai": "树莓派",
     "mucaimiaoshu": "很好吃的树莓派"
+  },
+  "staticsname": {
+    "totalTimeConsume": "消耗时间",
+    "oka1": "无敌1",
+    "oka2": "无敌2"
   }
 }

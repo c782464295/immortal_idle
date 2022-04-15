@@ -235,7 +235,6 @@ class Inventory {
             }
         }
 
-
         // update
         for (let i of [...this.parentDOM.children]) {
             if (i.data.qty == 0) i.remove();

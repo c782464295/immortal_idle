@@ -17,6 +17,9 @@ export function getPetsName(itemID) {
     return strings["petsname"][itemID];
 }
 
+export function getStaticsnName(itemID) {
+    return strings["staticsname"][itemID];
+}
 
 function getString(locale) {
     let defaultString;

@@ -1,5 +1,6 @@
 "use strict";
 import { game } from '../game.js';
+import { getStaticsnName } from '../locale.js';
 
 class stasTable extends HTMLElement {
 	constructor() {
@@ -52,7 +53,7 @@ class stasTable extends HTMLElement {
 
 		for (let item of game.statistics['Woodcutting'].statistics) {
 			if(item[0] == 'totalTimeConsume') {
-				data.rows.push([item[0], this.formatDuring(item[1])]);
+				data.rows.push([getStaticsnName(item[0]), this.formatDuring(item[1])]);
 				continue;
 			}
 			data.rows.push([item[0], item[1]]);
