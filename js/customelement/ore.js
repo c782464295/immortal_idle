@@ -156,7 +156,7 @@ class Ore extends HTMLElement {
 
         */
         //console.log('mining-ore');
-        isNaN(global['pack'].storage[this._id]) ? global['pack'].storage[this._id] = 1 : global['pack'].storage[this._id] += 1;
+        
         //gpNotify(20);
         let qty = 1;
         if (this.isItemExist(this._id)) {
@@ -248,8 +248,10 @@ class Mining {
 
     }
     tick() {
-        for (let i in this.ores) {
-            this.ores[i].tick();
+        if(global.currentAction == 'Mining') {
+            for (let i in this.ores) {
+                this.ores[i].tick();
+            }
         }
     }
     serialize() {

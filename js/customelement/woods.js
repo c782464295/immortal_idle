@@ -245,8 +245,10 @@ class WoodCutting {
 
     }
     tick() {
-        for (let i in this.trees) {
-            this.trees[i].tick();
+        if(global.currentAction == 'woodcutting') {
+            for (let i in this.trees) {
+                this.trees[i].tick();
+            }
         }
     }
     serialize() {
