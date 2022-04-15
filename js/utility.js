@@ -178,3 +178,43 @@ export function generateGaussianNumber($mean, $stdDev) {
     const $randNumNorm = Math.sqrt(-2.0 * Math.log($randNumA)) * Math.cos(2.0 * 3.141592653589793238462643383279502884197169399375 * $randNumB);
     return $mean + $stdDev * $randNumNorm;
 }
+
+
+
+function showFireworks(force = false) {
+    forcePyro = force;
+    const pyro = `<div class="pyro">
+					<div class="before"></div>
+					<div class="after"></div>
+				</div>`;
+    $("body").append(pyro);
+    startPyroInterval();
+}
+
+
+function removePyro() {
+    $(".pyro").remove();
+}
+
+export function startPyroInterval() {
+    clearInterval(pyroInterval);
+    pyroInterval = setInterval(function() {
+        if (!Swal.isVisible() && !forcePyro) {
+            removePyro();
+            clearInterval(pyroInterval);
+        }
+    }, 1000);
+}
+
+
+function openDiscordLink() {
+    if (location.origin === "https://steam.melvoridle.com") {
+        try {
+            parent.nw.Shell.openExternal("https://discord.gg/melvoridle");
+        } catch (e) {
+            console.warn("Unable to open Discord URL: " + e);
+        }
+    } else {
+        window.open("https://discord.gg/melvoridle", "_blank").focus();
+    }
+}

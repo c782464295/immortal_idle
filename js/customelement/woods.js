@@ -153,8 +153,7 @@ class Tree extends HTMLElement {
             tmp.qty += qty;
         } else {
             if (global.isFull()) {
-                this.stop();
-                return;
+                console.log('背包满了');
             }
             global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice });
         }
@@ -167,10 +166,7 @@ class Tree extends HTMLElement {
 
     }
 
-    stop() {
-        this.timer.stop();
-        global.currentAction = '';
-    }
+
 
     isItemExist(id) {
         if (global.inventory.find(item => item.id == id) === undefined) {

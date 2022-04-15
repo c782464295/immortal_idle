@@ -5,7 +5,7 @@ export var save = window.localStorage;
 export var global = {
     inventory: [],//{ id: 15, locked: false, qty: 1, tab: 0, sellsFor: 80 },
     getMaxSpace() {
-        return 3;
+        return 2;
     },
     isFull() {
         return this.inventory.filter(item => item.qty != 0).length >= this.getMaxSpace() ? true : false;

@@ -1,11 +1,43 @@
-lootTable: [
-    [CONSTANTS.item.Copper_Ore, 50, 1],
-    [CONSTANTS.item.Tin_Ore, 50, 1],
-    [CONSTANTS.item.Iron_Ore, 12, 1],
-    [CONSTANTS.item.Bronze_Bar, 50, 1],
-    [CONSTANTS.item.Iron_Bar, 15, 1],
-    [CONSTANTS.item.Steel_Bar, 10, 1],
-    [CONSTANTS.item.Normal_Logs, 50, 1],
-    [CONSTANTS.item.Oak_Logs, 15, 1],
-    [CONSTANTS.item.Willow_Logs, 10, 1],
-]
+'use strict'
+
+import { error, extend } from "jquery";
+
+export const MonsterName = {
+    0: "LegaranWurm",
+    1: "CursedLich",
+    2: "Dragon",
+
+    get: function (value) {
+        if (typeof (value) == 'number') {
+            return GeneralStats[value];
+        } else {
+            return Object.keys(GeneralStats).find(key => GeneralStats[key] === value);
+        }
+    }
+}
+
+
+
+export const Monster = {
+    id: MonsterName.get("Dragon"),
+    get name() {
+        return getLangString('MONSTER_NAME', `${this.id}`);
+    },
+    basicAttributes: {
+        Hitpoints: 900,
+        Attack: 1,
+        Strength: 1,
+        Defence: 350,
+        Ranged: 650,
+        Magic: 300,
+        attackSpeed: 2100
+    },
+    specialAttacks: [attacks.Burrow, attacks.PenetratingSpikeShot, attacks.ToxicNeedles],
+    dropRate: 10 / 100,
+    lootTable: [
+        // 物品Id,数量，概率
+        [Items.Poison_Essence, 8, 1 / 100],
+        [Items.Worm_Spike, 1, 10 / 100],
+    ],
+
+}

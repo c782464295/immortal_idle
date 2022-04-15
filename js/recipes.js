@@ -15,15 +15,14 @@ class Recipe extends HTMLElement {
         this.querySelector('button').addEventListener('click', this.check.bind(this), false);
     }
     check() {
+        // 这里还需要判断背包是否满了
         let allMeet = true;
         this.data.itemCosts.forEach(function (value) {
-            console.log(value);
             if (global.inventory.filter(function (currentValue, index, arr) { return currentValue.id == value.id }, this)[0].qty < value.qty) allMeet = false;
 
         });
         if (allMeet) {
             this.data.itemCosts.forEach(function (value) {
-                console.log(value);
                 let tmp_item = global.inventory.filter(function (currentValue, index, arr) { return currentValue.id == value.id }, this)[0];
 
                 tmp_item.qty -= value.qty;
