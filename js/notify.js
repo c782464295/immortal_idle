@@ -131,7 +131,9 @@ function processItemNotify(itemID, qty) {
         duration: 2000,
         gravity: "bottom",
         position: "center",
-        backgroundColor: "transparent",
+        style: {
+            background: "transparent",
+        },
         stopOnFocus: false,
         escapeMarkup: false,
 

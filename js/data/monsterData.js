@@ -1,6 +1,5 @@
 'use strict'
 
-import { error, extend } from "jquery";
 
 export const MonsterName = {
     0: "LegaranWurm",
