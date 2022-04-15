@@ -6,6 +6,7 @@ import { processItemNotify, notificationQueue } from '../notify.js';
 import { ProgressBar } from './progress.js'
 import { items } from '../items.js';
 import { statistics } from '../statistic.js';
+import { oreData } from '../data/oreData.js';
 
 class Ore extends HTMLElement {
     constructor(p_dom) {
@@ -203,100 +204,6 @@ class Ore extends HTMLElement {
 
 
 customElements.define('ore-element', Ore);
-
-var oreData = [
-    {
-        id: 1,
-        name: loc('tree0'),
-        description: '矿石1',
-        baseExperience: 7,
-        baseInterval: 5000,
-        requirelevel: 1,
-        media: './assets/ores/rock_coal.svg'
-    },
-    {
-        id: 2,
-        name: loc('tree0'),
-        description: '矿石2',
-        baseExperience: 7,
-        baseInterval: 5000,
-        requirelevel: 1,
-        media: './assets/ores/rock_adamantite.svg',
-    },
-    {
-        id: 3,
-        name: loc('tree0'),
-        description: '矿石3',
-        baseExperience: 18,
-        baseInterval: 10000,
-        requirelevel: 15,
-        media: './assets/ores/rock_copper.svg',
-    },
-    {
-        id: 4,
-        name: loc('tree0'),
-        description: '矿石4',
-        baseExperience: 25,
-        baseInterval: 10000,
-        requirelevel: 30,
-        media: './assets/ores/rock_dragonite.svg',
-    },
-    {
-        id: 5,
-        name: loc('tree0'),
-        description: '矿石4',
-        baseExperience: 42,
-        baseInterval: 15000,
-        requirelevel: 30,
-        media: './assets/ores/rock_dragonite.svg',
-    },
-    {
-        id: 6,
-        name: loc('tree0'),
-        description: '矿石4',
-        baseExperience: 51,
-        baseInterval: 15000,
-        requirelevel: 40,
-        media: './assets/ores/rock_dragonite.svg',
-    },
-    {
-        id: 7,
-        name: loc('tree0'),
-        description: '矿石4',
-        baseExperience: 64,
-        baseInterval: 20000,
-        requirelevel: 50,
-        media: './assets/ores/rock_dragonite.svg',
-    },
-    {
-        id: 8,
-        name: loc('tree0'),
-        description: '矿石4',
-        baseExperience: 105,
-        baseInterval: 30000,
-        requirelevel: 70,
-        media: './assets/ores/rock_dragonite.svg',
-    },
-    {
-        id: 9,
-        name: loc('tree0'),
-        description: '矿石4',
-        baseExperience: 225,
-        baseInterval: 60000,
-        requirelevel: 80,
-        media: './assets/ores/rock_dragonite.svg',
-    },
-    {
-        id: 10,
-        name: loc('tree0'),
-        description: '矿石4',
-        baseExperience: 525,
-        baseInterval: 120000,
-        requirelevel: 95,
-        media: './assets/ores/rock_dragonite.svg',
-    }
-];
-
 
 
 

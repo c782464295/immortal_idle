@@ -1,33 +1,14 @@
 'use strict'
 import { items } from './items.js';
 import { global } from './global.js';
+import { recipeData } from './data/recipeData.js';
 
-
-const recipes = [
-    {
-        itemID: 111,
-        baseQuantity: 1,
-        category: 1,
-        baseXP: 5,
-        level: 1,
-        masteryID: 0,
-        itemCosts: [{
-            id: 1,
-            qty: 1
-        }, {
-            id: 2,
-            qty: 1
-        },],
-        gpCost: 0,
-        scCost: 0,
-    },
-]
 
 
 class Recipe extends HTMLElement {
     constructor(p_dom) {
         super();
-        this.data = recipes[0];
+        this.data = recipeData[0];
     }
     connectedCallback() {
         this.innerHTML = '<button type="button">点我!</button>';

@@ -4,6 +4,12 @@ export const TICK_INTERVAL = 50;
 export var save = window.localStorage;
 export var global = {
     inventory: [],//{ id: 15, locked: false, qty: 1, tab: 0, sellsFor: 80 },
+    getMaxSpace() {
+        return 3;
+    },
+    isFull() {
+        return this.inventory.filter(item => item.qty != 0).length >= this.getMaxSpace() ? true : false;
+    },
     options: {
         disableFlyoutLabels: false
     },
@@ -47,7 +53,13 @@ export var global = {
             
         }
     }),
-    
+    PlayerStates : {
+        HP: 300,
+        magic: 140,
+        XP: 0,
+    },
+
+
     serialize() {
         return JSON.stringify(this);
     },
@@ -76,22 +88,11 @@ export var global = {
     },
 };
 
-global['pack'] = {
-    baseBOFmax: 5,
-    baseStomax: 10,
-    storage: {},
-    BagOfHolding: {},
-    bank: []
-};
 
 
 
 
-global['PlayerStates'] = {
-    HP: 300,
-    magic: 140,
-    XP: 0,
-};
+
 
 
 

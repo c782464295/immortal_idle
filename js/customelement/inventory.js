@@ -205,7 +205,7 @@ class Inventory {
                     <th>
                         ${items.filter(item => item.id == itemID)[0].name}<br/>
                         ${items.filter(item => item.id == itemID)[0].description}<br/>
-                        ${items.filter(item => item.id == itemID)[0].farmingXP != undefined?`恢复${items.filter(item => item.id == itemID)[0].farmingXP}`:''}
+                        ${items.filter(item => item.id == itemID)[0].farmingXP != undefined ? `恢复${items.filter(item => item.id == itemID)[0].farmingXP}` : ''}
                     </th>
                 </tr>
             </table>
@@ -248,9 +248,7 @@ class Inventory {
         totalGP = global.inventory.map(x => x.qty * x.sellsFor).reduce(function (x, y) { return x + y });
         return totalGP;
     }
-    getMaxSpace() {
-        return 999;
-    }
+    
     serialize() {
 
     }
