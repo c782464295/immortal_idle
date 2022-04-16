@@ -64,7 +64,6 @@ export var global = {
         return JSON.stringify(this);
     },
     deserialize(data) {
-        console.log(JSON.parse(data));
         for (let k in JSON.parse(data)) {
             if(k == 'NonBattleSkill'){
                 this[k] = new Proxy(JSON.parse(data)[k],{

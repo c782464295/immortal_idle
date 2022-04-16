@@ -162,7 +162,7 @@ class AttackSpeed extends DependantBuff {
     }
 
     findModifierByName(name) {
-        return this.otherAttributes.filter(m => m.name == name)[0];
+        return this.otherAttributes.find(m => m.name == name);
     }
 
     calculateValue() {

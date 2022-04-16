@@ -36,7 +36,7 @@ class Item extends HTMLElement {
     }
 
     render() {
-        let item = items.filter(function (currentValue, index, arr) { return currentValue.id == this.data.id }, this)[0];
+        let item = items.find(function (currentValue, index, arr) { return currentValue.id == this.data.id }, this);
 
         this.img.src = item.media;
         this.text.innerText = beautify(this.data.qty);
@@ -80,7 +80,7 @@ class Search extends HTMLElement {
             };
             let searchObj = deepClone(global.inventory);
             for (let i in searchObj) {
-                let tmp_item = items.filter(function (currentValue) { return currentValue.id == searchObj[i].id })[0];
+                let tmp_item = items.find(function (currentValue) { return currentValue.id == searchObj[i].id });
                 searchObj[i].name = tmp_item.name;
                 searchObj[i].description = tmp_item.description;
             }
@@ -189,7 +189,7 @@ class Inventory {
     }
     addItem(itemID) {
         let tmp_item = new Item();
-        tmp_item.data = global.inventory.filter(item => item.id == itemID)[0];
+        tmp_item.data = global.inventory.find(item => item.id == itemID);
         tippy(tmp_item, {
             placement: "top",
             allowHTML: true,
@@ -200,12 +200,12 @@ class Inventory {
             <table>
                 <tr>
                     <th width="50px" height="50px">
-                        <img src="${items.filter(item => item.id == itemID)[0].media}">
+                        <img src="${items.find(item => item.id == itemID).media}">
                     </th>
                     <th>
-                        ${items.filter(item => item.id == itemID)[0].name}<br/>
-                        ${items.filter(item => item.id == itemID)[0].description}<br/>
-                        ${items.filter(item => item.id == itemID)[0].farmingXP != undefined ? `恢复${items.filter(item => item.id == itemID)[0].farmingXP}` : ''}
+                        ${items.find(item => item.id == itemID).name}<br/>
+                        ${items.find(item => item.id == itemID).description}<br/>
+                        ${items.find(item => item.id == itemID).farmingXP != undefined ? `恢复${items.find(item => item.id == itemID).farmingXP}` : ''}
                     </th>
                 </tr>
             </table>

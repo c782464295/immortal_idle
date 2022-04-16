@@ -66,7 +66,7 @@ let SwalLocale = Swal.mixin({
     //backgroundColor: var(--popup-bg);
     buttonsStyling: false,
 });
-SwalLocale.fire();
+//SwalLocale.fire();
 function gpNotify(qty) {
     if (1) {
         let textClass = "success";
@@ -110,18 +110,18 @@ function itemNotify(itemID, qty) {
 }
 
 function processItemNotify(itemID, qty) {
-    let item = items.filter(function (currentValue) { return currentValue.id == itemID})[0];
+    let item = items.find(function (currentValue) { return currentValue.id == itemID});
     return Toastify({
         text: `
         <table>
             <tr>
                 <th width="32px" height="32px">
-                    <img src="${items.filter(item => item.id == itemID)[0].media}" width="100%" height="100%">
+                    <img src="${items.find(item => item.id == itemID).media}" width="100%" height="100%">
                  </th>
                 <th>
 
                     <span class="badge-success">
-                        +${qty}&nbsp&nbsp(${global.inventory.filter(function (currentValue) { return currentValue.id == itemID})[0].qty})
+                        +${qty}&nbsp&nbsp(${global.inventory.find(function (currentValue) { return currentValue.id == itemID}).qty})
                     </span>
 
                 </th>

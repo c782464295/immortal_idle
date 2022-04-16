@@ -107,5 +107,3 @@ export const items = [
         media: "assets/items/apple_pie.png",
     },
 ]
-
-console.log(items);

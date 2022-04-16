@@ -87,8 +87,9 @@ class Game {
             this.statistics.Gamestats.set(GameStats.AccountCreationDate, Date.now());
         }
 
-        console.log(this.global['Settings'].lightmode);
+        
         this.global['Settings'].lightmode == 1 ? document.body.classList.add('light-mode') : document.body.classList.remove('light-mode');
+
         let oldsnap = this.snapShot();
 
         let offlinetimestamp = new Date().getTime();
@@ -108,7 +109,6 @@ class Game {
             items: deepClone(global.inventory),
             currency: deepClone(global.currency),
         }
-        console.log(snapshot);
         return snapshot;
     }
 
@@ -323,7 +323,7 @@ class Game {
         //console.log(res);
 
         for (let [k, v] of Object.entries(this)) {
-            console.log(k, v);
+            //console.log(k, v);
             if (v.serialize == undefined) {
                 if (typeof (v) != 'object') {
 
@@ -544,7 +544,7 @@ $(document).ready(function () {
 
     };
     var guiParticles = gui.addFolder('Particles');
-    guiParticles.add(fworks, 'partCount').min(0).max(100).step(1).onChange(
+    guiParticles.add(fworks, 'partCount').min(0).max(10).step(1).onChange(
         function () {
             document.documentElement.style
                 .setProperty('--bg-blur', `${this.getValue()}px`);
@@ -559,5 +559,5 @@ $(document).ready(function () {
 })
 
 /* 
-'H4sIAAAAAAAAA7VU34/aMAz+X/Lcm9qjsMHbgcZu0v2SOOkmAQ+mNRA1bbokZccQ//vspBxF2+3tJCrsL7Y/x7F9EErr+lmWaMTouhd5debAOMzFyJkGI1HC6+N6rWSFzzIrrBh9GaRxHEeiNriTurEMcwgxSq7jePipT2HAOkeQdVDWhA/S4bDXT/qfh8kgEhulV6DESBwWQlY7rJw2+4UYzVnPSUiiBWWSFcjKGpRFAn46tkkHJDpYkRiTZFEpO9WGneLjkhBdO6krSwBFy6WFlcKp2uvG3cEKlT1FPJLtDCnLatMaEyMoJHkhfm+vJg8LwWnIzdaVOsdOJhZ2OFHakusiVImDZY0xWGX7EKzUFe7bJB3Y4v6ks6l0WNobZRDy/VQ3FV9zvnyL4W4yvoPP5JfWedb4NH0+D7oag3MKZ4VUquWSFR1/fa1bvo5PANMBw2tptxd2tYLKnVVQ2RbL/RnIDKzdpYeBznngvcMdqvbROswnuH9m7lp67i7QsnehE/+FH2XwpnMta8iKUIYVWBw/TqlfW1oGZk4HIPHtQp0GGwz2ia8MxxjD5nF9q1UeXvRw9M5V4Z+FlScFezQ0GA7bZrl9ov9e7MsAG5kxQ8rajyf/ykcRcX24QBRkfpVE9IuX0YdJy0i8UPUnofrMmUbXcZR8BBFkW0lvUFKr3kNFBTXMF0c8CmSZnAU/MuxCm8BJ62RGC+Qg7mUoDG+A80kotwgXyU4X+dtmTiOlHaiXi9lIB8TYnvA6mtAWaEr0J7Svlj7yNHTiu8xTabCE4n8m38DvNWf/mVovapdd3KNvGFi/87y/E/B4/AN54xwjhQUAAA=='
+
 */

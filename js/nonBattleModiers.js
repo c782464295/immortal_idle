@@ -73,7 +73,7 @@ class NonBattleModifiersManager {
 
     }
     findModifierByName(name) {
-        return this.modifier.filter(m => m.name == name)[0];
+        return this.modifier.find(m => m.name == name);
     }
     addModifier(name, modifier) {
         this.findModifierByName(name).addModifier(modifier);
@@ -86,20 +86,27 @@ class NonBattleModifiersManager {
     }
 
     serialize() {
-        let saveObj = { id: 0 };
+        let saveObj = {};
+        let i = 0;
         this.modifier.forEach((m) => {
-            let index = 0
-            m.modifiers.forEach((mm) =>{
-                saveObj[index] = {baseValue : mm.baseValue,baseMultiplier:mm.baseMultiplier};
-                index++;
+
+            saveObj[i] = [];
+            m.modifiers.forEach((mm) => {
+                saveObj[i].push({ baseValue: mm.baseValue, baseMultiplier: mm.baseMultiplier });
             }, this);
-            
-            
+            i++;
+
         })
 
         return JSON.stringify(saveObj);
     }
-    deserialize(data) {
+    deserialize(sData, version) {
+        let parseData = JSON.parse(sData);
+        Object.keys(parseData).forEach((e) => {
+            Object.keys(parseData[e]).forEach((m)=>{
+                nonBattleModifiersManager.addModifier("CuttingDoubleRate", new BaseModifier(parseData[e],'',parseData[e][m].baseValue,parseData[e][m].baseMultiplier));
+            })
+        })
         return true;
     }
 

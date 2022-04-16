@@ -48,7 +48,7 @@ const achieve_list = [
         checkFunction: (x) => { return 1 > 0 ? true : false; },
     },
     {
-        id: 1,
+        id: 2,
         name: 'a',
         state: false,
         description: '成就3',
@@ -82,7 +82,6 @@ class AchievementManager {
     tick() {
         if (!this.init) {
             this.init = true;
-            this.checkAchievement();
 
             this.achievements.forEach(function (achievement) {
 
@@ -104,7 +103,6 @@ class AchievementManager {
         this.achievements.forEach(function (achievement) {
             if (!achievement.state && achievement.checkFunction(global)) {
                 achievement.state = true;
-                console.log('achivement unlocked');
             }
         });
 
@@ -120,7 +118,7 @@ class AchievementManager {
         return sData;
     }
     deserialize(sData, version) {
-        sData.forEach(e => this.achievements.filter(item => item.id == e[0])[0].state = e[1])
+        sData.forEach((e) => { this.achievements.find(item => item.id == e[0]).state = e[1] }, this);
     }
 }
 
