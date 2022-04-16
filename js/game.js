@@ -14,8 +14,12 @@ import { statistics, GameStats, getGameStatsTableData } from './statistic.js';
 
 import { notificationQueue } from './notify.js';
 
+import { nonBattleModifiersManager } from './nonBattleModiers.js';
+
 import { } from './recipes.js';
 import { } from './customelement/textChange.js';
+import { } from './customelement/pray.js';
+
 
 class Game {
     constructor() {
@@ -48,6 +52,7 @@ class Game {
         this.achievementManager = achievementManager;
         this.statistics = statistics;
 
+        this.NonBattleModifers = nonBattleModifiersManager;
 
         ifvisible.on("blur", () => this.pauseGame());
 

@@ -1,5 +1,5 @@
 'use strict'
-class TextChange extends HTMLElement {
+export class TextChange extends HTMLElement {
     constructor() {
         super();
         TextChange.counter = TextChange.counter + 1 || 1;

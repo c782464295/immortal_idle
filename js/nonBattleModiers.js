@@ -1,27 +1,5 @@
 'use strict'
-
-const nonBattleModifierData = [
-    {
-        id: 0,
-        name: 'CuttingDoubleRate',
-        defaultRate: 0
-    },
-    {
-        id: 1,
-        name: 'BirdNestDropRate',
-        defaultRate: 3
-    },
-    {
-        id: 2,
-        name: 'DoubleHarvestRate',
-        defaultRate: 5
-    },
-    {
-        id: 3,
-        name: 'DoubleHarvestRate',
-        defaultRate: 5
-    }
-]
+import { prayData } from './data/prayData.js';
 
 class BaseModifier {
     constructor(id, name, baseValue, baseMultiplier = 0) {
@@ -32,7 +10,7 @@ class BaseModifier {
     }
 }
 
-class Modifier extends BaseModifier {
+export class Modifier extends BaseModifier {
     constructor(id, name, baseValue, baseMultiplier = 0) {
         super(id, name, baseValue, baseMultiplier);
 
@@ -85,9 +63,14 @@ class Modifier extends BaseModifier {
 class NonBattleModifiersManager {
     constructor() {
         this.modifier = [];
-        nonBattleModifierData.forEach(function (modifier) {
-            this.modifier.push(new Modifier(modifier.id, modifier.name, modifier.defaultRate));
-        }, this)
+
+    }
+
+    init(prayData) {
+        prayData.forEach((ele) => {
+            this.modifier.push(new Modifier(ele.id, ele.name, ele.baseValue, ele.baseMultiplier));
+        }, this);
+
     }
     findModifierByName(name) {
         return this.modifier.filter(m => m.name == name)[0];
@@ -95,19 +78,36 @@ class NonBattleModifiersManager {
     addModifier(name, modifier) {
         this.findModifierByName(name).addModifier(modifier);
     }
-    removeModifier(name,modifier) {
+    removeModifier(name, modifier) {
         return this.findModifierByName(name).removeModifier(modifier);
     }
     getFinalValue(name) {
         return this.findModifierByName(name).finalValue;
     }
+
+    serialize() {
+        let saveObj = { id: 0 };
+        this.modifier.forEach((m) => {
+            let index = 0
+            m.modifiers.forEach((mm) =>{
+                saveObj[index] = {baseValue : mm.baseValue,baseMultiplier:mm.baseMultiplier};
+                index++;
+            }, this);
+            
+            
+        })
+
+        return JSON.stringify(saveObj);
+    }
+    deserialize(data) {
+        return true;
+    }
+
 }
 
 
 let nonBattleModifiersManager = new NonBattleModifiersManager();
-
-let test = new BaseModifier(2,'a',50);
-nonBattleModifiersManager.addModifier("CuttingDoubleRate",test);
+nonBattleModifiersManager.init(prayData);
 
 //onBattleModifiersManager.removeModifier("CuttingDoubleRate",test);
 export { nonBattleModifiersManager };
