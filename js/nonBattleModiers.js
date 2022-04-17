@@ -87,7 +87,13 @@ class NonBattleModifiersManager {
     getFinalValue(id) {
         return this.findModifierById(id).finalValue;
     }
-
+    findSubModifierByid(id) {
+        for(let index in this.modifierList){
+            if(typeof(this.modifierList[index].findModifierById(id)) != 'undefined') { 
+                return {id:this.modifierList[index].id,baseM:this.modifierList[index].findModifierById(id)};
+            }
+        }
+    }
     serialize() {
         let saveObj = {};
         let i = 0;
@@ -109,7 +115,7 @@ class NonBattleModifiersManager {
             if(parseData[e].length != 0) {
                 
                 for(let item in parseData[e]){
-                    console.log(parseData[e][item]);
+                    
                     this.addModifier(e, new BaseModifier(parseData[e][item].id,'',parseData[e][item].baseValue,parseData[e][item].baseMultiplier));
                 }
             }

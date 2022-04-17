@@ -102,6 +102,17 @@
     "area_2": "域外区域",
     "area_3": "荒漠杀戮之地"
   },
+  "achivement": {
+    "achive_name_0": "成就1",
+    "achive_name_1": "成就2",
+    "achive_name_2": "成就3",
+    "achive_name_3": "成就4",
+
+    "achive_des_0": "描述1",
+    "achive_des_1": "描述2",
+    "achive_des_2": "描述3",
+    "achive_des_3": "描述4"
+  },
   "woodArea": {
     "tree_name_0": "巨柳树",
     "tree_name_1": "紫檀树",

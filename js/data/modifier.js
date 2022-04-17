@@ -5,9 +5,24 @@ export const modifier = {
     "CuttingDoubleRate": 0,
     "BirdNestDropRate": 1,
 
-    0: "CuttingDoubleRate",
-    1: "BirdNestDropRate",
+    get: function (value) {
+        return Object.keys(this).find(key => this[key] === value);
+    }
 }
+
+export const modifierFrom = {
+    
+    "slot_0":0,
+    "slot_1":1,
+    "slot_2":2,
+    
+    "Equipment":99,
+    "Buff":100,
+    get: function (value) {
+        return Object.keys(this).find(key => this[key] === value);
+    }
+}
+
 
 export const modifierData = [
     {
