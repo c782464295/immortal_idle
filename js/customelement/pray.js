@@ -108,7 +108,7 @@ class PrayCard extends HTMLElement {
     set data(val) {
         this._data = val;
         this.img.src = '../assets/pray/Trigramme2630_☰.svg';
-        this.pray2.text = modifierData.find(m => m.id == nonBattleModifiersManager.findSubModifierByid(modifierFrom.slot_1).id).description;
+        this.pray2.text = modifierData.find(m => m.id == nonBattleModifiersManager.findSubModifierByid(modifierFrom.slot_1).id).description +  modifierData.find(m => m.id == nonBattleModifiersManager.findSubModifierByid(modifierFrom.slot_1).id).baseValue;
     }
 }
 customElements.define('praycard-element', PrayCard);
