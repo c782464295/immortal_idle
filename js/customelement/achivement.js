@@ -1,7 +1,7 @@
 'use strict'
 import { loc } from '../locale.js';
 import { global } from '../global.js';
-
+import { achieve_list } from '../data/achiveData.js';
 class achivementUI extends HTMLElement {
     constructor() {
         super();
@@ -30,33 +30,7 @@ class achivementUI extends HTMLElement {
 
 customElements.define('achivement-element', achivementUI);
 
-const achieve_list = [
-    {
-        id: 0,
-        name: 'a',
-        state: false,
-        description: '成就1',
-        media: './assets/achievements/firemaking.png',
-        checkFunction: (x) => { return x.inventory.length > 0 ? true : false; },
-    },
-    {
-        id: 1,
-        name: 'a',
-        state: false,
-        description: '成就2',
-        media: './assets/achievements/woodcutting.png',
-        checkFunction: (x) => { return 1 > 0 ? true : false; },
-    },
-    {
-        id: 2,
-        name: 'a',
-        state: false,
-        description: '成就3',
-        media: './assets/achievements/woodcutting.png',
-        checkFunction: (x) => { return 0 > 1 ? true : false; },
-    },
 
-]
 class Achievement {
     constructor(id, name, state, description, media, checkFunction) {
         this.id = id;

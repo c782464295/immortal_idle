@@ -1,3 +1,4 @@
+// "{0} is dead, but {1} is alive! {0} {2}".format("ASP", "ASP.NET")
 if (!String.prototype.format) {
     String.prototype.format = function () {
         var args = arguments;

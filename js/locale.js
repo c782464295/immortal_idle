@@ -10,7 +10,7 @@ export function loc(key, variables) {
 
 
 export function getItemName(itemID) {
-    return strings["itemsname"][itemID];
+    return strings["itemName"][itemID];
 }
 
 export function getPetsName(itemID) {
@@ -18,7 +18,7 @@ export function getPetsName(itemID) {
 }
 
 export function getStaticsnName(itemID) {
-    return strings["staticsname"][itemID];
+    return strings["statics"][itemID];
 }
 
 function getString(locale) {
