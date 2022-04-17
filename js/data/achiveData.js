@@ -24,5 +24,13 @@ export const achieve_list = [
         media: './assets/achievements/woodcutting.png',
         checkFunction: (x) => { return 0 > 1 ? true : false; },
     },
+    {
+        id: 3,
+        name: 'a',
+        state: false,
+        description: '成就3',
+        media: './assets/achievements/woodcutting.png',
+        checkFunction: (x) => { return 0 > 1 ? true : false; },
+    },
 
 ]

@@ -16,11 +16,22 @@ class achivementUI extends HTMLElement {
     set data(val) {
         this.img.src = val.media;
         this._data = val;
+        tippy(this.container, {
+            placement: "top",
+            allowHTML: true,
+            interactive: false,
+            animation: false,
+            Duration: 0,
+            content: `
+                <h4>${val.description}</h4>
+            `,
+        });
     }
 
     connectedCallback() {
         this.container.appendChild(this.img);
         this.appendChild(this.container);
+        
     }
     render() {
         this.container.setAttribute('active', this._data.state);

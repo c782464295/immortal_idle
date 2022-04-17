@@ -103,16 +103,50 @@
     "area_3": "荒漠杀戮之地"
   },
   "woodArea": {
-    "nomal": "普通树",
-    "oka": "橡树",
-    "willow": "柳树",
-    "magic": "魔法树"
+    "tree_name_0": "巨柳树",
+    "tree_name_1": "紫檀树",
+    "tree_name_2": "三株树",
+    "tree_name_3": "文玉树",
+    "tree_name_4": "建木树",
+    "tree_name_5": "扶桑树",
+    "tree_name_6": "帝休树",
+    "tree_name_7": "大椿树",
+    "tree_name_8": "不死树"
+  },
+  "woodDescription": {
+    "tree_description_0": "巨大的柳树，至少已经生长了上百年",
+    "tree_description_1": "上好的紫檀树可是非常稀有的",
+    "tree_description_2": "生于赤水之上，其为树如柏，叶皆为珠",
+    "tree_description_3": "即梧桐木，是百鸟之王凤凰栖息之处",
+    "tree_description_4": "窫窳龙首，居弱水中，其状如龙首",
+    "tree_description_5": "汤谷上有扶桑，十日所浴，在黑齿北",
+    "tree_description_6": "其名帝休，叶状如杨，其枝五衢",
+    "tree_description_7": "八千岁为春，八千岁为秋",
+    "tree_description_8": "昆仑开明北有不死树，食之不老"
   },
   "miningArea": {
-    "ore_name_0": "铜",
-    "ore_name_1": "秘银",
-    "ore_name_2": "精金",
-    "ore_name_3": "神金"
+    "ore_name_0": "铜矿",
+    "ore_name_1": "金矿",
+    "ore_name_2": "赤金矿",
+    "ore_name_3": "紫水晶矿",
+    "ore_name_4": "玄铁矿",
+    "ore_name_5": "秘银矿",
+    "ore_name_6": "精金矿",
+    "ore_name_7": "不朽石矿",
+    "ore_name_8": "神金矿",
+    "ore_name_9": "X矿"
+  },
+  "miningDescription": {
+    "ore_description_0": "普通的铜矿，没什么奇特的地方",
+    "ore_description_1": "上好的紫檀树可是非常稀有的",
+    "ore_description_2": "生于赤水之上，其为树如柏，叶皆为珠",
+    "ore_description_3": "即梧桐木，是百鸟之王凤凰栖息之处",
+    "ore_description_4": "窫窳龙首，居弱水中，其状如龙首",
+    "ore_description_5": "汤谷上有扶桑，十日所浴，在黑齿北",
+    "ore_description_6": "其名帝休，叶状如杨，其枝五衢",
+    "ore_description_7": "八千岁为春，八千岁为秋",
+    "ore_description_8": "八千岁为春，八千岁为秋",
+    "ore_description_9": "八千岁为春，八千岁为秋"
   },
   "fishingArea": {
     "area_name_0": "浅滩",

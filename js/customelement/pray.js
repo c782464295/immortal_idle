@@ -1,9 +1,14 @@
 "use strict";
-import { prayData, KanData } from '../data/prayData.js';
+import { KanData } from '../data/prayData.js';
+import { modifierData, modifier } from '../data/modifier.js';
 import { TextChange } from './textChange.js';
-import { nonBattleModifiersManager, Modifier } from '../nonBattleModiers.js';
+import { nonBattleModifiersManager, Modifier, BaseModifier } from '../nonBattleModiers.js';
 
-
+const slotIndex = {
+    slot_1: 0,
+    slot_2: 1,
+    slot_3: 2
+}
 /* https://game-icons.net/
 */
 class PrayCard extends HTMLElement {
@@ -78,6 +83,7 @@ class PrayCard extends HTMLElement {
         this.name.innerText = '乾';
         this.img.src = '../assets/pray/Trigramme2630_☰.svg';
 
+        
 
     }
     getRandomInt(min, max) {
@@ -89,12 +95,11 @@ class PrayCard extends HTMLElement {
         let index = this.getRandomInt(1, KanData.length) - 1;
         let kan = KanData[index];
         if (this.pray2_ != undefined) {
-            console.log(this.pray2_.name);
-            //nonBattleModifiersManager.removeModifier(this.pray2_.name, this.pray2_);
+            nonBattleModifiersManager.removeModifier(modifier[this.pray2_.name], this.pray2_);
         }
-        this.pray2_ = new Modifier(kan.id, kan.name, this.getRandomInt(kan.baseValueRange[0], kan.baseValueRange[1]), this.getRandomInt(kan.baseMultiplierRange[0], kan.baseMultiplierRange[1]));
+        this.pray2_ = new BaseModifier(slotIndex.slot_2, kan.name, this.getRandomInt(kan.baseValueRange[0], kan.baseValueRange[1]), this.getRandomInt(kan.baseMultiplierRange[0], kan.baseMultiplierRange[1]));
         console.log(this.pray2_);
-        nonBattleModifiersManager.addModifier(kan.name, this.pray2_);
+        nonBattleModifiersManager.addModifier(modifier[this.pray2_.name], this.pray2_);
         this.pray2.text = kan.name + '+' + this.pray2_._baseValue + '%';
     }
 
@@ -102,6 +107,11 @@ class PrayCard extends HTMLElement {
     set data(val) {
         this._data = val;
         this.img.src = '../assets/pray/Trigramme2630_☰.svg';
+        if(nonBattleModifiersManager.modifierList.filter((e)=>{
+            console.log(e.findModifierById(slotIndex.slot_2));
+        })){
+
+        }
     }
 }
 customElements.define('praycard-element', PrayCard);
