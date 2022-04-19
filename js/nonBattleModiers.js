@@ -87,12 +87,14 @@ class NonBattleModifiersManager {
     getFinalValue(id) {
         return this.findModifierById(id).finalValue;
     }
-    findSubModifierByid(id) {
+    findSubModifierByid(target) {
         for(let index in this.modifierList){
-            if(typeof(this.modifierList[index].findModifierById(id)) != 'undefined') { 
-                return {id:this.modifierList[index].id,baseM:this.modifierList[index].findModifierById(id)};
+            if(typeof(this.modifierList[index].findModifierById(target)) != 'undefined') { 
+                console.log(this.modifierList[index].findModifierById(target));
+                return {id:this.modifierList[index].id,baseM:this.modifierList[index].findModifierById(target)};
             }
         }
+        return undefined;
     }
     serialize() {
         let saveObj = {};

@@ -18,7 +18,7 @@ import { nonBattleModifiersManager } from './nonBattleModiers.js';
 
 import { } from './recipes.js';
 import { } from './customelement/textChange.js';
-import { } from './customelement/pray.js';
+import { PrayMenu } from './customelement/pray.js';
 
 
 class Game {
@@ -46,6 +46,7 @@ class Game {
 
         this.minning = new Mining();
         this.WoodCutting = new WoodCutting();
+        this.prayMenu = new PrayMenu();
 
         this.inventory = new Inventory();
 

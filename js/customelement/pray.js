@@ -1,15 +1,10 @@
 "use strict";
-import { KanData } from '../data/prayData.js';
+import { EightDiagrams } from '../data/prayData.js';
 import { modifierData, modifier } from '../data/modifier.js';
 import { TextChange } from './textChange.js';
 import { nonBattleModifiersManager, Modifier, BaseModifier } from '../nonBattleModiers.js';
 import { modifierFrom } from '../data/modifier.js';
 
-const slotIndex = {
-    slot_1: 0,
-    slot_2: 1,
-    slot_3: 2
-}
 /* https://game-icons.net/
 */
 class PrayCard extends HTMLElement {
@@ -38,10 +33,11 @@ class PrayCard extends HTMLElement {
             .card{
                 box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
                 transition: 0.3s;
-                width: 90%;
+                width: 40%;
                 height: 300px;
                 display:inline-block;
-                margin:20px;
+                margin-left:5%;
+                margin-bottom:50px;
                 text-align:center;
                 -webkit-user-select: none; 
                 cursor: pointer;
@@ -81,11 +77,6 @@ class PrayCard extends HTMLElement {
         this.button.onclick = () => this.click();
 
         this.appendChild(this.container);
-        this.name.innerText = '乾';
-        this.img.src = '../assets/pray/Trigramme2630_☰.svg';
-
-
-
     }
     getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -98,28 +89,44 @@ class PrayCard extends HTMLElement {
         if (this.pray2_ != undefined) {
             nonBattleModifiersManager.removeModifier(modifier[this.pray2_.name], this.pray2_);
         }
-        this.pray2_ = new BaseModifier(modifierFrom.slot_1, kan.name, this.getRandomInt(kan.baseValueRange[0], kan.baseValueRange[1]), this.getRandomInt(kan.baseMultiplierRange[0], kan.baseMultiplierRange[1]));
-        console.log(this.pray2_);
-        nonBattleModifiersManager.addModifier(modifier[this.pray2_.name], this.pray2_);
+        this.pray2_ = new BaseModifier(modifierFrom.SlotIndex_0_1, kan.name, this.getRandomInt(kan.baseValueRange[0], kan.baseValueRange[1]), this.getRandomInt(kan.baseMultiplierRange[0], kan.baseMultiplierRange[1]));
+
+        nonBattleModifiersManager.addModifier(kan.id, this.pray2_);
         this.pray2.text = kan.name + '+' + this.pray2_._baseValue + '%';
     }
 
 
     set data(val) {
         this._data = val;
-        this.img.src = '../assets/pray/Trigramme2630_☰.svg';
-        this.pray2.text = modifierData.find(m => m.id == nonBattleModifiersManager.findSubModifierByid(modifierFrom.slot_1).id).description +  modifierData.find(m => m.id == nonBattleModifiersManager.findSubModifierByid(modifierFrom.slot_1).id).baseValue;
+        this.img.src = val.media;
+        this.pray2.text = 'a';
+        this.id = val.id;
+
+        this.name.innerText = val.name;
+        this.pray2_ = nonBattleModifiersManager.findSubModifierByid(val.id);
+
+        if (typeof (this.pray2_) != "undefined") {
+            this.pray2.text = this.pray2_.id;
+        }
     }
 }
 customElements.define('praycard-element', PrayCard);
 
-class PrayMenu extends HTMLElement {
+export class PrayMenu extends HTMLElement {
     constructor() {
         super();
+        this.p_dom = document.getElementById("pray-container");
         this.nonBattleModifiersManager = nonBattleModifiersManager;
+        this.eightDiagrams = [];
+        this.p_dom.appendChild(this);
     }
     connectedCallback() {
-
+        EightDiagrams.forEach((ele) => {
+            let tmp_card = new PrayCard();
+            tmp_card.data = ele;
+            this.eightDiagrams.push(tmp_card);
+            this.appendChild(tmp_card);
+        })
     }
 }
 customElements.define('praymenu-element', PrayMenu);

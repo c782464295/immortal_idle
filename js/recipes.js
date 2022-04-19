@@ -18,13 +18,14 @@ class Recipe extends HTMLElement {
         // 这里还需要判断背包是否满了
         let allMeet = true;
         this.data.itemCosts.forEach(function (value) {
-            if (global.inventory.find(function (currentValue, index, arr) { return currentValue.id == value.id }, this).qty < value.qty) allMeet = false;
+            let tmp_item = global.inventory.find(function (currentValue, index, arr) { return currentValue.id == value.id }, this);
+            if (tmp_item == undefined || tmp_item.qty < value.qty) allMeet = false;
 
         });
         if (allMeet) {
             this.data.itemCosts.forEach(function (value) {
                 let tmp_item = global.inventory.find(function (currentValue, index, arr) { return currentValue.id == value.id }, this);
-
+        
                 tmp_item.qty -= value.qty;
     
             });
@@ -37,6 +38,7 @@ class Recipe extends HTMLElement {
             }
             return true;
         } else {
+            console.log("条件不满足");
             return false;
         }
 
