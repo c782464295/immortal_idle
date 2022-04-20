@@ -19,7 +19,7 @@ import { nonBattleModifiersManager } from './nonBattleModiers.js';
 import { } from './recipes.js';
 import { } from './customelement/textChange.js';
 import { PrayMenu } from './customelement/pray.js';
-import { enemy } from './enemy.js';
+import { combat } from './combat.js';
 
 class Game {
     constructor() {
@@ -55,6 +55,8 @@ class Game {
 
         this.NonBattleModifers = nonBattleModifiersManager;
 
+        this.combat = combat;
+
         ifvisible.on("blur", () => this.pauseGame());
 
         ifvisible.on("focus", () => this.resumeGame());
@@ -77,7 +79,7 @@ class Game {
 
 
 
-        this.enn = enemy;
+        
         console.log("%c Loading %s Successfully!", 'background:#000;color:lime;font-style:italic', "Immortal Idle");
     }
     init() {
@@ -192,7 +194,7 @@ class Game {
         this.WoodCutting.tick();
         this.achievementManager.tick();
 
-        this.enn.tick();
+        this.combat.tick();
     }
 
     processTime() {

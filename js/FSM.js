@@ -18,6 +18,14 @@ export class StackFSM {
         }
     }
 
+    setState(state) {
+        switch (state) {
+            case 'flee':
+                this.pushState(this.characteristic.fleeState);
+                break
+        }
+    }
+
     popState() {
         return this.stack.pop();
     }
