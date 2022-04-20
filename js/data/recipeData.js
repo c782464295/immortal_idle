@@ -9,6 +9,7 @@ export const recipeData = [
         baseXP: 5,
         level: 1,
         masteryID: 0,
+        baseInterval:2000,
         itemCosts: [{
             id: 1,
             qty: 1

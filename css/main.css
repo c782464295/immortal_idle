@@ -1249,3 +1249,18 @@ item-element {
     filter: grayscale(100%);
 }
 
+/*!* Font Awesome Free 5.14.0 by @fontawesome - https://fontawesome.com
+* License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)*/
+@font-face {
+    font-family: "font awesome 5 free";
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url(../fonts/fontawesome/fa-regular-400.eot);
+    src: url(../fonts/fontawesome/fa-regular-400.eot?#iefix) format("embedded-opentype"),url(../fonts/fontawesome/fa-regular-400.woff2) format("woff2"),url(../fonts/fontawesome/fa-regular-400.woff) format("woff"),url(../fonts/fontawesome/fa-regular-400.ttf) format("truetype"),url(../fonts/fontawesome/fa-regular-400.svg#fontawesome) format("svg")
+}
+
+.far {
+    font-family: "font awesome 5 free";
+    font-weight: 400;
+}

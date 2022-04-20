@@ -121,6 +121,9 @@ export class PrayMenu extends HTMLElement {
         this.p_dom.appendChild(this);
     }
     connectedCallback() {
+        
+    }
+    init() {
         EightDiagrams.forEach((ele) => {
             let tmp_card = new PrayCard();
             tmp_card.data = ele;

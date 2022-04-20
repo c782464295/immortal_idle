@@ -19,7 +19,7 @@ import { nonBattleModifiersManager } from './nonBattleModiers.js';
 import { } from './recipes.js';
 import { } from './customelement/textChange.js';
 import { PrayMenu } from './customelement/pray.js';
-
+import { enemy } from './enemy.js';
 
 class Game {
     constructor() {
@@ -77,7 +77,7 @@ class Game {
 
 
 
-
+        this.enn = enemy;
         console.log("%c Loading %s Successfully!", 'background:#000;color:lime;font-style:italic', "Immortal Idle");
     }
     init() {
@@ -91,6 +91,9 @@ class Game {
         
         this.global['Settings'].lightmode == 1 ? document.body.classList.add('light-mode') : document.body.classList.remove('light-mode');
 
+
+        this.prayMenu.init();
+
         let oldsnap = this.snapShot();
 
         let offlinetimestamp = new Date().getTime();
@@ -102,6 +105,8 @@ class Game {
 
         let newsnap = this.snapShot();
         this.CreateModal(oldsnap, newsnap);
+
+        
     }
 
     snapShot() {
@@ -187,6 +192,7 @@ class Game {
         this.WoodCutting.tick();
         this.achievementManager.tick();
 
+        this.enn.tick();
     }
 
     processTime() {

@@ -1,5 +1,5 @@
 'use strict'
-
+import { loc } from '../locale.js';
 
 export const MonsterName = {
     0: "LegaranWurm",
@@ -8,35 +8,157 @@ export const MonsterName = {
 
     get: function (value) {
         if (typeof (value) == 'number') {
-            return GeneralStats[value];
+            return MonsterName[value];
         } else {
-            return Object.keys(GeneralStats).find(key => GeneralStats[key] === value);
+            return Object.keys(MonsterName).find(key => MonsterName[key] === value);
         }
     }
 }
 
+function randomizer(values) {
+    let picked = null;
+    let i, pickedValue,
+        randomNr = Math.random(),
+        threshold = 0;
 
+    for (i = 0; i < values.length; i++) {
+        if (values[i].probability === '*') {
+            continue;
+        }
 
-export const Monster = {
-    id: MonsterName.get("Dragon"),
+        threshold += values[i].probability;
+        if (threshold > randomNr) {
+            pickedValue = values[i].value;
+            picked = values[i];
+            break;
+        }
+
+        if (!pickedValue) {
+            //nothing found based on probability value, so pick element marked with wildcard
+            picked = values.find((value) => value.probability === '*');
+        }
+    }
+
+    return picked;
+}
+const attacks = {
+    Burrow: 0,
+    PenetratingSpikeShot: 1,
+    ToxicNeedles: 2
+}
+const Items = {
+    Poison_Essence: 0,
+    Worm_Spike: 1
+}
+
+export const MonsterInterface = {
+    id: -1,
     get name() {
-        return getLangString('MONSTER_NAME', `${this.id}`);
+        return '';
     },
     basicAttributes: {
-        Hitpoints: 900,
+        HP: -1,
+        MP: -1,
+        Attack: -1,
+        Strength: -1,
+        Defence: -1,
+        Ranged: -1,
+        Magic: -1,
+        attackSpeed: -1
+    },
+    idleState: {
+        action() {
+        }
+    },
+    fleeState: {
+        action() {
+        }
+    },
+    dieState: {
+        action() {
+        }
+    }
+}
+export const MonsterTest = {
+    id: MonsterName.get("Dragon"),
+    get name() {
+        return loc('MONSTER_NAME', `${this.id}`);
+    },
+    basicAttributes: {
+        HP: 900,
+        MP: 200,
         Attack: 1,
         Strength: 1,
         Defence: 350,
         Ranged: 650,
         Magic: 300,
-        attackSpeed: 2100
+        attackSpeed: 200
     },
     specialAttacks: [attacks.Burrow, attacks.PenetratingSpikeShot, attacks.ToxicNeedles],
-    dropRate: 10 / 100,
-    lootTable: [
-        // 物品Id,数量，概率
-        [Items.Poison_Essence, 8, 1 / 100],
-        [Items.Worm_Spike, 1, 10 / 100],
-    ],
+    idleState: {
+        maxTick:0,
+        tickLeft:0,
+        action(that) {
+            if(this.maxTick === 0) {
+                this.maxTick = that.characteristic.basicAttributes.attackSpeed;
+                this.tickLeft = this.maxTick;
+            }
+            console.log('idle');
+            if (that.characteristic.basicAttributes.HP < Math.floor(that.characteristic.basicAttributes.HP * 0.1)) {
+                that.stack.push(that.characteristic.dieState);
+                return
+            }
+            if (that.characteristic.basicAttributes.HP <= 100) {
+                that.stack.push(that.characteristic.fleeState);
+                return;
+            }
+            
+            this.tickLeft -= 1;
+            if(this.tickLeft === 0 ) {
+                this.tickLeft = this.maxTick;
+                if (Math.floor(Math.random() * 10 + 1) > 5) {
 
+                    if (that.characteristic.basicAttributes.MP >= 10) {
+                        //that.stack.push(that.characteristic.skill);
+                        that.characteristic.basicAttributes.MP -= 10;
+                        console.log('skill');
+                    } else {
+                        that.stack.push(that.characteristic.attackState);
+                    }
+                } else {
+    
+                    that.stack.push(that.characteristic.attackState);
+                }
+            }
+        }
+    },
+    fleeState: { action: function () { console.log('fless') } },
+    dieState: {
+
+        lootTable: [
+            // itemID,number of item, probability
+            { id: Items.Poison_Essence, number: 8, probability: 1 / 100 },
+            { id: Items.Worm_Spike, number: 1, probability: 10 / 100 },
+            { id: Items.Worm_Spike, number: 1, probability: '*' },
+        ],
+
+        action: function (that) {
+            console.log('die');
+            //that.stack = [];
+            that.characteristic = {};
+            //delete that.stack;
+            delete that.characteristic;
+
+            let tmpItem = randomizer(this.lootTable);
+            console.log(tmpItem);
+
+        }
+    },
+    attackState: {
+
+        action: function(that) {
+            console.log('normal attack');
+            that.stack.pop();
+        }
+    }
 }
