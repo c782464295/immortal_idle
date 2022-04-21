@@ -54,7 +54,7 @@ Object.defineProperty(Array.prototype, "equals", { enumerable: false });
 /**
  * rando(0,100)
  */
-function rando(mi, ma) {
+export function rando(mi, ma) {
     return Math.floor(Math.random() * (ma - mi + 1) + mi);
 };
 

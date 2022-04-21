@@ -18,33 +18,48 @@ export const playerData = {
         attackSpeed: 200
     },
     idleState: {
-        maxTick:0,
-        tickLeft:0,
+        maxTick: 0,
+        tickLeft: 0,
         action(that) {
-            
+            if (that.enemy.characteristic.basicAttributes.HP > 0) {
+                that.stack.push(that.characteristic.attackState);
+            } else {
+                that.stack.push(that.characteristic.dieState);
+            }
+
         }
     },
     fleeState: { action: function () { console.log('fless') } },
     dieState: {
 
-        
+
 
         action: function (that) {
-
+            console.log('player die');
+            console.log(that);
+            that.start = false;
+            that.enemy.start = false;
         }
     },
     attackState: {
 
-        action: function(that) {
-            console.log('normal attack');
+        action: function (that) {
+            that.enemy.characteristic.basicAttributes.HP -= 10;
+
             that.stack.pop();
         }
     }
 }
-export class Player extends StackFSM{
-    constructor(playerData){
+export class Player extends StackFSM {
+    constructor(playerData) {
         super(playerData);
+        this.enemy = {};
+        this.start = false;
         //this.characteristic = global.PlayerStates;
     }
-
+    tick() {
+        if (this.start) {
+            super.tick();
+        }
+    }
 }

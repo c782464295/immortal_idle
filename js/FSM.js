@@ -7,6 +7,7 @@ export class StackFSM {
      * @param {MonsterInterface} characteristic 
      */
     constructor(characteristic) {
+        this.start = false;
         this.stack = [];
         this.characteristic = characteristic;
         this.pushState(this.characteristic.idleState);
@@ -39,6 +40,9 @@ export class StackFSM {
     }
 
     tick() {
-        this.updateState();
+        if(this.start){
+            this.updateState();
+        }
+        
     }
 }
