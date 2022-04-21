@@ -1274,3 +1274,7 @@ item-element {
     margin-right: -14px;
     margin-left: -14px
 }
+
+.pointer-enabled {
+    cursor: pointer
+}

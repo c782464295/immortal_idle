@@ -10,28 +10,38 @@ import { statistics } from '../statistic.js';
 class FishingArea extends HTMLElement {
     constructor() {
         super();
-        this.className = 'col-12 col-xl-6';
+        this.className = '';
+        this.style = `
+            flex: 0 0 auto;
+            width: 50%;
+            min-width:767px;
+          `;
         this.container = document.createElement('div');
         this.container.className = 'row';
         this.container.style = 'min-height:370px;';
 
 
-        this.title_ = document.createElement('h4');
-
+        this.titleDiv = document.createElement('div');
+        this.titleDiv.style = `text-align: center`;
+        this.titleText = document.createElement('h3');
+        
         this.container_left = document.createElement('div');
-        this.container_left.className = 'col-6';
-        this.container_left.style = 'width:50%';
+        this.container_left.style = 'width:50%;text-align:center;';
+
+        this.right_content = document.createElement('h4');
 
         this.container_right = document.createElement('div');
-        this.container_right.className = 'col-6';
-        this.container_right.style = 'width:50%';
+        this.container_right.style = 'width:50%;text-align:center';
     }
     connectedCallback() {
-        this.title_.innerText = '黄海';
-        this.container_left.innerText = 'a';
-        this.container_right.innerText = 'a';
+        this.titleText.innerText = '黄海';
+        this.right_content.innerText = '闲置';
 
-        this.appendChild(this.title_);
+
+        this.titleDiv.appendChild(this.titleText);
+        this.appendChild(this.titleDiv);
+
+        this.container_right.appendChild(this.right_content);
 
         this.container.appendChild(this.container_left);
         this.container.appendChild(this.container_right);

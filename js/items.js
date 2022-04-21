@@ -1,12 +1,12 @@
 'use strict'
 import { getItemName } from './locale.js';
-
+import { itemsEnum } from './data/itemsEnum.js';
 // melvoridle有1200件物品
 export const items = [
     {
         category: "Woodcutting",
         type: "Logs",
-        id:1,
+        id: itemsEnum.log0,
         get name() {
             return getItemName("oka1");
         },
@@ -20,7 +20,7 @@ export const items = [
     {
         category: "Woodcutting",
         type: "Logs",
-        id:2,
+        id: itemsEnum.log1,
         get name() {
             return getItemName("oka2");
         },
@@ -34,7 +34,7 @@ export const items = [
     {
         category: "Woodcutting",
         type: "Logs",
-        id:3,
+        id: 3,
         get name() {
             return getItemName("oka");
         },
@@ -48,7 +48,7 @@ export const items = [
     {
         category: "Raw Fish",
         type: "Logs",
-        id:11,
+        id: 11,
         get name() {
             return getItemName("oka");
         },
@@ -62,7 +62,7 @@ export const items = [
     {
         category: "Cooking",
         type: "Food",
-        id:11,
+        id: 11,
         get name() {
             return getItemName("oka");
         },
@@ -77,7 +77,7 @@ export const items = [
     {
         category: "Mining",
         type: "Ores",
-        id:11,
+        id: 11,
         get name() {
             return getItemName("oka");
         },
@@ -91,7 +91,7 @@ export const items = [
     {
         category: "Farming",
         type: "Seeds",
-        id:111,
+        id: 111,
         get name() {
             return getItemName("mucai");
         },
