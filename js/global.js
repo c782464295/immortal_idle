@@ -18,13 +18,13 @@ export var global = {
         lightmode: 1,
         saveClosing: true,
     },
-    currency:{
-        money:0,
-        taskMoney:0
+    currency: {
+        money: 0,
+        taskMoney: 0
     },
     itemsAlreadyFound: [],
-    currentAction:'',
-    NonBattleSkill : new Proxy({
+    currentAction: '',
+    NonBattleSkill: new Proxy({
         miningExp: 0,
         woodcuttingExp: 0,
         fishingExp: 0,
@@ -40,44 +40,60 @@ export var global = {
         alchemyLevel: 1,
         craftingLevel: 1,
         prayLevel: 1
-    },{
-        set : function(target, attr, value){
-            if(attr.indexOf('Exp')!=-1){
-               
-                target[attr.replace('Exp','Level')] = exp.xp_to_level(value);
-                target[attr]=value;
-            }else{
-                target[attr]=value;
+    }, {
+        set: function (target, attr, value) {
+            if (attr.indexOf('Exp') != -1) {
+
+                target[attr.replace('Exp', 'Level')] = exp.xp_to_level(value);
+                target[attr] = value;
+            } else {
+                target[attr] = value;
             }
             return true;
-            
+
         }
     }),
-    PlayerStates : {
+    PlayerStates: {
         HP: 300,
         magic: 140,
         XP: 0,
     },
+    Equipment: {
+        leftHand: { name: 'left-hand', equipmentID: 0 },
+        rightHand: { name: 'right-hand', equipmentID: 1 },
+        leftRing: { name: 'right-ring', equipmentID: 2 },
+        rightRing: { name: 'right-ring', equipmentID: 2 },
 
+        helmet: { name: 'helmat', equipmentID: 2 },
+        foot: { name: 'foot', equipmentID: 2 },
 
+        amulet: { name: 'amulet', equipmentID: 2, unlocked: false},
+
+        necklace : { name: 'necklace ', equipmentID: 2 },
+
+        plateBody: { name: 'right-hand', equipmentID: 2 },
+        plateLegs: { name: 'right-hand', equipmentID: 2 },
+
+        medicine: [{ name: 'medicine', equipmentID: 2 },{ name: 'medicine', equipmentID: 2 },{ name: 'medicine', equipmentID: 2 }]
+    },
     serialize() {
         return JSON.stringify(this);
     },
     deserialize(data) {
         for (let k in JSON.parse(data)) {
-            if(k == 'NonBattleSkill'){
-                this[k] = new Proxy(JSON.parse(data)[k],{
-                    set : function(target, attr, value){
-                        
-                        if(attr.indexOf('Exp')!=-1){
-                           
-                            target[attr.replace('Exp','Level')] = exp.xp_to_level(value);
-                            target[attr]=value;
-                        }else{
-                            target[attr]=value;
+            if (k == 'NonBattleSkill') {
+                this[k] = new Proxy(JSON.parse(data)[k], {
+                    set: function (target, attr, value) {
+
+                        if (attr.indexOf('Exp') != -1) {
+
+                            target[attr.replace('Exp', 'Level')] = exp.xp_to_level(value);
+                            target[attr] = value;
+                        } else {
+                            target[attr] = value;
                         }
                         return true;
-                        
+
                     }
                 });
                 continue;
@@ -86,7 +102,6 @@ export var global = {
         }
     },
 };
-
 
 
 

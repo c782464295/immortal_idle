@@ -12,7 +12,7 @@ class Item extends HTMLElement {
         this.text = document.createElement("span");
         this.img = document.createElement("img");
         this.img.className = "item-img";
-
+        this.onclick =  () => this.click();
     }
 
     connectedCallback() {
@@ -25,17 +25,12 @@ class Item extends HTMLElement {
     set data(val) {
         this._data = val;
         this.setAttribute('data-id', val.id);
-        this.addEventListener("click", function () {
-            console.log('lci');
-            if (!global.itemsAlreadyFound.includes(val.id)) global.itemsAlreadyFound.push(val.id);
-            this.removeGlow();
-        });
     }
     get data() {
         return this._data;
     }
 
-    render() {
+    async render() {
         let item = items.find(function (currentValue, index, arr) { return currentValue.id == this.data.id }, this);
 
         this.img.src = item.media;
@@ -47,6 +42,13 @@ class Item extends HTMLElement {
     }
     removeGlow() {
         this.container.classList.remove("new-item-glow");
+    }
+    click() {
+        console.log(`You clicked item ID:${this.data.id}`);
+        if (!global.itemsAlreadyFound.includes(this.data.id)) {
+            global.itemsAlreadyFound.push(this.data.id);
+            this.removeGlow();
+        }
     }
 }
 
@@ -105,6 +107,19 @@ class Search extends HTMLElement {
     }
 }
 customElements.define('search-element', Search);
+class InventoryDetailMenu extends HTMLElement{
+    constructor() {
+        super();
+    }
+    connectedCallback() {
+
+    }
+    set data(val) {
+
+    }
+}
+customElements.define('inventorydetailmenu-element', InventoryDetailMenu);
+
 
 class Inventory {
     constructor() {
@@ -115,17 +130,15 @@ class Inventory {
 
         this.isSort = false;
 
-
+        this.inventoryDetailMenu = new InventoryDetailMenu();
         this.sortInsant = this.init();
 
-    }
-    connectedCallback() {
 
     }
+
 
     init() {
-
-
+        
 
         return Sortable.create(this.parentDOM, {
             group: "inventory",

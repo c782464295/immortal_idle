@@ -1264,3 +1264,13 @@ item-element {
     font-family: "font awesome 5 free";
     font-weight: 400;
 }
+
+
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -14px;
+    margin-left: -14px
+}

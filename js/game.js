@@ -6,6 +6,8 @@ import { } from './items.js';
 import { Mining } from './customelement/ore.js';
 import { WoodCutting } from './customelement/woods.js';
 import { Inventory } from './customelement/inventory.js';
+import { } from './customelement/fish.js';
+
 import { deepClone } from './utility.js';
 import { } from './customelement/stasticsTable.js'
 
