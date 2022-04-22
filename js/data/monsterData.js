@@ -41,7 +41,7 @@ export const MonsterDragon = {
         Defence: 350,
         Ranged: 650,
         Magic: 300,
-        attackSpeed: 200
+        attackSpeed: 20
     },
     specialAttacks: [attacks.Burrow, attacks.PenetratingSpikeShot, attacks.ToxicNeedles],
     lootTable: [

@@ -40,8 +40,8 @@ export class Combat {
         return {
             enemyStart: this.enemy.start,
             playerStart: this.player.start,
-            enemyStack: this.enemy.stackFSM.stack,
-            playerStack: this.player.stackFSM.stack,
+            enemyTick: [this.enemy.idleState.maxTick, this.enemy.idleState.tickLeft],
+            playerTick: [this.player.idleState.maxTick, this.player.idleState.tickLeft],
             saveBasicAttributes : JSON.stringify(this.enemy.saveBasicAttributes),
         };
 
@@ -51,14 +51,12 @@ export class Combat {
         this.enemy.start = data.enemyStart;
         this.player.start = data.playerStart;
 
-        for (let state of data.enemyStack) {
-            this.enemy.pushState(state.name, state.maxTick, state.tickLeft);
-        }
-        for (let state of data.playerStack) {
-            this.player.pushState(state.name, state.maxTick, state.tickLeft);
-        }
-        this.enemy.saveBasicAttributes = JSON.parse(data.saveBasicAttributes);
-        this.enemy.basicAttributes = this.enemy.saveBasicAttributes;
+        
+        this.enemy.pushState('idleState', data.enemyTick[0], data.enemyTick[1]);
+        this.player.pushState('idleState', data.playerTick[0], data.playerTick[1]);
+        
+        this.enemy.saveBasicAttributes = deepClone(JSON.parse(data.saveBasicAttributes));
+        this.enemy.basicAttributes = deepClone(JSON.parse(data.saveBasicAttributes));
         this.enemy.enemy = this.player;
         this.player.enemy = this.enemy;
         return true;
