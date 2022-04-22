@@ -48,7 +48,14 @@ export class Enemy {
     setEnemy(enemy) {
         this.enemy = enemy;
     }
-
+    pushState(stateName, maxTick, tickLeft) {
+        switch (stateName) {
+            case 'idleState':
+                this.idleState.maxTick = maxTick;
+                this.idleState.tickLeft = tickLeft;
+                this.stackFSM.pushState(this.idleState);
+        }
+    }
     tick() {
         if (this.start) {
             this.stackFSM.tick(this);

@@ -78,7 +78,7 @@ export class attackState extends State {
         super('attackState');
     }
     action(target) {
-        console.log(target.basicAttributes.Attack);
+        console.log(target.basicAttributes);
         target.enemy.basicAttributes.HP -= target.basicAttributes.Attack;
 
         target.stackFSM.popState();

@@ -4,6 +4,7 @@ import { Player, playerData } from './player.js';
 import { Enemy } from './enemy.js';
 import { MonsterDragon } from './data/monsterData.js';
 import { deepClone } from './utility.js';
+import { idleState } from './FSM.js';
 
 export class Combat {
     constructor() {
@@ -34,4 +35,33 @@ export class Combat {
     clickFlee() {
         this.player.setState('flee');
     }
+
+    serialize() {
+        return {
+            enemyStart: this.enemy.start,
+            playerStart: this.player.start,
+            enemyStack: this.enemy.stackFSM.stack,
+            playerStack: this.player.stackFSM.stack,
+            saveBasicAttributes : JSON.stringify(this.enemy.saveBasicAttributes),
+        };
+
+
+    }
+    deserialize(data) {
+        this.enemy.start = data.enemyStart;
+        this.player.start = data.playerStart;
+
+        for (let state of data.enemyStack) {
+            this.enemy.pushState(state.name, state.maxTick, state.tickLeft);
+        }
+        for (let state of data.playerStack) {
+            this.player.pushState(state.name, state.maxTick, state.tickLeft);
+        }
+        this.enemy.saveBasicAttributes = JSON.parse(data.saveBasicAttributes);
+        this.enemy.basicAttributes = this.enemy.saveBasicAttributes;
+        this.enemy.enemy = this.player;
+        this.player.enemy = this.enemy;
+        return true;
+    }
+
 }
