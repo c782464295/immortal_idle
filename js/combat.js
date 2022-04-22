@@ -2,19 +2,17 @@
 import { global } from './global.js';
 import { Player, playerData } from './player.js';
 import { Enemy } from './enemy.js';
-import { MonsterDefalut, MonsterTest } from './data/monsterData.js';
+import { MonsterDragon } from './data/monsterData.js';
 import { deepClone } from './utility.js';
 
 export class Combat {
     constructor() {
-        this.player = new Player(playerData);
-        this.enemy = new Enemy(MonsterDefalut);
+        this.player = new Player();
+        this.enemy = new Enemy();
     }
     tick() {
-
         this.enemy.tick();
         this.player.tick();
-        
     }
     combatStart() {
         this.enemy.start = true;
@@ -25,14 +23,14 @@ export class Combat {
         this.player.start = false;
     }
     clickSelected(enemy) {
-        this.enemy.setEnemy(MonsterTest);
+        this.enemy.setSelf(MonsterDragon);
         this.enemy.enemy = this.player;
         this.player.enemy = this.enemy;
+
+        this.enemy.setState('idle');
         this.combatStart();
     }
     clickFlee() {
         this.player.setState('flee');
     }
 }
-let combat = new Combat();
-export { combat };

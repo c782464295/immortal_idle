@@ -21,7 +21,7 @@ import { nonBattleModifiersManager } from './nonBattleModiers.js';
 import { } from './recipes.js';
 import { } from './customelement/textChange.js';
 import { PrayMenu } from './customelement/pray.js';
-import { combat } from './combat.js';
+import { Combat } from './combat.js';
 
 class Game {
     constructor() {
@@ -57,7 +57,7 @@ class Game {
 
         this.NonBattleModifers = nonBattleModifiersManager;
 
-        this.combat = combat;
+        this.combat = new Combat();
 
         ifvisible.on("blur", () => this.pauseGame());
 
@@ -94,7 +94,6 @@ class Game {
 
         
         this.global['Settings'].lightmode == 1 ? document.body.classList.add('light-mode') : document.body.classList.remove('light-mode');
-
 
         this.prayMenu.init();
 
@@ -337,7 +336,6 @@ class Game {
             //console.log(k, v);
             if (v.serialize == undefined) {
                 if (typeof (v) != 'object') {
-
                     this[k] = res[k];
                 }
             } else {

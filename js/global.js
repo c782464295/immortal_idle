@@ -60,8 +60,8 @@ export var global = {
     }),
     PlayerStates: {
         HP: 300,
-        magic: 140,
-        XP: 0,
+        MP: 140,
+        XP: 0
     },
     Equipment: {
         leftHand: { name: 'left-hand', equipmentID: 0 },
@@ -86,23 +86,15 @@ export var global = {
     },
     deserialize(data) {
         for (let k in data) {
-            if (k == 'NonBattleSkill') {
-                this[k] = new Proxy(data[k], {
-                    set: function (target, attr, value) {
 
-                        if (attr.indexOf('Exp') != -1) {
+            if(k == 'PlayerStates' || k == 'NonBattleSkill') {
+                Object.keys(this[k]).forEach((key)=>{
 
-                            target[attr.replace('Exp', 'Level')] = exp.xp_to_level(value);
-                            target[attr] = value;
-                        } else {
-                            target[attr] = value;
-                        }
-                        return true;
-
-                    }
+                    this[k][key] = data[k][key];
                 });
-                continue;
+                continue
             }
+            
             this[k] = data[k];
         }
     },

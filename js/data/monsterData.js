@@ -52,44 +52,9 @@ const Items = {
     Worm_Spike: 1
 }
 
-export const MonsterInterface = {
-    id: -1,
-    get name() {
-        return '';
-    },
-    basicAttributes: {
-        HP: -1,
-        MP: -1,
-        Attack: -1,
-        Strength: -1,
-        Defence: -1,
-        Ranged: -1,
-        Magic: -1,
-        attackSpeed: -1
-    },
-    idleState: {
-        action() {
-        }
-    },
-    fleeState: {
-        action() {
-        }
-    },
-    dieState: {
-        action() {
-        }
-    }
-}
 
-export const MonsterDefalut = {
-    id: -1,
-    enemy: {},
-    idleState: {
-        action(that) {
-            return
-        }
-    }
-}
+
+
 
 export const MonsterTest = {
     id: MonsterName.get("Dragon"),
@@ -190,4 +155,28 @@ export const MonsterTest = {
             that.stack.pop();
         }
     }
+}
+
+export const MonsterDragon = {
+    id: MonsterName.get("Dragon"),
+    get name() {
+        return loc('MONSTER_NAME', `${this.id}`);
+    },
+    basicAttributes: {
+        HP: 900,
+        MP: 200,
+        Attack: 1,
+        Strength: 1,
+        Defence: 350,
+        Ranged: 650,
+        Magic: 300,
+        attackSpeed: 200
+    },
+    specialAttacks: [attacks.Burrow, attacks.PenetratingSpikeShot, attacks.ToxicNeedles],
+    lootTable: [
+        // itemID,number of item, probability
+        { id: Items.Poison_Essence, number: 8, probability: 1 / 100 },
+        { id: Items.Worm_Spike, number: 1, probability: 10 / 100 },
+        { id: Items.Worm_Spike, number: 1, probability: '*' },
+    ]
 }

@@ -50,16 +50,36 @@ export const playerData = {
         }
     }
 }
-export class Player extends StackFSM {
-    constructor(playerData) {
-        super(playerData);
-        this.enemy = {};
+
+class playerFleeState extends State{
+    constructor() {
+        super('fleeState');
+    }
+    action() {
+        console.log('fless');
+    }
+}
+class playerDieState extends State{
+    constructor() {
+        super('dieState');
+    }
+    action() {
+        console.log('fless');
+    }
+}
+export class Player{
+    constructor() {
+        this.stackFSM = new StackFSM();
         this.start = false;
-        //this.characteristic = global.PlayerStates;
+
+        this.basicAttributes = global.PlayerStates;
+        this.specialAttacks = {};
+
+        this.enemy = {};
     }
     tick() {
         if (this.start) {
-            super.tick();
+            this.stackFSM.tick(this);
         }
     }
 }
