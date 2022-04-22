@@ -34,7 +34,21 @@ export const items = [
     {
         category: "Woodcutting",
         type: "Logs",
-        id: 3,
+        id: itemsEnum.log2,
+        get name() {
+            return getItemName("oka");
+        },
+        get description() {
+            return getItemName("oka");
+        },
+        isEquipment: false,
+        sellPrice: 10,
+        media: "assets/items/logs_yew.png",
+    },
+    {
+        category: "Woodcutting",
+        type: "Logs",
+        id: itemsEnum.log3,
         get name() {
             return getItemName("oka");
         },

@@ -1,8 +1,9 @@
 "use strict";
 import { loc } from '../locale.js';
+import { itemsEnum } from './itemsEnum.js';
 export const TreeData = [
     {
-        id: 1,
+        id: itemsEnum.log0,
         name: loc('woodArea')['tree_name_0'],
         description: loc('woodDescription')['tree_description_0'],
         baseExperience: 10,
@@ -11,7 +12,7 @@ export const TreeData = [
         media: './assets/woods/magic_tree.svg'
     },
     {
-        id: 2,
+        id: itemsEnum.log1,
         name: loc('woodArea')['tree_name_1'],
         description: loc('woodDescription')['tree_description_1'],
         baseExperience: 15,

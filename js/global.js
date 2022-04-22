@@ -1,4 +1,9 @@
 'use strict'
+/* https://jsonvisio.com/editor
+   Json visualization
+   https://svgsilh.com/
+   svg
+*/
 import { exp } from './exp.js';
 export const TICK_INTERVAL = 50;
 export var save = window.localStorage;
@@ -77,12 +82,12 @@ export var global = {
         medicine: [{ name: 'medicine', equipmentID: 2 },{ name: 'medicine', equipmentID: 2 },{ name: 'medicine', equipmentID: 2 }]
     },
     serialize() {
-        return JSON.stringify(this);
+        return this;
     },
     deserialize(data) {
-        for (let k in JSON.parse(data)) {
+        for (let k in data) {
             if (k == 'NonBattleSkill') {
-                this[k] = new Proxy(JSON.parse(data)[k], {
+                this[k] = new Proxy(data[k], {
                     set: function (target, attr, value) {
 
                         if (attr.indexOf('Exp') != -1) {
@@ -98,7 +103,7 @@ export var global = {
                 });
                 continue;
             }
-            this[k] = JSON.parse(data)[k];
+            this[k] = data[k];
         }
     },
 };
