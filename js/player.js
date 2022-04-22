@@ -1,5 +1,5 @@
 'use strict'
-import { StackFSM } from './FSM.js';
+import { StackFSM, State, skillState, stunState, idleState, normalAttackState, attackState} from './FSM.js';
 import { global } from './global.js';
 
 export const playerData = {
@@ -76,6 +76,19 @@ export class Player{
         this.specialAttacks = {};
 
         this.enemy = {};
+
+        this.idleState = new idleState();
+        this.attackState = new attackState();
+    }
+    setState(stateName) {
+        switch (stateName) {
+            case 'flee':
+                this.stackFSM.pushState(this.fleeState);
+                break
+            case 'idle':
+                console.log(this);
+                this.stackFSM.pushState(this.idleState);
+        }
     }
     tick() {
         if (this.start) {

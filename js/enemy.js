@@ -16,18 +16,25 @@ export class Enemy {
 
         this.idleState = new idleState();
         this.attackState = new attackState();
+        this.respawnState = new respawnState();
+        this.dieState = new dieState();
+
+        this.saveBasicAttributes = {};
     }
 
     setSelf(target) {
         this.id = target.id;
         this.name = target.name;
+        this.saveBasicAttributes = deepClone(target.basicAttributes);
         this.basicAttributes = deepClone(target.basicAttributes);
         this.specialAttacks = deepClone(target.specialAttacks);
         this.lootTable = deepClone(target.lootTable);
 
         this.stackFSM.stack = [];
     }
-
+    respawn() {
+        this.basicAttributes = deepClone('xxx');
+    }
     setState(stateName) {
         switch (stateName) {
             case 'flee':

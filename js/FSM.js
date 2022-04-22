@@ -1,10 +1,10 @@
 'use strict'
 import { deepClone } from './utility.js';
-
+import { randomizer } from './utility.js';
 /**
  * @override
  */
-class State {
+export class State {
     constructor(name) {
         this.name = name;
     }
@@ -12,30 +12,30 @@ class State {
         throw new Error('Must be override!');
     }
 }
-export class idleState extends State{
+export class idleState extends State {
     constructor() {
         super('idleState');
         this.maxTick = 0;
         this.tickLeft = 0;
     }
     action(target) {
-        if(this.maxTick === 0) {
+        if (this.maxTick === 0) {
             this.maxTick = target.basicAttributes.attackSpeed;
             this.tickLeft = this.maxTick;
         }
-        /*
-        if (target.characteristic.basicAttributes.HP <= 0) {
-            target.stackFSM.push(characteristic.dieState);
+
+        if (target.basicAttributes.HP <= 0) {
+            target.stackFSM.pushState(target.dieState);
             return
         }
-
+        /*
         if (target.enemy.characteristic.basicAttributes.HP <= 0) {
             //that.start = false;
             //that.enemy.start = false;
         }
         */
         this.tickLeft -= 1;
-        if(this.tickLeft === 0 ) {
+        if (this.tickLeft === 0) {
             this.tickLeft = this.maxTick;
             if (0) {
 
@@ -52,7 +52,7 @@ export class idleState extends State{
         }
     }
 }
-export class fleeState extends State{
+export class fleeState extends State {
     constructor() {
         super('fleeState');
     }
@@ -60,27 +60,31 @@ export class fleeState extends State{
         console.log('fless');
     }
 }
-export class dieState extends State{
+export class dieState extends State {
     constructor() {
         super('dieState');
     }
-    action() {
-        console.log('fless');
+    action(target) {
+        console.log('die');
+        target.stackFSM.popState();
+        let tmpItem = randomizer(target.lootTable);
+        console.log(tmpItem);
+        target.stackFSM.pushState(target.respawnState);
+
     }
 }
-export class attackState extends State{
+export class attackState extends State {
     constructor() {
         super('attackState');
     }
     action(target) {
-        console.log('attack');
-        console.log(target.enemy);
-        target.enemy.basicAttributes.HP -= 500;
+        console.log(target.basicAttributes.Attack);
+        target.enemy.basicAttributes.HP -= target.basicAttributes.Attack;
 
         target.stackFSM.popState();
     }
 }
-export class normalAttackState extends State{
+export class normalAttackState extends State {
     constructor() {
         super('normalAttackState');
     }
@@ -88,7 +92,7 @@ export class normalAttackState extends State{
         console.log('fless');
     }
 }
-export class skillState extends State{
+export class skillState extends State {
     constructor() {
         super('skillState');
     }
@@ -96,7 +100,7 @@ export class skillState extends State{
         console.log('fless');
     }
 }
-export class stunState extends State{
+export class stunState extends State {
     constructor() {
         super('stunState');
     }
@@ -104,12 +108,24 @@ export class stunState extends State{
         console.log('fless');
     }
 }
-export class respawnState extends State{
+export class respawnState extends State {
     constructor() {
         super('respawnState');
+        this.maxTick = 100;
+        this.tickLeft = this.maxTick;
     }
-    action() {
-        console.log('fless');
+    action(target) {
+
+        if (this.tickLeft >= 0) {
+            this.tickLeft--;
+
+        } else {
+            console.log('respown');
+
+            this.tickLeft = this.maxTick;
+            target.stackFSM.popState();
+            target.basicAttributes = deepClone(target.saveBasicAttributes);
+        }
     }
 }
 

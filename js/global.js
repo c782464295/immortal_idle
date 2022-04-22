@@ -61,7 +61,9 @@ export var global = {
     PlayerStates: {
         HP: 300,
         MP: 140,
-        XP: 0
+        XP: 0,
+        Attack:100,
+        attackSpeed:10
     },
     Equipment: {
         leftHand: { name: 'left-hand', equipmentID: 0 },

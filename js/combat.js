@@ -28,6 +28,7 @@ export class Combat {
         this.player.enemy = this.enemy;
 
         this.enemy.setState('idle');
+        this.player.setState('idle');
         this.combatStart();
     }
     clickFlee() {

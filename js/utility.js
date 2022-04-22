@@ -199,7 +199,7 @@ function removePyro() {
 
 export function startPyroInterval() {
     clearInterval(pyroInterval);
-    pyroInterval = setInterval(function() {
+    pyroInterval = setInterval(function () {
         if (!Swal.isVisible() && !forcePyro) {
             removePyro();
             clearInterval(pyroInterval);
@@ -218,4 +218,32 @@ function openDiscordLink() {
     } else {
         window.open("https://discord.gg/melvoridle", "_blank").focus();
     }
+}
+
+
+export function randomizer(values) {
+    let picked = null;
+    let i, pickedValue,
+        randomNr = Math.random(),
+        threshold = 0;
+
+    for (i = 0; i < values.length; i++) {
+        if (values[i].probability === '*') {
+            continue;
+        }
+
+        threshold += values[i].probability;
+        if (threshold > randomNr) {
+            pickedValue = values[i].value;
+            picked = values[i];
+            break;
+        }
+
+        if (!pickedValue) {
+            //nothing found based on probability value, so pick element marked with wildcard
+            picked = values.find((value) => value.probability === '*');
+        }
+    }
+
+    return picked;
 }

@@ -70,7 +70,7 @@ class Game {
                 if (global.Settings.saveClosing) {
                     this.lasttimestamp = new Date().getTime();
                     //this.lasttimestamp = 0;
-                    storage.setItem('saveData', this.serialize());
+                    //storage.setItem('saveData', this.serialize());
                     this.inventory.close();
                 }
 
