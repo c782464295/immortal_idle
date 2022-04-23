@@ -249,9 +249,9 @@ class Mining {
     }
     tick() {
         if(global.currentAction == 'Mining') {
-            for (let i in this.ores) {
-                this.ores[i].tick();
-            }
+            this.ores.forEach((ore) => {
+                ore.tick();
+            });
         }
     }
     serialize() {
