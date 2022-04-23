@@ -1,30 +1,36 @@
 'use strict'
-import { StackFSM, State, skillState, stunState, idleState, normalAttackState, attackState} from './FSM.js';
+import { StackFSM, State, skillState, stunState, idleState, normalAttackState, attackState } from './FSM.js';
 import { global } from './global.js';
+import { effectAndBuffContainer } from './skill.js';
 
-class playerFleeState extends State{
+class playerFleeState extends State {
     constructor() {
         super('fleeState');
     }
     action() {
-        console.log('playerFlee');
+
         target.stackFSM.popState();
         target.start = false;
         target.enemy.start = false;
     }
 }
-class playerDieState extends State{
+class playerDieState extends State {
     constructor() {
         super('dieState');
     }
     action(target) {
-        console.log('playerDie');
+
         target.start = false;
         target.enemy.start = false;
+        // keep the original array references
+        //global.inventory.length = 0;
     }
 }
-export class Player{
+export class Player {
     constructor() {
+        this.battleHistory = [];
+        this.effectAndBuffContainer = new effectAndBuffContainer();
+
         this.stackFSM = new StackFSM();
         this.start = false;
 

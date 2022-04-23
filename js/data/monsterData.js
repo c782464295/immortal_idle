@@ -18,13 +18,15 @@ export const MonsterName = {
 
 
 const attacks = {
-    Burrow: 0,
-    PenetratingSpikeShot: 1,
-    ToxicNeedles: 2
+    Burn: 0,
+    BeingSheep: 1,
+    DoubleAttack: 2,
+    AttackUP: 3
 }
 const Items = {
-    Poison_Essence: 0,
-    Worm_Spike: 1
+    null: -1,
+    log0: 0,
+    log1: 1
 }
 
 
@@ -43,11 +45,11 @@ export const MonsterDragon = {
         Magic: 300,
         attackSpeed: 20
     },
-    specialAttacks: [attacks.Burrow, attacks.PenetratingSpikeShot, attacks.ToxicNeedles],
+    specialAttacks: [attacks.Burn, attacks.BeingSheep, attacks.DoubleAttack, attacks.AttackUP],
     lootTable: [
         // itemID,number of item, probability
-        { id: Items.Poison_Essence, number: 8, probability: 1 / 100 },
-        { id: Items.Worm_Spike, number: 1, probability: 50 / 100 },
-        { id: Items.Worm_Spike, number: 1, probability: '*' },
+        { id: Items.log1, number: 8, probability: 1 / 100 },
+        { id: Items.log0, number: 1, probability: 50 / 100 },
+        { id: Items.null, number: 1, probability: '*' },
     ]
 }

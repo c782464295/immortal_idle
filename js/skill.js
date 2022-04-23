@@ -1,7 +1,6 @@
 'use strict'
-
-import { global } from './global.js';
 import { TICK_INTERVAL, global } from './global.js';
+
 // skill composed of many buff
 class effectTimer {
     /**
@@ -76,7 +75,16 @@ class effectContainer {
     }
 }
 
-
+export class effectAndBuffContainer {
+    constructor() {
+        this.containerList = [];
+    }
+    push(skillOrbuff) {
+        this.containerList.push(skillOrbuff);
+    }
+    pop() {
+    }
+}
 
 // every skill to enemy or self is composed of buffs
 class Skill extends effectContainer {

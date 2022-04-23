@@ -1,6 +1,7 @@
 'use strict'
 import { deepClone } from './utility.js';
 import { randomizer } from './utility.js';
+import { global } from './global.js';
 /**
  * @override
  */
@@ -28,12 +29,7 @@ export class idleState extends State {
             target.stackFSM.pushState(target.dieState);
             return
         }
-        /*
-        if (target.enemy.characteristic.basicAttributes.HP <= 0) {
-            //that.start = false;
-            //that.enemy.start = false;
-        }
-        */
+
         this.tickLeft -= 1;
         if (this.tickLeft === 0) {
             this.tickLeft = this.maxTick;
@@ -65,10 +61,16 @@ export class dieState extends State {
         super('dieState');
     }
     action(target) {
-        console.log('die');
+
+        target.battleHistory.push(`targetID:${target.id} Die!`);
         target.stackFSM.popState();
         let tmpItem = randomizer(target.lootTable);
         console.log(tmpItem);
+        if (tmpItem.id != -1) {
+            let tmp = global.inventory.find(item => item.id == tmpItem.id);
+            tmp.qty += 1;
+        }
+
         target.stackFSM.pushState(target.respawnState);
 
     }
@@ -119,20 +121,19 @@ export class respawnState extends State {
             this.tickLeft--;
 
         } else {
-            console.log('respown');
+            target.battleHistory.push(`targetID:${target.id} Respown!`);
 
             this.tickLeft = this.maxTick;
             target.stackFSM.popState();
             target.basicAttributes = deepClone(target.saveBasicAttributes);
+            console.log(target.battleHistory);
+            target.battleHistory.length = 0;
         }
     }
 }
 
 export class StackFSM {
-    /**
-     * 
-     * @param {MonsterInterface} characteristic 
-     */
+
     constructor() {
         this.stack = [];
     }

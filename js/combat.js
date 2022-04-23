@@ -8,6 +8,8 @@ import { idleState } from './FSM.js';
 
 export class Combat {
     constructor() {
+        // record the battle history
+        this.battleHistory = [];
         this.player = new Player();
         this.enemy = new Enemy();
     }
@@ -22,11 +24,15 @@ export class Combat {
     combatEnd() {
         this.enemy.start = false;
         this.player.start = false;
+        this.battleHistory.length = 0;
     }
     clickSelected(enemy) {
         this.enemy.setSelf(MonsterDragon);
         this.enemy.enemy = this.player;
         this.player.enemy = this.enemy;
+
+        this.player.battleHistory = this.battleHistory;
+        this.enemy.battleHistory = this.battleHistory;
 
         this.enemy.setState('idle');
         this.player.setState('idle');

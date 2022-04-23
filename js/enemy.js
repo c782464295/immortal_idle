@@ -1,9 +1,13 @@
 'use strict'
 import { StackFSM, respawnState, skillState, stunState, idleState, dieState, normalAttackState, attackState, fleeState } from './FSM.js';
 import { deepClone } from './utility.js';
+import { effectAndBuffContainer } from './skill.js';
 
 export class Enemy {
     constructor() {
+        this.battleHistory = [];
+        this.effectAndBuffContainer = new effectAndBuffContainer();
+
         this.stackFSM = new StackFSM();
         this.start = false;
 

@@ -130,7 +130,6 @@ class Statistics {
 }
 
 
-let statistics = new Statistics();
 
 
 
@@ -194,4 +193,6 @@ function getGameStatsTableData() {
     return data;
 }
 
+
+let statistics = new Statistics();
 export { statistics, GameStats, getGameStatsTableData };
