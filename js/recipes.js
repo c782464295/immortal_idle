@@ -17,19 +17,22 @@ class Recipe extends HTMLElement {
     check() {
         // 这里还需要判断背包是否满了
         let allMeet = true;
+        let q = 0;
         this.data.itemCosts.forEach(function (value) {
             let tmp_item = global.inventory.find(function (currentValue, index, arr) { return currentValue.id == value.id }, this);
             if (tmp_item == undefined || tmp_item.qty < value.qty) allMeet = false;
-
+            if (tmp_item != undefined && (tmp_item.qty - value.qty) === 0) q++;
         });
+        if(global.isFull(-q)) allMeet = false;
+        console.log(q);
         if (allMeet) {
             this.data.itemCosts.forEach(function (value) {
                 let tmp_item = global.inventory.find(function (currentValue, index, arr) { return currentValue.id == value.id }, this);
-        
+
                 tmp_item.qty -= value.qty;
-    
+
             });
-            
+
             if (this.isItemExist(this.data.itemID)) {
                 let tmp = global.inventory.find(item => item.id == this.data.itemID);
                 tmp.qty += 1;

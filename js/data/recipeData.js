@@ -11,10 +11,10 @@ export const recipeData = [
         masteryID: 0,
         baseInterval:2000,
         itemCosts: [{
-            id: 1,
-            qty: 1
+            id: 0,
+            qty: 2
         }, {
-            id: 2,
+            id: 1,
             qty: 1
         },],
         gpCost: 0,

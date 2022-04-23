@@ -65,7 +65,7 @@ export class dieState extends State {
         target.battleHistory.push(`targetID:${target.id} Die!`);
         target.stackFSM.popState();
         let tmpItem = randomizer(target.lootTable);
-        console.log(tmpItem);
+        target.battleHistory.push(`lootItem:${tmpItem.id} Dropped!`);
         if (tmpItem.id != -1) {
             let tmp = global.inventory.find(item => item.id == tmpItem.id);
             tmp.qty += 1;
@@ -126,7 +126,7 @@ export class respawnState extends State {
             this.tickLeft = this.maxTick;
             target.stackFSM.popState();
             target.basicAttributes = deepClone(target.saveBasicAttributes);
-            console.log(target.battleHistory);
+            console.log(target.battleHistory.join("\r\n"));
             target.battleHistory.length = 0;
         }
     }

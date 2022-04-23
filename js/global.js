@@ -5,6 +5,7 @@
    svg
 */
 import { exp } from './exp.js';
+import { items } from './items.js';
 export const TICK_INTERVAL = 50;
 export var save = window.localStorage;
 export var global = {
@@ -12,8 +13,23 @@ export var global = {
     getMaxSpace() {
         return 2;
     },
-    isFull() {
-        return this.inventory.filter(item => item.qty != 0).length >= this.getMaxSpace() ? true : false;
+    isFull(q = 0) {
+        return this.inventory.filter(item => item.qty != 0).length + q >= this.getMaxSpace() ? true : false;
+    },
+    isItemExist(id) {
+        if (global.inventory.find(item => item.id == id) === undefined) {
+            return false;
+        } else {
+            return true;
+        }
+    },
+    inventoryAddItem(id, qty) {
+        if (!this.isItemExist(id) && !this.isFull()) {
+            this.inventory.push({ id: id, locked: false, qty: qty, tab: 0, sellsFor: items.find(item => item.id == id).sellPrice });
+        } else {
+            let tmp = this.inventory.find(item => item.id == id);
+            tmp.qty += qty;
+        }
     },
     options: {
         disableFlyoutLabels: false
@@ -62,8 +78,8 @@ export var global = {
         HP: 300,
         MP: 140,
         XP: 0,
-        Attack:100,
-        attackSpeed:10
+        Attack: 100,
+        attackSpeed: 10
     },
     Equipment: {
         leftHand: { name: 'left-hand', equipmentID: 0 },
@@ -74,14 +90,14 @@ export var global = {
         helmet: { name: 'helmat', equipmentID: 2 },
         foot: { name: 'foot', equipmentID: 2 },
 
-        amulet: { name: 'amulet', equipmentID: 2, unlocked: false},
+        amulet: { name: 'amulet', equipmentID: 2, unlocked: false },
 
-        necklace : { name: 'necklace ', equipmentID: 2 },
+        necklace: { name: 'necklace ', equipmentID: 2 },
 
         plateBody: { name: 'right-hand', equipmentID: 2 },
         plateLegs: { name: 'right-hand', equipmentID: 2 },
 
-        medicine: [{ name: 'medicine', equipmentID: 2 },{ name: 'medicine', equipmentID: 2 },{ name: 'medicine', equipmentID: 2 }]
+        medicine: [{ name: 'medicine', equipmentID: 2 }, { name: 'medicine', equipmentID: 2 }, { name: 'medicine', equipmentID: 2 }]
     },
     serialize() {
         return this;
@@ -89,14 +105,14 @@ export var global = {
     deserialize(data) {
         for (let k in data) {
 
-            if(k == 'PlayerStates' || k == 'NonBattleSkill') {
-                Object.keys(this[k]).forEach((key)=>{
+            if (k == 'PlayerStates' || k == 'NonBattleSkill') {
+                Object.keys(this[k]).forEach((key) => {
 
                     this[k][key] = data[k][key];
                 });
                 continue
             }
-            
+
             this[k] = data[k];
         }
     },

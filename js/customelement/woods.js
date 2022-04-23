@@ -149,15 +149,7 @@ class Tree extends HTMLElement {
         Math.random() * 100 < nonBattleModifiersManager.getFinalValue(0) ? (qty = 2, statistics.Woodcutting.inc('doubleCut')) : qty = 1;
 
 
-        if (this.isItemExist(this._id)) {
-            let tmp = global.inventory.find(item => item.id == this._id);
-            tmp.qty += qty;
-        } else {
-            if (global.isFull()) {
-                console.log('背包满了');
-            }
-            global.inventory.push({ id: this._id, locked: false, qty: 1, tab: 0, sellsFor: items.find(item => item.id == this._id).sellPrice });
-        }
+        global.isFull()?console.log('full'):global.inventoryAddItem(this._id, qty);
         statistics.Woodcutting.inc('totalWoodcutting');
         statistics.Woodcutting.add('totalTimeConsume', this.baseInterval);
 
