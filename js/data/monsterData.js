@@ -1,6 +1,7 @@
 'use strict'
 import { loc } from '../locale.js';
 import { deepClone, rando } from '../utility.js';
+import { SkillsEnmu } from '../skill.js';
 
 export const MonsterName = {
     0: "LegaranWurm",
@@ -17,12 +18,7 @@ export const MonsterName = {
 }
 
 
-const attacks = {
-    Burn: 0,
-    BeingSheep: 1,
-    DoubleAttack: 2,
-    AttackUP: 3
-}
+
 const Items = {
     null: -1,
     log0: 0,
@@ -45,7 +41,7 @@ export const MonsterDragon = {
         Magic: 300,
         attackSpeed: 20
     },
-    specialAttacks: [attacks.Burn, attacks.BeingSheep, attacks.DoubleAttack, attacks.AttackUP],
+    specialAttacks: [SkillsEnmu.DoubleAttack, SkillsEnmu.AttackUP, SkillsEnmu.Burn, SkillsEnmu.BeingSheep],
     lootTable: [
         // itemID,number of item, probability
         { id: Items.log1, number: 8, probability: 1 / 100 },

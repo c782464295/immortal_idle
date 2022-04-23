@@ -1,5 +1,5 @@
 'use strict'
-import { deepClone } from './utility.js';
+import { deepClone, rando } from './utility.js';
 import { randomizer } from './utility.js';
 import { global } from './global.js';
 /**
@@ -33,12 +33,10 @@ export class idleState extends State {
         this.tickLeft -= 1;
         if (this.tickLeft === 0) {
             this.tickLeft = this.maxTick;
-            if (0) {
-
+            if (rando(0, 1)) {
                 if (target.basicAttributes.MP >= 10) {
-                    //that.stack.push(that.characteristic.skill);
+                    target.stackFSM.pushState(target.skillState);
                     target.basicAttributes.MP -= 10;
-                    console.log('skill');
                 } else {
                     target.stackFSM.pushState(target.attackState);
                 }
@@ -53,7 +51,7 @@ export class fleeState extends State {
         super('fleeState');
     }
     action() {
-        console.log('fless');
+        console.log('fleeState');
     }
 }
 export class dieState extends State {
@@ -85,20 +83,13 @@ export class attackState extends State {
         target.stackFSM.popState();
     }
 }
-export class normalAttackState extends State {
-    constructor() {
-        super('normalAttackState');
-    }
-    action() {
-        console.log('fless');
-    }
-}
 export class skillState extends State {
     constructor() {
         super('skillState');
     }
-    action() {
-        console.log('fless');
+    action(target) {
+        console.log('skillState');
+        target.stackFSM.popState();
     }
 }
 export class stunState extends State {
@@ -106,7 +97,7 @@ export class stunState extends State {
         super('stunState');
     }
     action() {
-        console.log('fless');
+        console.log('stun');
     }
 }
 export class respawnState extends State {

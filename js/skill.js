@@ -1,4 +1,5 @@
 'use strict'
+import { idleState } from './FSM.js';
 import { TICK_INTERVAL, global } from './global.js';
 
 // skill composed of many buff
@@ -10,9 +11,9 @@ class effectTimer {
      * @param {Function} action
      * @param {Function} uncast
      */
-    constructor(totalTime, frequency, action, uncast) {
+    constructor(totalTime, frequency, cast, uncast) {
         const ticks = Math.floor(totalTime / TICK_INTERVAL);
-        this.action = action;
+        this.cast = cast;
         this.uncast = uncast;
 
         if (ticks < 1)
@@ -31,22 +32,12 @@ class effectTimer {
                 if (this._frequencyLeft) {
                     this._ticksLeft = this._maxTicks;
                     this._frequencyLeft--;
-                    this.action();
-                }else {
+                    this.cast();
+                } else {
                     this.uncast();
                 }
             }
         }
-    }
-    serialize() {
-        const sData = [];
-        sData.push(this._ticksLeft, this._maxTicks, this._frequencyLeft);
-        return sData;
-    }
-    deserialize(sData, version) {
-        this._ticksLeft = sData[0];
-        this._maxTicks = sData[1];
-        this.active = sData[2];
     }
 }
 
@@ -104,18 +95,32 @@ class Skill extends effectContainer {
 }
 
 
-class poisonEffect extends Effect {
-    constructor(){
+class burnEffect extends Effect {
+    constructor() {
         super('poison');
         this.effectTimer = new effectTimer(200, 5, this.action.bind(this), undefined);
-        this.hp = 200;
     }
-    action() {
-        console.log('tike me');
-        this.hp -= 10;
-        console.log(this.hp);
+    action(target) {
+        target.basicAttributes.HP 
     }
     tick() {
         this.effectTimer.tick();
     }
 }
+
+export const SkillsEnmu = {
+    DoubleAttack: 0,
+    AttackUP: 1,
+    Burn: 2,
+    BeingSheep: 3,
+
+    get: function (value) {
+        return Object.keys(this).find(key => this[key] === value);
+    }
+}
+export const skill = [
+    { id: SkillsEnmu.DoubleAttack, concrete: burnEffect },
+    { id: SkillsEnmu.AttackUP, concrete: burnEffect },
+    { id: SkillsEnmu.Burn, concrete: burnEffect },
+    { id: SkillsEnmu.BeingSheep, concrete: burnEffect },
+]

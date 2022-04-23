@@ -10,8 +10,9 @@ export const TICK_INTERVAL = 50;
 export var save = window.localStorage;
 export var global = {
     inventory: [],//{ id: 15, locked: false, qty: 1, tab: 0, sellsFor: 80 },
+    maxSpace: 3,
     getMaxSpace() {
-        return 2;
+        return this.maxSpace;
     },
     isFull(q = 0) {
         return this.inventory.filter(item => item.qty != 0).length + q >= this.getMaxSpace() ? true : false;

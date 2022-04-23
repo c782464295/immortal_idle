@@ -1,5 +1,5 @@
 'use strict'
-import { StackFSM, respawnState, skillState, stunState, idleState, dieState, normalAttackState, attackState, fleeState } from './FSM.js';
+import { StackFSM, respawnState, skillState, stunState, idleState, dieState, attackState, fleeState } from './FSM.js';
 import { deepClone } from './utility.js';
 import { effectAndBuffContainer } from './skill.js';
 
@@ -22,6 +22,7 @@ export class Enemy {
         this.attackState = new attackState();
         this.respawnState = new respawnState();
         this.dieState = new dieState();
+        this.skillState = new skillState();
 
         this.saveBasicAttributes = {};
     }
@@ -60,9 +61,13 @@ export class Enemy {
                 this.stackFSM.pushState(this.idleState);
         }
     }
+    effect(target) {
+        this.effectAndBuffContainer;
+    }
     tick() {
         if (this.start) {
             this.stackFSM.tick(this);
+            this.effect(this);
         }
 
     }

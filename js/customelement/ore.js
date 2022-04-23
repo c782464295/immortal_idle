@@ -72,7 +72,7 @@ class Ore extends HTMLElement {
         </style>
 
         <div class='card' id=${val.id} aria-checked="false">
-    <p>经验:${val.baseExperience}xp/${Math.floor(val.baseInterval/1000)}s</p>
+    <p>经验:${val.baseExperience}xp/⏳${Math.floor(val.baseInterval/1000)}s</p>
             <img src=${val.media} alt="Avatar" height="100px" width="100px">
             <div class="container">
                 <progress max=100 value=10></progress>

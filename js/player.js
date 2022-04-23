@@ -1,5 +1,5 @@
 'use strict'
-import { StackFSM, State, skillState, stunState, idleState, normalAttackState, attackState } from './FSM.js';
+import { StackFSM, State, skillState, stunState, idleState, attackState } from './FSM.js';
 import { global } from './global.js';
 import { effectAndBuffContainer } from './skill.js';
 
@@ -26,6 +26,15 @@ class playerDieState extends State {
         //global.inventory.length = 0;
     }
 }
+class playerSkillState extends State {
+    constructor() {
+        super('dieState');
+    }
+    action(target) {
+        target.stackFSM.popState();
+    }
+}
+
 export class Player {
     constructor() {
         this.battleHistory = [];
@@ -41,6 +50,7 @@ export class Player {
 
         this.idleState = new idleState();
         this.attackState = new attackState();
+        this.skillState = new playerSkillState();
 
         this.dieState = new playerDieState();
     }
@@ -62,9 +72,13 @@ export class Player {
                 this.stackFSM.pushState(this.idleState);
         }
     }
+    effect(target) {
+        this.effectAndBuffContainer;
+    }
     tick() {
         if (this.start) {
             this.stackFSM.tick(this);
+            this.effect(this);
         }
     }
 }

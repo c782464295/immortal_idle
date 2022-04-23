@@ -75,7 +75,7 @@ class Tree extends HTMLElement {
         </style>
 
         <div class='card' id=${val.id} aria-checked="false">
-    <p>经验:${val.baseExperience}xp/${Math.floor(val.baseInterval/1000)}s</p>
+    <p>经验:${val.baseExperience}xp/⏳${Math.floor(val.baseInterval / 1000)}s</p>
             <img src=${val.media} alt="Avatar" height="100px" width="100px">
             <div class="container">
                 <progress max=100 value=10></progress>
@@ -149,7 +149,7 @@ class Tree extends HTMLElement {
         Math.random() * 100 < nonBattleModifiersManager.getFinalValue(0) ? (qty = 2, statistics.Woodcutting.inc('doubleCut')) : qty = 1;
 
 
-        global.isFull()?console.log('full'):global.inventoryAddItem(this._id, qty);
+        global.isFull() && !global.isItemExist(this._id) ? console.log('full') : global.inventoryAddItem(this._id, qty);
         statistics.Woodcutting.inc('totalWoodcutting');
         statistics.Woodcutting.add('totalTimeConsume', this.baseInterval);
 
@@ -161,13 +161,6 @@ class Tree extends HTMLElement {
 
 
 
-    isItemExist(id) {
-        if (global.inventory.find(item => item.id == id) === undefined) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     tick() {
         if (this.timer.isActive) this.timer.tick();
