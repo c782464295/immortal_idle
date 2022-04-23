@@ -1,6 +1,6 @@
 'use strict'
 import { global } from './global.js';
-import { Player, playerData } from './player.js';
+import { Player } from './player.js';
 import { Enemy } from './enemy.js';
 import { MonsterDragon } from './data/monsterData.js';
 import { deepClone } from './utility.js';
@@ -38,6 +38,11 @@ export class Combat {
 
     serialize() {
         return {
+            enemyId: this.enemy.id,
+            enemyName: this.enemy.name,
+            enemySpecialAttacks: this.enemy.specialAttacks,
+            enemyLootTable: this.enemy.lootTable,
+
             enemyStart: this.enemy.start,
             playerStart: this.player.start,
             enemyTick: [this.enemy.idleState.maxTick, this.enemy.idleState.tickLeft],
@@ -48,6 +53,11 @@ export class Combat {
 
     }
     deserialize(data) {
+        this.enemy.id = data.enemyId;
+        this.enemy.name = data.enemyName;
+        this.enemy.specialAttacks  = deepClone(data.enemySpecialAttacks);
+        this.enemy.lootTable = deepClone(data.enemyLootTable);
+
         this.enemy.start = data.enemyStart;
         this.player.start = data.playerStart;
 

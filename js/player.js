@@ -2,69 +2,25 @@
 import { StackFSM, State, skillState, stunState, idleState, normalAttackState, attackState} from './FSM.js';
 import { global } from './global.js';
 
-export const playerData = {
-    id: 0,
-    get name() {
-        return 'player';
-    },
-    basicAttributes: {
-        HP: 900,
-        MP: 200,
-        Attack: 1,
-        Strength: 1,
-        Defence: 350,
-        Ranged: 650,
-        Magic: 300,
-        attackSpeed: 200
-    },
-    idleState: {
-        maxTick: 0,
-        tickLeft: 0,
-        action(that) {
-            if (that.enemy.characteristic.basicAttributes.HP > 0) {
-                that.stack.push(that.characteristic.attackState);
-            } else {
-                that.stack.push(that.characteristic.dieState);
-            }
-
-        }
-    },
-    fleeState: { action: function () { console.log('fless') } },
-    dieState: {
-
-
-
-        action: function (that) {
-            console.log('player die');
-            console.log(that);
-            that.start = false;
-            that.enemy.start = false;
-        }
-    },
-    attackState: {
-
-        action: function (that) {
-            that.enemy.characteristic.basicAttributes.HP -= 10;
-
-            that.stack.pop();
-        }
-    }
-}
-
 class playerFleeState extends State{
     constructor() {
         super('fleeState');
     }
     action() {
-        console.log('fless');
+        console.log('playerFlee');
+        target.stackFSM.popState();
+        target.start = false;
+        target.enemy.start = false;
     }
 }
 class playerDieState extends State{
     constructor() {
         super('dieState');
     }
-    action() {
-        console.log('fless');
+    action(target) {
+        console.log('playerDie');
+        target.start = false;
+        target.enemy.start = false;
     }
 }
 export class Player{
@@ -79,6 +35,8 @@ export class Player{
 
         this.idleState = new idleState();
         this.attackState = new attackState();
+
+        this.dieState = new playerDieState();
     }
     setState(stateName) {
         switch (stateName) {

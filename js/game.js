@@ -69,7 +69,7 @@ class Game {
                 //event.returnValue = '关闭提示';
                 if (global.Settings.saveClosing) {
                     this.lasttimestamp = new Date().getTime();
-                    //this.lasttimestamp = 0;
+                    this.lasttimestamp = 0;
                     storage.setItem('saveData', this.serialize());
                     this.inventory.close();
                 }

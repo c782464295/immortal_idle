@@ -79,7 +79,7 @@ export class attackState extends State {
     }
     action(target) {
         target.enemy.basicAttributes.HP -= target.basicAttributes.Attack;
-        console.log(target);
+        //console.log(target);
         target.stackFSM.popState();
     }
 }
