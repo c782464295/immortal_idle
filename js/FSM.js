@@ -70,9 +70,8 @@ export class dieState extends State {
             global.inventoryAddItem(tmpItem.id, 1);
         }
 
-        //target.effectContainer.length = 0;
-        //target.enemy.effectContainer.length = 0;
-        console.log(target.enemy.effectContainer);
+        target.effectContainer.effectsList.length = 0;
+        target.enemy.effectContainer.effectsList.length = 0;
         target.stackFSM.popState();
         target.stackFSM.pushState(target.respawnState);
         
