@@ -2,7 +2,7 @@
 import { StackFSM, State, skillState, stunState, idleState, attackState } from './FSM.js';
 import { global } from './global.js';
 import { effectContainer } from './skill.js';
-
+import { equipment } from './equipment.js'
 class playerFleeState extends State {
     constructor() {
         super('fleeState');
@@ -55,6 +55,9 @@ export class Player {
         this.skillState = new playerSkillState();
 
         this.dieState = new playerDieState();
+
+
+        this.equipment = equipment;
     }
     setState(stateName) {
         switch (stateName) {
