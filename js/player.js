@@ -1,7 +1,7 @@
 'use strict'
 import { StackFSM, State, skillState, stunState, idleState, attackState } from './FSM.js';
 import { global } from './global.js';
-import { effectAndBuffContainer } from './skill.js';
+import { effectContainer } from './skill.js';
 
 class playerFleeState extends State {
     constructor() {
@@ -37,8 +37,10 @@ class playerSkillState extends State {
 
 export class Player {
     constructor() {
-        this.battleHistory = [];
-        this.effectAndBuffContainer = new effectAndBuffContainer();
+        this.name = 'Player';
+        this.battleHistory = undefined;
+
+        this.effectContainer = new effectContainer();
 
         this.stackFSM = new StackFSM();
         this.start = false;
@@ -78,7 +80,7 @@ export class Player {
     tick() {
         if (this.start) {
             this.stackFSM.tick(this);
-            this.effect(this);
+            this.effectContainer.tick(this);
         }
     }
 }

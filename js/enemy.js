@@ -1,13 +1,14 @@
 'use strict'
 import { StackFSM, respawnState, skillState, stunState, idleState, dieState, attackState, fleeState } from './FSM.js';
 import { deepClone } from './utility.js';
-import { effectAndBuffContainer } from './skill.js';
+import { effectContainer } from './skill.js';
 
 export class Enemy {
     constructor() {
-        this.battleHistory = [];
-        this.effectAndBuffContainer = new effectAndBuffContainer();
 
+        this.effectContainer = new effectContainer();
+        this.battleHistory = undefined;
+        
         this.stackFSM = new StackFSM();
         this.start = false;
 
@@ -35,6 +36,7 @@ export class Enemy {
         this.specialAttacks = deepClone(target.specialAttacks);
         this.lootTable = deepClone(target.lootTable);
 
+
         this.stackFSM.stack = [];
     }
     respawn() {
@@ -61,13 +63,11 @@ export class Enemy {
                 this.stackFSM.pushState(this.idleState);
         }
     }
-    effect(target) {
-        this.effectAndBuffContainer;
-    }
+
     tick() {
         if (this.start) {
             this.stackFSM.tick(this);
-            this.effect(this);
+            this.effectContainer.tick(this);
         }
 
     }

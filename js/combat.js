@@ -12,6 +12,10 @@ export class Combat {
         this.battleHistory = [];
         this.player = new Player();
         this.enemy = new Enemy();
+
+        this.player.battleHistory = this.battleHistory;
+        this.enemy.battleHistory = this.battleHistory;
+
     }
     tick() {
         this.enemy.tick();
@@ -31,9 +35,7 @@ export class Combat {
         this.enemy.enemy = this.player;
         this.player.enemy = this.enemy;
 
-        this.player.battleHistory = this.battleHistory;
-        this.enemy.battleHistory = this.battleHistory;
-
+        
         this.enemy.setState('idle');
         this.player.setState('idle');
         this.combatStart();

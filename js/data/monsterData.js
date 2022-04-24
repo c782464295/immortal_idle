@@ -29,7 +29,7 @@ const Items = {
 export const MonsterDragon = {
     id: MonsterName.get("Dragon"),
     get name() {
-        return loc('MONSTER_NAME', `${this.id}`);
+        return'dragon';
     },
     basicAttributes: {
         HP: 900,

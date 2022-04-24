@@ -221,5 +221,8 @@
   },
   "error": {
     "bug": "游戏发生错误"
+  },
+  "MONSTER_NAME" : {
+    "2": "dragon"
   }
 }

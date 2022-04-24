@@ -2,6 +2,7 @@
 import { deepClone, rando } from './utility.js';
 import { randomizer } from './utility.js';
 import { global } from './global.js';
+import { skill } from './skill.js';
 /**
  * @override
  */
@@ -37,6 +38,7 @@ export class idleState extends State {
                 if (target.basicAttributes.MP >= 10) {
                     target.stackFSM.pushState(target.skillState);
                     target.basicAttributes.MP -= 10;
+                    
                 } else {
                     target.stackFSM.pushState(target.attackState);
                 }
@@ -61,16 +63,19 @@ export class dieState extends State {
     action(target) {
 
         target.battleHistory.push(`targetID:${target.id} Die!`);
-        target.stackFSM.popState();
+        
         let tmpItem = randomizer(target.lootTable);
         target.battleHistory.push(`lootItem:${tmpItem.id} Dropped!`);
         if (tmpItem.id != -1) {
-            let tmp = global.inventory.find(item => item.id == tmpItem.id);
-            tmp.qty += 1;
+            global.inventoryAddItem(tmpItem.id, 1);
         }
 
+        //target.effectContainer.length = 0;
+        //target.enemy.effectContainer.length = 0;
+        console.log(target.enemy.effectContainer);
+        target.stackFSM.popState();
         target.stackFSM.pushState(target.respawnState);
-
+        
     }
 }
 export class attackState extends State {
@@ -88,7 +93,14 @@ export class skillState extends State {
         super('skillState');
     }
     action(target) {
-        console.log('skillState');
+        let skillID = target.specialAttacks[rando(0, target.specialAttacks.length - 1)];
+        let skill_tmp = skill.find((item) => { return item.id == skillID });
+
+        
+        let concrete = new skill_tmp.concrete();
+        concrete.cast(target);
+
+        target.battleHistory.push(target.name + ' use Skill named ' + concrete.effectName);
         target.stackFSM.popState();
     }
 }
@@ -107,7 +119,7 @@ export class respawnState extends State {
         this.tickLeft = this.maxTick;
     }
     action(target) {
-
+        target.effectContainer.length = 0;
         if (this.tickLeft >= 0) {
             this.tickLeft--;
 
@@ -117,7 +129,8 @@ export class respawnState extends State {
             this.tickLeft = this.maxTick;
             target.stackFSM.popState();
             target.basicAttributes = deepClone(target.saveBasicAttributes);
-            console.log(target.battleHistory.join("\r\n"));
+            
+            console.log(target.battleHistory.join('\r\n'));
             target.battleHistory.length = 0;
         }
     }
