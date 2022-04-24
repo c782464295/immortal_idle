@@ -23,7 +23,7 @@ class Recipe extends HTMLElement {
             if (tmp_item == undefined || tmp_item.qty < value.qty) allMeet = false;
             if (tmp_item != undefined && (tmp_item.qty - value.qty) === 0) q++;
         });
-        if(global.isFull(-q)) allMeet = false;
+        if(global.isFull(-q) && !this.isItemExist(this.data.itemID)) allMeet = false;
         console.log(q);
         if (allMeet) {
             this.data.itemCosts.forEach(function (value) {

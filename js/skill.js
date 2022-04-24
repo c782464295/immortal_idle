@@ -114,7 +114,7 @@ class burnEffect extends Effect {
 
     }
     action(target) {
-        target.battleHistory.push(this.effectName + ' caused ' + target.name + ' HP -10');
+        target.battleHistory.push(this.effectName + ' caused ' + target.name + ' HP -10 currentHP:' + target.basicAttributes.HP);
 
         target.basicAttributes.HP -= 10;
     }
