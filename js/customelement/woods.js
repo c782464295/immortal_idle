@@ -235,7 +235,7 @@ class WoodCutting {
         }
 
 
-        this.progress.value = Math.floor(global.NonBattleSkill.woodcuttingExp/exp.level_to_xp(exp.xp_to_level(global.NonBattleSkill.woodcuttingExp)+1)*100);
+        this.progress.value = exp.progress(global.NonBattleSkill.woodcuttingExp);
         this.level.innerText = global.NonBattleSkill.woodcuttingLevel;
     }
     tick() {

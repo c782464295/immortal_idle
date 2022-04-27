@@ -27,7 +27,14 @@ class Exp {
         } while (this.level_to_xp(level) < xp);
         if (xp <= 0)
             level = 1;
-        return level-1;
+        return level - 1;
+    }
+    progress(xp) {
+        let diff = this.level_to_xp(this.xp_to_level(xp) + 1) - this.level_to_xp(this.xp_to_level(xp));
+        let current_exp_diff = xp - this.level_to_xp(this.xp_to_level(xp));
+
+        let rate = Math.floor(current_exp_diff / diff * 100);
+        return rate;
     }
 }
 const exp = new Exp(MAX_LEVEL);
