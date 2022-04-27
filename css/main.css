@@ -1477,3 +1477,17 @@ item-element {
         transform: scale(1, var(--scaleFlip)) translateY(var(--posFlip)) rotate(20deg);
     }
 }
+
+/*
+
+*/
+
+tree-element {
+    width: 90% !important;
+    height: 280px !important;
+    display: inline-block;
+    margin: 20px;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+}

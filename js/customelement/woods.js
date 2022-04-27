@@ -20,27 +20,19 @@ class Tree extends HTMLElement {
 
         this.timer = new Timer('woodcut', this.action.bind(this));
 
-
-
-    }
-    set data(val) {
-        this.baseInterval = val.baseInterval;
-        this.requirelevel = val.requirelevel;
-        this.baseExperience = val.baseExperience;
-        this._id = val.id;
-        const shadowRoot = this.attachShadow({ mode: 'open' });
-        shadowRoot.innerHTML = `
-        <style>
+        let style = document.createElement('style');
+        style.appendChild(document.createTextNode(`
         .card{
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
-            width: 90%;
-            height: 280px;
+            width: 30%!important;
+            height: 280px!important;
             display:inline-block;
             margin:20px;
             text-align:center;
             -webkit-user-select: none; 
             cursor: pointer;
+            float: left;
         }
           
         .card:hover{
@@ -73,40 +65,68 @@ class Tree extends HTMLElement {
             opacity: 1;
             display:none;
         }
-        </style>
+        `));
+        this.setAttribute("aria-checked",false);
 
-        <div class='card' id=${val.id} aria-checked="false">
-    <p>经验:${val.baseExperience}xp/⏳${Math.floor(val.baseInterval / 1000)}s</p>
-            <img src=${val.media} alt="Avatar" height="100px" width="100px">
-            <div class="container">
-                <progress max=100 value=10></progress>
-                <p><b>${val.name}</b></p>
-                <p>${val.description}</p>
-            </div>
-        </div>
-        `
-        this.card = shadowRoot.querySelector('.card');
-        this.bar = shadowRoot.querySelector('progress');
-        //shadowRoot.querySelector('.card').addEventListener('click', this.check.bind(this), false);
-        shadowRoot.querySelector('.card').onclick = this.check.bind(this);
+        
+        this.appendChild(style);
+        this.container = document.createElement("div");
+        this.container.className = 'card';
+        
+        this.container.setAttribute("id",-1);
+
+        this.exp_text = document.createElement("p");
+        this.container.appendChild(this.exp_text);
+
+        this.img = document.createElement("img");
+        this.img.setAttribute("height","100px");
+        this.img.setAttribute("width","100px");
+        this.container.appendChild(this.img);
+
+        this.sub_container = document.createElement("container");
+        this.sub_progress = document.createElement("progress");
+        this.sub_progress.max = 100;
+
+        this.sub_name = document.createElement("p");
+        this.sub_name_b = document.createElement("b");
+        this.sub_name.appendChild(this.sub_name_b);
+        this.sub_description = document.createElement("p");
+
+        this.sub_container.appendChild(this.sub_name);
+        this.sub_container.appendChild(this.sub_description);
+
+        this.container.appendChild(this.sub_container);
+
+    }
+    connectedCallback() {
+        this.appendChild(this.container);
+        this.onclick = this.check.bind(this);
+    }
+    set data(val) {
+        this.baseInterval = val.baseInterval;
+        this.requirelevel = val.requirelevel;
+        this.baseExperience = val.baseExperience;
+        this._id = val.id;
+
+        this.exp_text.innerText = `经验:${val.baseExperience}xp/⏳${Math.floor(val.baseInterval / 1000)}s`;
+        this.img.src = val.media;
+        this.sub_name_b.innerText = val.name;
+        this.sub_description.innerText = val.description;
         return
     }
     get data() {
         return this.val;
     }
-    connectedCallback() {
-
-
-    }
+    
 
 
 
     check(event) {
 
         let children = this.p_dom.childNodes;
-
+        console.log('click');
         for (let e in children) {
-
+            console.log(children[e].isChecked);
             if (children[e].isChecked == true && children[e] != this) {
                 return;
             }
@@ -134,10 +154,10 @@ class Tree extends HTMLElement {
         // called when one of attributes listed above is modified
     }
     hide() {
-        this.shadowRoot.querySelector(".card").classList.add("hidden")
+        this.classList.add("hidden")
     }
     show() {
-        this.shadowRoot.querySelector(".card").classList.remove("hidden")
+        this.classList.remove("hidden")
     }
     addXP() {
 
@@ -168,9 +188,9 @@ class Tree extends HTMLElement {
     }
     async render() {
         if (this.timer.active) {
-            this.card.setAttribute('aria-checked', String(true));
+            this.setAttribute('aria-checked', String(true));
             this._checked = true;
-            this.bar.value = 100 - 100 * this.timer._ticksLeft / this.timer._maxTicks;
+            this.sub_progress.value = 100 - 100 * this.timer._ticksLeft / this.timer._maxTicks;
 
 
         }
@@ -235,7 +255,7 @@ class WoodCutting {
         }
 
 
-        this.progress.value = exp.progress(global.NonBattleSkill.woodcuttingExp);
+        //this.progress.value = exp.progress(global.NonBattleSkill.woodcuttingExp);
         this.level.innerText = global.NonBattleSkill.woodcuttingLevel;
     }
     tick() {
