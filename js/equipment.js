@@ -14,11 +14,12 @@ class EquipmentSys {
 
     }
     unquip(equipID) {
-        if (isEquiped) {
-
+        if (isEquiped(equipID)) {
+            global.inventoryAddItem(equipID, 1);
         }
     }
     isEquiped(equipID) {
+        
         return true;
     }
     get attack() {

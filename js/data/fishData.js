@@ -31,3 +31,4 @@ export const fishData = [
     
 ];
 
+const fishes = ["🐟 🐠 🐡", "🐡", "🐠", "🐟", "🐟 🐠 🦑 🐙"];

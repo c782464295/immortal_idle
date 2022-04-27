@@ -9,6 +9,7 @@ import { statistics } from '../statistic.js';
 import { nonBattleModifiersManager } from '../nonBattleModiers.js';
 import { TreeData } from '../data/treeData.js';
 import { modifier } from '../data/modifier.js';
+import { exp } from '../exp.js';
 
 class Tree extends HTMLElement {
     constructor(p_dom) {
@@ -195,13 +196,18 @@ class WoodCutting {
         this.parentDOM = document.getElementById("woodcutting-area");
         this.trees = [];
 
-        this.init();
 
-    }
-    init() {
+        this.level = document.createElement('h4');
+        this.parentDOM.appendChild(this.level);
         this.progress = new ProgressBar();
         this.parentDOM.parentNode.insertBefore(this.progress, this.parentDOM);
 
+        this.init();
+
+    }
+
+    init() {
+        this.progress.max = 100;
         for (let i in TreeData) {
             let tmp_dom = new Tree(this.parentDOM);
 
@@ -221,14 +227,16 @@ class WoodCutting {
         for (let i in TreeData) {
             TreeData[i].requirelevel <= global.NonBattleSkill.woodcuttingLevel ? this.trees[i].show() : this.trees[i].hide();
         }
+
     }
     render() {
         for (let i in this.trees) {
             this.trees[i].render();
         }
-        this.progress.max = 100;
-        this.progress.value += 1;
 
+
+        this.progress.value = Math.floor(global.NonBattleSkill.woodcuttingExp/exp.level_to_xp(exp.xp_to_level(global.NonBattleSkill.woodcuttingExp)+1)*100);
+        this.level.innerText = global.NonBattleSkill.woodcuttingLevel;
     }
     tick() {
         if (global.currentAction == 'woodcutting') {
