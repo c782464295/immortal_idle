@@ -15,6 +15,11 @@
     <!-- CSS files -->
     <link rel="stylesheet" href="./css/main.css">
 
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 
 </head>
@@ -241,10 +246,9 @@
                     <div class="content-section">
                         
                         <div class="content-section-title">钓鱼区域</div>
-                        <div class="apps-card" id="">
-
-                            <fishingarea-element></fishingarea-element>
-                            <fishingarea-element></fishingarea-element>
+                                                          
+                        <div class="apps-card fish_" id="fish-area">
+                            
                         </div>
                         
                     </div>
@@ -471,12 +475,14 @@
 <script>
 
     // tab导航
-    $('.side-menu a').click(function () {
+    $('.side-menu a').click(function (e) {
+        if ($(this.getAttribute('href')).is(":visible")) return;
         $(".main-container").hide();
         if ($(this.getAttribute('href')).is(":visible")) {
             $(this.getAttribute('href')).hide();
         } else {
             $(this.getAttribute('href')).show();
+            $("#fish-area")[0].slick.refresh();
         }
     })
 

@@ -8,46 +8,15 @@ import { items } from '../items.js';
 import { statistics } from '../statistic.js';
 
 class FishingArea extends HTMLElement {
-    constructor() {
+    constructor(name) {
         super();
-        this.className = '';
-        this.style = `
-            flex: 0 0 auto;
-            width: 50%;
-            min-width:767px;
-          `;
-        this.container = document.createElement('div');
-        this.container.className = 'row';
-        this.container.style = 'min-height:370px;';
+        this.style.width = "100%;";
+        this.style.height = "100%;";
+        this.innerHTML = `<div class= 'aaa'>a${name}</div>`;
 
 
-        this.titleDiv = document.createElement('div');
-        this.titleDiv.style = `text-align: center`;
-        this.titleText = document.createElement('h3');
-        
-        this.container_left = document.createElement('div');
-        this.container_left.style = 'width:50%;text-align:center;';
-
-        this.right_content = document.createElement('h4');
-
-        this.container_right = document.createElement('div');
-        this.container_right.style = 'width:50%;text-align:center';
     }
     connectedCallback() {
-        this.titleText.innerText = '黄海';
-        this.right_content.innerText = '闲置';
-
-
-        this.titleDiv.appendChild(this.titleText);
-        this.appendChild(this.titleDiv);
-
-        this.container_right.appendChild(this.right_content);
-
-        this.container.appendChild(this.container_left);
-        this.container.appendChild(this.container_right);
-        //this.button.onclick = () => this.click();
-
-        this.appendChild(this.container);
     }
 
     click() {
@@ -56,13 +25,48 @@ class FishingArea extends HTMLElement {
 }
 customElements.define('fishingarea-element', FishingArea);
 
-class FishingMenu extends HTMLElement {
+export class FishingMenu {
     constructor() {
-        super();
-    }
-    connectedCallback() {
 
+        this.parentDOM = document.getElementById("fish-area");
+        $("#fish-area").slick({accessibility:true, slidesToShow:1,infinite:false,});
+
+        this.slider = document.createElement('div');
+        this.slider.className = 'fish-slider';
+        this.slider.style.width = '100%';
+        this.slider.style.height = '100%';
+        this.slider.style.height = '100%';
+        
+        this.fishingArea = new FishingArea('a');
+        this.fishingArea1 = new FishingArea('b');
+        this.fishingArea2 = new FishingArea('c');
+
+        $("#fish-area").slick('slickAdd',this.fishingArea);
+        $("#fish-area").slick('slickAdd',this.fishingArea1);
+        $("#fish-area").slick('slickAdd',this.fishingArea2);
+
+        $("#fish-area").on('beforeChange', function(event, slick, currentSlide, nextSlide){
+            console.log(event);
+            console.log(slick);
+            return false;
+          });
+
+    }
+
+    getCurrentSlide() {
+        return $('#fish-area').slick('slickCurrentSlide');
+    }
+    setCurrentSlide(index) {
+        $('#fish-area').slick('slickGoTo', index);
+    }
+    removeCurrentSlide(index) {
+        $('#fish-area').slick('slickRemove', index);
+    }
+    destroy() {
+        $('#fish-area').slick('unslick');
+
+    }
+    async render() {
+        
     }
 }
-
-customElements.define('fishingmenu-element', FishingMenu);

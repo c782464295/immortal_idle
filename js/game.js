@@ -6,6 +6,7 @@ import { } from './items.js';
 import { Mining } from './customelement/ore.js';
 import { WoodCutting } from './customelement/woods.js';
 import { Inventory } from './customelement/inventory.js';
+import { FishingMenu } from './customelement/fish.js';
 import { } from './customelement/fish.js';
 
 import { deepClone } from './utility.js';
@@ -49,6 +50,7 @@ class Game {
         this.minning = new Mining();
         this.WoodCutting = new WoodCutting();
         this.prayMenu = new PrayMenu();
+        this.fishingMenu = new FishingMenu();
 
         this.inventory = new Inventory();
 
@@ -361,7 +363,7 @@ $(document).ready(function () {
 
     game.debug(true);
 
-
+    
 
     //game.deserialize('');
     // 明暗模式动态
