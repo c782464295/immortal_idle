@@ -19,20 +19,19 @@ class Tree extends HTMLElement {
         this.p_dom = p_dom;
 
         this.timer = new Timer('woodcut', this.action.bind(this));
-
+        const shadowRoot = this.attachShadow({ mode: 'open' });
         let style = document.createElement('style');
         style.appendChild(document.createTextNode(`
         .card{
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
-            width: 30%!important;
-            height: 280px!important;
+            width: 90%;
+            height: 280px;
             display:inline-block;
             margin:20px;
             text-align:center;
             -webkit-user-select: none; 
             cursor: pointer;
-            float: left;
         }
           
         .card:hover{
@@ -59,20 +58,22 @@ class Tree extends HTMLElement {
         .card[aria-checked="true"] {
             box-shadow: 0 8px 36px 0 rgba(0,0,0,0.9);
         }
-
         .hidden {
             visibility: hidden;
             opacity: 1;
             display:none;
         }
         `));
-        this.setAttribute("aria-checked",false);
-
         
-        this.appendChild(style);
+
+
+        shadowRoot.appendChild(style);
         this.container = document.createElement("div");
         this.container.className = 'card';
         
+
+        this.container.setAttribute("aria-checked",false);
+
         this.container.setAttribute("id",-1);
 
         this.exp_text = document.createElement("p");
@@ -81,6 +82,7 @@ class Tree extends HTMLElement {
         this.img = document.createElement("img");
         this.img.setAttribute("height","100px");
         this.img.setAttribute("width","100px");
+        this.img.className = "aligncenter";
         this.container.appendChild(this.img);
 
         this.sub_container = document.createElement("container");
@@ -92,14 +94,15 @@ class Tree extends HTMLElement {
         this.sub_name.appendChild(this.sub_name_b);
         this.sub_description = document.createElement("p");
 
+        this.sub_container.appendChild(this.sub_progress);
         this.sub_container.appendChild(this.sub_name);
         this.sub_container.appendChild(this.sub_description);
 
         this.container.appendChild(this.sub_container);
-
+        shadowRoot.appendChild(this.container);
     }
     connectedCallback() {
-        this.appendChild(this.container);
+        
         this.onclick = this.check.bind(this);
     }
     set data(val) {
@@ -108,10 +111,13 @@ class Tree extends HTMLElement {
         this.baseExperience = val.baseExperience;
         this._id = val.id;
 
+        this.container.id = val.id;
+
         this.exp_text.innerText = `经验:${val.baseExperience}xp/⏳${Math.floor(val.baseInterval / 1000)}s`;
         this.img.src = val.media;
         this.sub_name_b.innerText = val.name;
         this.sub_description.innerText = val.description;
+        this.sub_progress.value = 100 - 100 * this.timer._ticksLeft / this.timer._maxTicks;
         return
     }
     get data() {
@@ -122,11 +128,9 @@ class Tree extends HTMLElement {
 
 
     check(event) {
-
         let children = this.p_dom.childNodes;
-        console.log('click');
         for (let e in children) {
-            console.log(children[e].isChecked);
+
             if (children[e].isChecked == true && children[e] != this) {
                 return;
             }
@@ -137,9 +141,8 @@ class Tree extends HTMLElement {
         this.timer.isActive ? this.timer.stop() : this.timer.start(this.baseInterval);
 
 
-
-        const isPressed = event.currentTarget.getAttribute('aria-checked') === 'true';
-        event.currentTarget.setAttribute('aria-checked', String(!isPressed));
+        const isPressed = this.container.getAttribute('aria-checked') === 'true';
+        this.container.setAttribute('aria-checked', String(!isPressed));
         this._checked = Boolean(!isPressed);
 
         isPressed ? global.currentAction = '' : global.currentAction = 'woodcutting';
@@ -188,7 +191,7 @@ class Tree extends HTMLElement {
     }
     async render() {
         if (this.timer.active) {
-            this.setAttribute('aria-checked', String(true));
+            this.container.setAttribute('aria-checked', String(true));
             this._checked = true;
             this.sub_progress.value = 100 - 100 * this.timer._ticksLeft / this.timer._maxTicks;
 

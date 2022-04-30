@@ -99,9 +99,8 @@ class Ore extends HTMLElement {
     check(event) {
 
         let children = this.p_dom.childNodes;
-
+        
         for (let e in children) {
-
             if (children[e].isChecked == true && children[e] != this) {
                 return;
             }
@@ -110,7 +109,6 @@ class Ore extends HTMLElement {
                 return;
         }
         this.timer.isActive ? this.timer.stop() : this.timer.start(this.baseInterval);
-
 
 
         const isPressed = event.currentTarget.getAttribute('aria-checked') === 'true';
