@@ -282,7 +282,11 @@ class Game {
         storage.removeItem('saveData');
         location.reload();
     }
-
+    reload() {
+        global.Settings.saveClosing = false;
+        storage.clear();
+        location.reload();
+    }
     serialize() {
         //console.log(Object.keys(this));
         //console.log(Object.values(this));
