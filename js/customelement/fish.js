@@ -128,7 +128,7 @@ class FishingArea extends HTMLElement {
 
         this.cardLevel = document.createElement('div');
         this.cardLevel.className = 'clash-card__level';
-        this.cardLevel.innerText = '49';
+        this.cardLevel.innerText = '等级要求49';
         this.card.appendChild(this.cardLevel);
 
         this.cardName = document.createElement('div');
@@ -185,7 +185,7 @@ class FishingArea extends HTMLElement {
     }
     connectedCallback() {
         this.appendChild(this.slideContainer);
-        this.onclick = this.click.bind(this);
+        this.card.onclick = this.click.bind(this);
     }
     disable() {
         $('#fish-area').slick('slickSetOption', "arrows", false, true);
@@ -251,5 +251,5 @@ export class FishingMenu {
 
     }
 
-    
+
 }
