@@ -196,7 +196,7 @@ class Game {
         this.minning.tick();
         this.WoodCutting.tick();
         this.achievementManager.tick();
-
+        this.fishingMenu.tick();
         this.combat.tick();
     }
 
@@ -216,7 +216,7 @@ class Game {
         this.minning.render();
         this.WoodCutting.render();
         this.inventory.render();
-
+        this.fishingMenu.render();
         this.achievementManager.render();
 
         document.querySelector('table-of-data').render();

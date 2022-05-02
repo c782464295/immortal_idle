@@ -10,7 +10,10 @@ import { statistics } from '../statistic.js';
 class FishingArea extends HTMLElement {
     constructor(name) {
         super();
-
+        this.timer = new Timer('fishing', this.action.bind(this));
+        this.baseInterval = 2000;
+        this.require = true;
+        this._id = 0;
 
         let style = document.createElement('style');
         style.appendChild(document.createTextNode(`
@@ -27,7 +30,7 @@ class FishingArea extends HTMLElement {
         .clash-card {
             background-color: transparent;
             width: 300px;
-            height: 500px;
+            height: 520px;
             display: inline-block;
             margin: auto;
             border-radius: 19px;
@@ -36,7 +39,9 @@ class FishingArea extends HTMLElement {
             box-shadow: -1px 15px 30px -12px black;
             z-index: 9999;
         }
-
+        .clash-card:hover{
+            box-shadow: 0 8px 36px 0 rgba(0,0,0,0.9);
+        }
         .clash-card[aria-checked="true"] {
             box-shadow: 0 8px 36px 0 rgba(0,0,0,0.9);
         }
@@ -104,6 +109,20 @@ class FishingArea extends HTMLElement {
             font-weight: 400;
             font-size: 12px;
         }
+
+        .loader{
+            height: 40px;
+            width: 40px;
+            text-align: center;
+            display: inline-block;
+            vertical-align: top;
+            visibility:hidden;
+        }
+
+        .clash-card[aria-checked="true"] .loader {
+            visibility:visible;
+        }
+
         `));
 
 
@@ -141,6 +160,22 @@ class FishingArea extends HTMLElement {
         this.cardDescription.innerText = '此处汲天地之精华，聚不测之深渊';
         this.card.appendChild(this.cardDescription);
 
+        // loading svg
+        this.loading = document.createElement('div');
+        this.loading.className = 'loader';
+        this.loading.innerHTML = `<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+        <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+        <animateTransform attributeType="xml"
+            attributeName="transform"
+            type="rotate"
+            from="0 25 25"
+            to="360 25 25"
+            dur="0.6s"
+            repeatCount="indefinite"/>
+        </path>
+        </svg>`;
+        this.card.appendChild(this.loading);
 
         this.cardStats = document.createElement('div');
         this.cardStats.className = 'clash-card__unit-stats clearfix';
@@ -194,14 +229,42 @@ class FishingArea extends HTMLElement {
         $('#fish-area').slick('slickSetOption', "arrows", true, true);
     }
     click() {
+        if (global.currentAction != 'fishing' && global.currentAction != '') {
+            return;
+        }
 
         if ($('#fish-area').slick('slickGetOption', 'arrows')) {
             this.disable();
             this.card.setAttribute('aria-checked', true);
+            global.currentAction = 'fishing';
         } else {
             this.enable();
             this.card.setAttribute('aria-checked', false);
+            global.currentAction = '';
+
         }
+
+        this.timer.isActive ? this.timer.stop() : this.timer.start(Math.floor(this.baseInterval * this.randomRange()));
+    }
+    randomRange(range = 0.15) {
+        return 1 + Math.random() * range * 2 - range;
+    }
+    action() {
+        let qty = 1;
+
+
+
+        global.isFull() && !global.isItemExist(this._id) ? console.log('full') : global.inventoryAddItem(this._id, qty);
+        statistics.Woodcutting.inc('totalWoodcutting');
+        statistics.Woodcutting.add('totalTimeConsume', this.baseInterval);
+
+        notificationQueue.add(processItemNotify(this._id, qty));
+        global.NonBattleSkill.fishingExp += 100;
+
+        this.timer.start(Math.floor(this.baseInterval * this.randomRange()));
+    }
+    tick() {
+        if (this.timer.isActive) this.timer.tick();
     }
 }
 customElements.define('fishingarea-element', FishingArea);
@@ -222,6 +285,10 @@ export class FishingMenu {
         this.fishingArea1 = new FishingArea('b');
         this.fishingArea2 = new FishingArea('c');
 
+        this.fishList = [];
+        this.fishList.push(this.fishingArea);
+        this.fishList.push(this.fishingArea1);
+        this.fishList.push(this.fishingArea2);
         $("#fish-area").slick('slickAdd', this.fishingArea);
         $("#fish-area").slick('slickAdd', this.fishingArea1);
         $("#fish-area").slick('slickAdd', this.fishingArea2);
@@ -236,8 +303,8 @@ export class FishingMenu {
     setCurrentSlide(index) {
         $('#fish-area').slick('slickGoTo', index);
     }
-    addSlide(obj) {
-        $("#fish-area").slick('slickAdd', obj);
+    addSlide(obj, index, addBefore = true) {
+        $("#fish-area").slick('slickAdd', obj, index, addBefore);
     }
     removeSlide(index) {
         $('#fish-area').slick('slickRemove', index);
@@ -246,10 +313,40 @@ export class FishingMenu {
         $('#fish-area').slick('unslick');
 
     }
-    
+
     async render() {
-
+        /*
+        this.fishList.forEach(function (fish, index) {
+            if (fish.requirelevel > global.NonBattleSkill.fishingLevel) {
+                tmp_dom.addSlide();
+            } else {
+                tmp_dom.removeSlide();
+            }
+        });
+        */
     }
-
-
+    tick() {
+        if (global.currentAction == 'fishing') {
+            this.fishList.forEach((fish) => {
+                fish.tick();
+            });
+        }
+    }
+    serialize() {
+        let json_string = [];
+        for (let i in this.fishList) {
+            json_string.push(this.fishList[i].timer.serialize());
+        }
+        return json_string;
+    }
+    deserialize(data) {
+        for (let i in data) {
+            this.fishList[i].timer.deserialize(data[i]);
+            if (data[i][2] == 1) {
+                this.setCurrentSlide(i);
+                this.fishList[i].disable();
+                this.fishList[i].card.setAttribute('aria-checked', true);
+            }
+        }
+    }
 }
