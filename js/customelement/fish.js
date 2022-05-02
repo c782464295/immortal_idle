@@ -8,13 +8,15 @@ import { items } from '../items.js';
 import { statistics } from '../statistic.js';
 
 class FishingArea extends HTMLElement {
-    constructor(name) {
+    constructor(data) {
         super();
         this.timer = new Timer('fishing', this.action.bind(this));
         this.baseInterval = 2000;
-        this.require = true;
+        this.show = false;
+        this.requiredLevel = data.requiredLevel;
         this._id = 0;
 
+        this.index = data.index
         let style = document.createElement('style');
         style.appendChild(document.createTextNode(`
         .slide-container {
@@ -152,7 +154,7 @@ class FishingArea extends HTMLElement {
 
         this.cardName = document.createElement('div');
         this.cardName.className = 'clash-card__unit-name';
-        this.cardName.innerText = '天池';
+        this.cardName.innerText = data.name;
         this.card.appendChild(this.cardName);
 
         this.cardDescription = document.createElement('div');
@@ -245,6 +247,7 @@ class FishingArea extends HTMLElement {
         }
 
         this.timer.isActive ? this.timer.stop() : this.timer.start(Math.floor(this.baseInterval * this.randomRange()));
+        
     }
     randomRange(range = 0.15) {
         return 1 + Math.random() * range * 2 - range;
@@ -266,6 +269,9 @@ class FishingArea extends HTMLElement {
     tick() {
         if (this.timer.isActive) this.timer.tick();
     }
+    getIndex() {
+        return this.getAttribute('data-slick-index');
+    }
 }
 customElements.define('fishingarea-element', FishingArea);
 
@@ -281,17 +287,17 @@ export class FishingMenu {
         this.slider.style.height = '100%';
         this.slider.style.height = '100%';
 
-        this.fishingArea = new FishingArea('a');
-        this.fishingArea1 = new FishingArea('b');
-        this.fishingArea2 = new FishingArea('c');
+        this.fishingArea = new FishingArea({ requiredLevel: 1, index: 0, name: '1号' });
+        this.fishingArea1 = new FishingArea({ requiredLevel: 10, index: 1, name: '2号' });
+        this.fishingArea2 = new FishingArea({ requiredLevel: 80, index: 2, name: '3号' });
+        this.fishingArea3 = new FishingArea({ requiredLevel: 1, index: 99, name: '?' });
 
         this.fishList = [];
         this.fishList.push(this.fishingArea);
         this.fishList.push(this.fishingArea1);
         this.fishList.push(this.fishingArea2);
-        $("#fish-area").slick('slickAdd', this.fishingArea);
-        $("#fish-area").slick('slickAdd', this.fishingArea1);
-        $("#fish-area").slick('slickAdd', this.fishingArea2);
+        this.fishList.push(this.fishingArea3);
+        
 
 
 
@@ -303,8 +309,8 @@ export class FishingMenu {
     setCurrentSlide(index) {
         $('#fish-area').slick('slickGoTo', index);
     }
-    addSlide(obj, index, addBefore = true) {
-        $("#fish-area").slick('slickAdd', obj, index, addBefore);
+    addSlide(obj, index, before = true) {
+        $("#fish-area").slick('slickAdd', obj, index, before);
     }
     removeSlide(index) {
         $('#fish-area').slick('slickRemove', index);
@@ -315,15 +321,22 @@ export class FishingMenu {
     }
 
     async render() {
-        /*
         this.fishList.forEach(function (fish, index) {
-            if (fish.requirelevel > global.NonBattleSkill.fishingLevel) {
-                tmp_dom.addSlide();
+
+            if (fish.requiredLevel <= global.NonBattleSkill.fishingLevel) {
+                if (!fish.show) {
+                    this.addSlide(fish, fish.index);
+                    fish.show = true;
+                };
             } else {
-                tmp_dom.removeSlide();
+                if (fish.show) {
+                    this.removeSlide(fish.getIndex());
+                    fish.show = false;
+                };
             }
-        });
-        */
+
+        }, this);
+
     }
     tick() {
         if (global.currentAction == 'fishing') {
