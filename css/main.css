@@ -1732,7 +1732,9 @@ item-element {
 }
 
 
-
+/**
+    farm
+*/
 .container111 {
     display: grid;
     grid-template-columns: 150px 150px 150px;
@@ -1748,4 +1750,14 @@ item-element {
     border-radius: 4px;
     border: 6px solid #171717;
 }
-
+/**
+    fishing
+*/
+.slick-next {
+    right: -100px!important;
+}
+.slick-prev:before,
+.slick-next:before
+{
+    font-size: 50px!important;
+}
