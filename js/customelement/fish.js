@@ -246,7 +246,7 @@ class FishingArea extends HTMLElement {
         }
 
         this.timer.isActive ? this.timer.stop() : this.timer.start(Math.floor(this.baseInterval * this.randomRange()));
-        
+
     }
     randomRange(range = 0.15) {
         return 1 + Math.random() * range * 2 - range;
@@ -308,15 +308,22 @@ export class FishingMenu {
         this.fishList.push(this.fishingArea1);
         this.fishList.push(this.fishingArea2);
         this.fishList.push(this.fishingArea3);
-        
+
         this.addSlide(this.fishingArea);
         this.addSlide(this.fishingArea1);
         this.addSlide(this.fishingArea2);
         this.addSlide(this.fishingArea3);
 
-
+        this.init();
     }
-
+    init() {
+        this.fishList.forEach(function (fish, index) {
+            if (!fish.show) {
+                fish.show = true;
+                fish.classList.add('show');
+            }
+        });
+    }
     getCurrentSlide() {
         return $('#fish-area').slick('slickCurrentSlide');
     }
@@ -326,7 +333,7 @@ export class FishingMenu {
     addSlide(obj, index, before = false) {
         global.currentAction = '';
         $("#fish-area").slick('slickAdd', obj);
-        
+
     }
     removeSlide(index) {
         global.currentAction = '';
@@ -346,20 +353,22 @@ export class FishingMenu {
                     fish.show = true;
                     $("#fish-area").slick('slickUnfilter');
                     fish.classList.add('show');
-                    $("#fish-area").slick('slickFilter','.show');
+                    $("#fish-area").slick('slickFilter', '.show');
+                    global.currentAction = '';
                 };
             } else {
                 if (fish.show) {
                     fish.show = false;
                     $("#fish-area").slick('slickUnfilter');
                     fish.classList.remove('show');
-                    $("#fish-area").slick('slickFilter','.show');
+                    $("#fish-area").slick('slickFilter', '.show');
+                    global.currentAction = '';
                 };
             }
-            
+
         }, this);
-        
-        
+
+
     }
     tick() {
         if (global.currentAction == 'fishing') {
