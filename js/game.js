@@ -163,8 +163,7 @@ class Game {
     startMainLoop() {
         console.log("%c\uD83C\uDF4A%c Start Mainloop %c", "background-color:#00869B40;padding:4px;", "background:#00869B80;color:#fff;padding:4px 0", "padding: 2px 0;")
         this.loopTimer = window.setInterval(this.loop.bind(this), TICK_INTERVAL);
-        // 定时保存
-        window.setInterval(this.saveGame.bind(this), 10000);
+        
         this.loopStarted = true;
         this.render();
     }
@@ -367,7 +366,8 @@ $(document).ready(function () {
 
     game.debug(true);
 
-    
+    // 定时保存
+    window.setInterval(game.saveGame.bind(game), 10000);
 
     //game.deserialize('');
     // 明暗模式动态

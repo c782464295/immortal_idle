@@ -128,7 +128,6 @@ class FishingArea extends HTMLElement {
         `));
 
 
-
         this.appendChild(style);
 
 
@@ -272,6 +271,18 @@ class FishingArea extends HTMLElement {
     getIndex() {
         return this.getAttribute('data-slick-index');
     }
+    setSlickIndex(index) {
+        this.setAttribute('data-slick-index', index);
+    }
+    render() {
+        this.setAttribute('data-slick-index', this.index);
+    }
+    hide() {
+        this.className += 'hide';
+    }
+    show() {
+        this.className += 'show';
+    }
 }
 customElements.define('fishingarea-element', FishingArea);
 
@@ -290,7 +301,7 @@ export class FishingMenu {
         this.fishingArea = new FishingArea({ requiredLevel: 1, index: 0, name: '1号' });
         this.fishingArea1 = new FishingArea({ requiredLevel: 10, index: 1, name: '2号' });
         this.fishingArea2 = new FishingArea({ requiredLevel: 80, index: 2, name: '3号' });
-        this.fishingArea3 = new FishingArea({ requiredLevel: 1, index: 99, name: '?' });
+        this.fishingArea3 = new FishingArea({ requiredLevel: -1, index: 99, name: '?' });
 
         this.fishList = [];
         this.fishList.push(this.fishingArea);
@@ -298,7 +309,10 @@ export class FishingMenu {
         this.fishList.push(this.fishingArea2);
         this.fishList.push(this.fishingArea3);
         
-
+        this.addSlide(this.fishingArea);
+        this.addSlide(this.fishingArea1);
+        this.addSlide(this.fishingArea2);
+        this.addSlide(this.fishingArea3);
 
 
     }
@@ -309,10 +323,14 @@ export class FishingMenu {
     setCurrentSlide(index) {
         $('#fish-area').slick('slickGoTo', index);
     }
-    addSlide(obj, index, before = true) {
-        $("#fish-area").slick('slickAdd', obj, index, before);
+    addSlide(obj, index, before = false) {
+        global.currentAction = '';
+        $("#fish-area").slick('slickAdd', obj);
+        
     }
     removeSlide(index) {
+        global.currentAction = '';
+        this.setCurrentSlide(0);
         $('#fish-area').slick('slickRemove', index);
     }
     destroy() {
@@ -325,18 +343,23 @@ export class FishingMenu {
 
             if (fish.requiredLevel <= global.NonBattleSkill.fishingLevel) {
                 if (!fish.show) {
-                    this.addSlide(fish, fish.index);
                     fish.show = true;
+                    $("#fish-area").slick('slickUnfilter');
+                    fish.classList.add('show');
+                    $("#fish-area").slick('slickFilter','.show');
                 };
             } else {
                 if (fish.show) {
-                    this.removeSlide(fish.getIndex());
                     fish.show = false;
+                    $("#fish-area").slick('slickUnfilter');
+                    fish.classList.remove('show');
+                    $("#fish-area").slick('slickFilter','.show');
                 };
             }
-
+            
         }, this);
-
+        
+        
     }
     tick() {
         if (global.currentAction == 'fishing') {
