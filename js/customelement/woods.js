@@ -23,8 +23,10 @@ class Tree extends HTMLElement {
         let style = document.createElement('style');
         style.appendChild(document.createTextNode(`
         .card{
+            border-radius: .7rem;
+            border: 1px solid #ffffff22;
+            transition: .2s;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-            transition: 0.3s;
             width: 90%;
             height: 280px;
             display:inline-block;
@@ -33,11 +35,14 @@ class Tree extends HTMLElement {
             -webkit-user-select: none; 
             cursor: pointer;
         }
-          
         .card:hover{
             box-shadow: 0 8px 36px 0 rgba(0,0,0,0.9);
+            border: 1px solid #ffffff44;
+            box-shadow: 0 7px 50px 10px #000000aa;
+            transform: scale(1.015);
         }
-          
+
+        
         .container{
             padding: 2px 16px;
         }
