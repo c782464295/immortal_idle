@@ -25,15 +25,17 @@ class Item extends HTMLElement {
     set data(val) {
         this._data = val;
         this.setAttribute('data-id', val.id);
+        let item = items.find(function (currentValue, index, arr) { return currentValue.id == this.data.id }, this);
+        this.img.src = item.media;
     }
     get data() {
         return this._data;
     }
 
     async render() {
-        let item = items.find(function (currentValue, index, arr) { return currentValue.id == this.data.id }, this);
+        
 
-        this.img.src = item.media;
+        
         this.text.innerText = beautify(this.data.qty);
     }
 
