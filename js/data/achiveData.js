@@ -7,8 +7,12 @@ export const achieve_list = [
         name: loc('achivement')['achive_name_0'],
         state: false,
         description: loc('achivement')['achive_des_0'],
+        hint: "Suit up.",
         media: './assets/achievements/firemaking.png',
         checkFunction: (x) => { return x.inventory.length > 0 ? true : false; },
+        effect: () => {
+            this.storeService.unlockManual(this.itemRepoService.items['useSpiritGemManual']);
+        },
     },
     {
         id: 1,

@@ -138,24 +138,6 @@ class Ore extends HTMLElement {
 
     action() {
 
-        /*
-            let myEvent = new CustomEvent('ce', {
-                bubbles: true,
-                cancelable: false,
-                composed: true,
-                detail:{
-                    typename: "cut",
-                    name: this.data.id,
-                    num:1// 将需要传递的数据写在detail中，以便在EventListener中获取
-                    // 数据将会在event.detail中得到
-                },
-            });
-            this.dispatchEvent(myEvent);
-
-        */
-        //console.log('mining-ore');
-        
-        //gpNotify(20);
         let qty = 1;
         if (this.isItemExist(this._id)) {
             let tmp = global.inventory.find(item => item.id == this._id);
@@ -169,7 +151,7 @@ class Ore extends HTMLElement {
         notificationQueue.add(processItemNotify(this._id, qty));
         global.NonBattleSkill.miningExp += this.baseExperience;
         this.timer.start(this.baseInterval);
-        //toast_warning('333');
+
     }
 
     isItemExist(id) {

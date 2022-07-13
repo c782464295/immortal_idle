@@ -190,7 +190,7 @@ class Game {
         }
         // new Promise((resolve, reject) => {})
     }
-
+    // this can be decoupling by using observe mode
     tick() {
         this.minning.tick();
         this.WoodCutting.tick();
@@ -210,6 +210,7 @@ class Game {
 
         this.previousTickTime += ticksToRun * TICK_INTERVAL;
     }
+    // this can be decoupling by using observe mode
     render() {
         //console.log('render');
         this.minning.render();

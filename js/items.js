@@ -120,4 +120,12 @@ export const items = [
         sellPrice: 1,
         media: "assets/items/apple_pie.png",
     },
+    /*
+            use: () => {
+                if (!this.inventoryService){
+                    this.characterService.characterState.status.stamina.value++;
+                }
+                this.characterService.characterState.status.health.value += 1;
+            },`
+    */
 ]
